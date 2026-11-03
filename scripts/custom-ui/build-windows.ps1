@@ -1,3 +1,8 @@
+param(
+    [ValidateSet('all', 'checks', 'package')]
+    [string] $Mode = 'all'
+)
+
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
@@ -12,31 +17,35 @@ if ($LASTEXITCODE -or $actualSha -ne $env:CANDIDATE_SHA) { throw 'Build checkout
 Push-Location codex-rs
 try {
     & (Join-Path $PSScriptRoot 'refresh-workspace-lock.ps1')
-    $checks = @(
-        @('codex-config', 'tui_user_message'),
-        @('codex-tui', 'history_cell::session'),
-        @('codex-tui', 'configured_user_message_text_style'),
-        @('codex-tui', 'prompt_style_tests'),
-        @('codex-tui', 'local_load_preserves_defaults')
-    )
-    foreach ($check in $checks) {
-        & cargo test --locked --release --target $target -p $check[0] --lib $check[1] 2>&1 |
-            Tee-Object -Variable log | ForEach-Object { Write-Host $_ }
-        $exitCode = $LASTEXITCODE
-        if ($exitCode -ne 0) { throw "Tests failed: $($check -join ' ')" }
-        if (($log -join "`n") -notmatch 'test result: ok\. [1-9][0-9]* passed') {
-            throw "Required custom UI tests were not found: $($check -join ' ')"
+    if ($Mode -ne 'package') {
+        $checks = @(
+            @('codex-config', 'tui_user_message'),
+            @('codex-tui', 'history_cell::session'),
+            @('codex-tui', 'configured_user_message_text_style'),
+            @('codex-tui', 'prompt_style_tests'),
+            @('codex-tui', 'local_load_preserves_defaults')
+        )
+        foreach ($check in $checks) {
+            & cargo test --locked --profile ci-test --target $target -p $check[0] --lib $check[1] 2>&1 |
+                Tee-Object -Variable log | ForEach-Object { Write-Host $_ }
+            $exitCode = $LASTEXITCODE
+            if ($exitCode -ne 0) { throw "Tests failed: $($check -join ' ')" }
+            if (($log -join "`n") -notmatch 'test result: ok\. [1-9][0-9]* passed') {
+                throw "Required custom UI tests were not found: $($check -join ' ')"
+            }
         }
+        $schemaPath = Join-Path $env:RUNNER_TEMP 'custom-ui-config.schema.json'
+        & cargo run --locked --profile ci-test --target $target -p codex-config-schema --bin codex-write-config-schema -- --out $schemaPath
+        if ($LASTEXITCODE) { throw 'Config schema generation failed' }
+        $expected = (Get-Content core/config.schema.json -Raw).Replace("`r`n", "`n")
+        $generated = (Get-Content $schemaPath -Raw).Replace("`r`n", "`n")
+        if ($expected -cne $generated) { throw 'Config schema is out of date' }
     }
-    $schemaPath = Join-Path $env:RUNNER_TEMP 'custom-ui-config.schema.json'
-    & cargo run --locked --release --target $target -p codex-config-schema --bin codex-write-config-schema -- --out $schemaPath
-    if ($LASTEXITCODE) { throw 'Config schema generation failed' }
-    $expected = (Get-Content core/config.schema.json -Raw).Replace("`r`n", "`n")
-    $generated = (Get-Content $schemaPath -Raw).Replace("`r`n", "`n")
-    if ($expected -cne $generated) { throw 'Config schema is out of date' }
 } finally {
     Pop-Location
 }
+
+if ($Mode -eq 'checks') { return }
 
 $packageDir = Join-Path $repoRoot 'out/windows-package'
 $releaseDir = Join-Path $repoRoot 'out/release'

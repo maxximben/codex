@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: "22"
       - name: Test update safeguards
-        run: node --test .github/scripts/custom-ui-automation.test.mjs scripts/custom-ui/refresh-workspace-lock.test.mjs
+        run: node --test .github/scripts/custom-ui-automation.test.mjs scripts/custom-ui/refresh-workspace-lock.test.mjs scripts/custom-ui/build-windows.test.mjs
       - name: Find stable upstream release and prepare update PR
         id: prepare
         env:
@@ -58,6 +58,10 @@ jobs:
     if: needs.prepare.outputs.build == 'true'
     runs-on: windows-2022
     timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: [checks, package]
     env:
       CARGO_HOME: C:\c
       CARGO_TARGET_DIR: C:\t
@@ -66,6 +70,9 @@ jobs:
       CARGO_PROFILE_RELEASE_DEBUG: "0"
       CARGO_PROFILE_RELEASE_LTO: "false"
       CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "16"
+      CARGO_PROFILE_CI_TEST_DEBUG: "0"
+      CARGO_PROFILE_CI_TEST_INCREMENTAL: "false"
+      CUSTOM_UI_BUILD_MODE: ${{ matrix.stage }}
       RUST_MIN_STACK: "8388608"
       FORCE_COLOR: "0"
       CODEX_REPO_ROOT: ${{ github.workspace }}
@@ -90,7 +97,9 @@ jobs:
           if (-not $toolchain) { throw 'No Rust toolchain channel found' }
           rustup toolchain install $toolchain --profile minimal --component rustfmt,clippy,rust-src
           if ($LASTEXITCODE) { throw 'Rust toolchain installation failed' }
-      - uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+      - uses: actions/cache/restore@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        id: cargo-cache
+        continue-on-error: true
         with:
           path: |
             C:\c\registry
@@ -103,15 +112,34 @@ jobs:
       - uses: ./.github/actions/setup-rusty-v8
         with:
           target: x86_64-pc-windows-msvc
-      - name: Validate customizations and build Windows distribution
+      - name: Fetch locked dependencies before compilation
+        shell: pwsh
+        working-directory: codex-rs
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $false
+          & ../scripts/custom-ui/refresh-workspace-lock.ps1
+          cargo fetch --locked --target x86_64-pc-windows-msvc
+          if ($LASTEXITCODE) { throw 'Dependency fetch failed' }
+      - name: Save dependency cache before the long build
+        if: steps.cargo-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        uses: actions/cache/save@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            C:\c\registry
+            C:\c\git
+          key: ${{ steps.cargo-cache.outputs.cache-primary-key }}
+      - name: Windows ${{ matrix.stage }}
         shell: pwsh
         env:
           CANDIDATE_SHA: ${{ needs.prepare.outputs.candidate_sha }}
           PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
           RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
           UPSTREAM_TAG: ${{ needs.prepare.outputs.upstream_tag }}
-        run: ./scripts/custom-ui/build-windows.ps1
+        run: ./scripts/custom-ui/build-windows.ps1 -Mode $env:CUSTOM_UI_BUILD_MODE
       - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        if: matrix.stage == 'package'
         with:
           name: custom-ui-windows
           path: out/release/*

@@ -45,11 +45,16 @@ It preserves this fork's `.github/workflows/` directory: upstream workflows need
 OpenAI infrastructure, and `GITHUB_TOKEN` cannot push workflow changes.
 All other source changes are merged normally.
 
-The same workflow tests the custom headers, transparent backgrounds, sent-message
-text styles and config defaults, verifies the generated config schema, then builds
-and smoke-tests the complete Windows x86_64 distribution. A missing test is a
+The same workflow runs two parallel Windows jobs for the same candidate commit.
+The `checks` job tests custom headers, transparent backgrounds, sent-message text
+styles and config defaults, and verifies the generated config schema. It uses the
+unoptimized `ci-test` profile without debug symbols or incremental compilation.
+The `package` job independently builds and smoke-tests the complete Windows x86_64
+distribution in the optimized `release` profile. Both jobs must pass before the
+update is accepted or a release is published. A missing test is a
 failure, rather than silently accepting zero tests. Windows builds use a short
-Cargo cache path and Git long-path support.
+Cargo cache path and Git long-path support. Downloaded dependencies are cached
+before compilation, so a later build failure does not discard that cache.
 
 Upstream release tags change the workspace version without updating `Cargo.lock`.
 Before locked validation the build runs `cargo update --workspace`, matching the
