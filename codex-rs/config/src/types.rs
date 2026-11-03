@@ -868,10 +868,46 @@ impl QuickDial {
     }
 }
 
+/// Appearance of the session header. Custom templates replace the standard title and directory.
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, JsonSchema)]
+#[serde(default)]
+#[schemars(deny_unknown_fields)]
+pub struct TuiHeader {
+    /// Override the displayed name; defaults to OpenAI Codex.
+    pub title: Option<String>,
+    /// Override the prompt icon; defaults to >_. An empty string hides it.
+    pub icon: Option<String>,
+    /// Include the version in the standard layout. Templates choose their own fields.
+    pub show_version: bool,
+    /// Include the working directory in the standard layout. Templates choose their own fields.
+    pub show_directory: bool,
+    /// Multiline UTF-8 template with {title}, {icon}, {version}, {directory}, {model}, and {effort}.
+    pub text: Option<String>,
+    /// UTF-8 template file, absolute or relative to CODEX_HOME. Takes precedence over text.
+    pub file: Option<std::path::PathBuf>,
+}
+
+impl Default for TuiHeader {
+    fn default() -> Self {
+        Self {
+            title: None,
+            icon: None,
+            show_version: true,
+            show_directory: true,
+            text: None,
+            file: None,
+        }
+    }
+}
+
 /// Collection of settings that are specific to the TUI.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Default, JsonSchema)]
 #[schemars(deny_unknown_fields)]
 pub struct Tui {
+    /// Customize the session header's fields or replace it with a text/ASCII-art template.
+    #[serde(default)]
+    pub header: TuiHeader,
+
     /// Preferred hosts for new conversations, indexed by project and local user identity.
     /// Read from the user configuration only; values are never endpoints or credentials.
     #[serde(default)]

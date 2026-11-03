@@ -205,7 +205,7 @@ impl StartupDraftPump {
         ) {
             blossom.start_fresh();
         }
-        let header = startup_session_header(/*cwd*/ None);
+        let header = startup_session_header(/*cwd*/ None, /*settings*/ None);
         Self {
             header,
             blossom: std::cell::RefCell::new(blossom),
@@ -262,7 +262,7 @@ impl StartupDraftPump {
         self.motion = crate::motion::MotionMode::from_animations_enabled(
             local_settings.tui.animations && local_settings.tui.effects.welcome,
         );
-        self.header = startup_session_header(Some(cwd));
+        self.header = startup_session_header(Some(cwd), Some(local_settings));
         self.bottom_pane.set_status_line_enabled(
             local_settings
                 .tui
@@ -465,14 +465,21 @@ impl StartupDraftPump {
     }
 }
 
-fn startup_session_header(cwd: Option<&Path>) -> Box<dyn HistoryCell> {
+fn startup_session_header(
+    cwd: Option<&Path>,
+    settings: Option<&LocalSettings>,
+) -> Box<dyn HistoryCell> {
     // Execution permissions are unknown until the server initializes the thread.
-    Box::new(history_cell::SessionHeaderHistoryCell::new(
+    let mut header = history_cell::SessionHeaderHistoryCell::new(
         "loading".to_string(),
         /*reasoning_effort*/ None,
         cwd.map_or_else(|| PathBuf::from("loading"), Path::to_path_buf),
         CODEX_CLI_VERSION,
-    ))
+    );
+    if let Some(settings) = settings {
+        header = header.with_header(&settings.tui.header, &settings.codex_home);
+    }
+    Box::new(header)
 }
 
 fn startup_draft_renderable<'a>(

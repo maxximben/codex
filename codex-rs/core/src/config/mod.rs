@@ -836,6 +836,9 @@ pub struct Config {
     /// Mouse wheel speed multiplier for transcript scrolling; defaults to one row per event.
     pub tui_mouse_scroll_speed: Option<f64>,
 
+    /// Client-owned session header appearance and template settings.
+    pub tui_header: codex_config::types::TuiHeader,
+
     /// Override the terminal default for copying transcript, footer, and composer selections.
     pub tui_copy_on_select: codex_config::types::CopyOnSelect,
 
@@ -4793,6 +4796,11 @@ impl Config {
                 .as_ref()
                 .is_none_or(|tui| tui.fullscreen_transcript),
             tui_mouse_scroll_speed: cfg.tui.as_ref().and_then(|tui| tui.mouse_scroll_speed),
+            tui_header: cfg
+                .tui
+                .as_ref()
+                .map(|tui| tui.header.clone())
+                .unwrap_or_default(),
             tui_copy_on_select: cfg
                 .tui
                 .as_ref()

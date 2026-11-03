@@ -1,5 +1,7 @@
 # Configuration
 
+For session header customization in this fork, see [Custom session headers](custom-headers.md).
+
 For basic configuration instructions, see [this documentation](https://developers.openai.com/codex/config-basic).
 
 For advanced configuration instructions, see [this documentation](https://developers.openai.com/codex/config-advanced).

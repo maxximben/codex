@@ -56,6 +56,7 @@ impl LocalSettings {
                 config.tui_alternate_screen != codex_config::types::AltScreenMode::Never,
             ),
             tui: Tui {
+                header: config.tui_header.clone(),
                 default_hosts: Default::default(),
                 notification_settings: config.tui_notifications.clone(),
                 animations: config.animations,

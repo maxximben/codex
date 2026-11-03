@@ -6,6 +6,9 @@ use crate::line_truncation::truncate_line_with_ellipsis_if_overflow;
 use crate::style::accent_color;
 use crate::width::display_width;
 
+#[path = "session_header.rs"]
+mod header;
+
 /// Render `lines` inside a border whose inner width is at least `inner_width`.
 ///
 /// This is useful when callers have already clamped their content to a
@@ -40,7 +43,7 @@ pub(crate) fn with_border_with_inner_width(
     out
 }
 
-/// Brand title shared by the session header and the status card; each owns its own indentation.
+/// Standard brand title for status cards; session headers can override their presentation.
 pub(crate) fn codex_title(version: &str) -> Vec<Span<'static>> {
     vec![
         ">_ ".fg(accent_color()),
@@ -207,6 +210,7 @@ pub(crate) fn new_session_info(
         config.cwd.to_path_buf(),
         CODEX_CLI_VERSION,
     )
+    .with_header(&local_settings.tui.header, &local_settings.codex_home)
     .with_yolo_mode(has_yolo_permissions(
         session.approval_policy,
         &session.permission_profile,
@@ -321,6 +325,8 @@ pub(crate) struct SessionHeaderHistoryCell {
     reasoning_effort: Option<ReasoningEffortConfig>,
     directory: PathBuf,
     yolo_mode: bool,
+    header: codex_config::types::TuiHeader,
+    header_text: Option<String>,
 }
 
 impl SessionHeaderHistoryCell {
@@ -336,6 +342,8 @@ impl SessionHeaderHistoryCell {
             reasoning_effort,
             directory,
             yolo_mode: false,
+            header: Default::default(),
+            header_text: None,
         }
     }
 
@@ -382,16 +390,26 @@ impl HistoryCell for SessionHeaderHistoryCell {
     fn display_lines(&self, width: u16) -> Vec<Line<'static>> {
         let width = usize::from(width);
         let mut title = vec!["  ".into()];
-        title.extend(codex_title(self.version));
-        let mut lines = vec![
-            Line::default(),
-            Line::from(title),
-            Line::from(vec![
-                "     ".into(),
-                self.format_directory(Some(width.saturating_sub(/*rhs*/ 5)))
-                    .dim(),
-            ]),
-        ];
+        title.extend(self.title_spans());
+        let mut lines = vec![Line::default()];
+        if let Some(custom) = self.custom_header_lines() {
+            lines.extend(custom.into_iter().map(|line| {
+                let mut spans = vec![Span::raw("  ")];
+                spans.extend(line.spans);
+                Line::from(spans)
+            }));
+        } else {
+            lines.push(Line::from(title));
+            if self.header.show_directory {
+                let icon_width = display_width(&self.header_icon());
+                let indent = 2 + icon_width + usize::from(icon_width > 0);
+                lines.push(Line::from(vec![
+                    " ".repeat(indent).into(),
+                    self.format_directory(Some(width.saturating_sub(indent)))
+                        .dim(),
+                ]));
+            }
+        }
         if self.yolo_mode {
             lines.push(Line::from(vec![
                 "  permissions: ".dim(),
@@ -405,20 +423,33 @@ impl HistoryCell for SessionHeaderHistoryCell {
     }
 
     fn raw_lines(&self) -> Vec<Line<'static>> {
-        let mut lines = vec![
-            Line::from(format!("OpenAI Codex (v{})", self.version)),
-            Line::from(format!(
-                "model: {}{}",
-                self.model,
-                self.reasoning_label()
-                    .map(|reasoning| format!(" {reasoning}"))
-                    .unwrap_or_default()
-            )),
-            Line::from(format!(
-                "directory: {}",
-                self.format_directory(/*max_width*/ None)
-            )),
-        ];
+        let mut lines = if let Some(custom) = self.custom_header_lines() {
+            custom
+        } else {
+            let title = self.header_title();
+            let title = if self.header.show_version {
+                format!("{title} (v{})", self.version)
+            } else {
+                title
+            };
+            let mut lines = vec![
+                Line::from(title),
+                Line::from(format!(
+                    "model: {}{}",
+                    self.model,
+                    self.reasoning_label()
+                        .map(|reasoning| format!(" {reasoning}"))
+                        .unwrap_or_default()
+                )),
+            ];
+            if self.header.show_directory {
+                lines.push(Line::from(format!(
+                    "directory: {}",
+                    self.format_directory(/*max_width*/ None)
+                )));
+            }
+            lines
+        };
         if self.yolo_mode {
             lines.push(Line::from("permissions: YOLO mode"));
         }

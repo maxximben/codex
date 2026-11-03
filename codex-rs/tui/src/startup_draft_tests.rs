@@ -30,7 +30,7 @@ where
     let (tx, rx) = unbounded_channel();
     let mut blossom = crate::empty_state_animation::EmptyStateAnimation::default();
     blossom.start_fresh();
-    let header = startup_session_header(/*cwd*/ None);
+    let header = startup_session_header(/*cwd*/ None, /*settings*/ None);
     StartupDraftPump {
         header,
         blossom: std::cell::RefCell::new(blossom),
@@ -95,7 +95,7 @@ fn startup_draft_renders_full_empty_and_multiline_composer_frames() {
         let mut pump = startup_test_pump(std::iter::empty());
         pump.session_action = session_action;
         if label == "configured" {
-            pump.header = startup_session_header(Some(std::path::Path::new("workspace")));
+            pump.header = startup_session_header(Some(std::path::Path::new("workspace")), None);
         }
         pump.bottom_pane
             .set_composer_text(text.to_string(), Vec::new(), Vec::new());
@@ -322,6 +322,12 @@ async fn startup_draft_hydrates_its_header_without_moving_the_composer() {
             .desired_height(width),
         initial_height
     );
+
+    let mut custom_settings = crate::local_settings::LocalSettings::from(&config);
+    custom_settings.tui.header.text = Some("Custom header\n{directory}".into());
+    pump.apply_settings(&custom_settings, config.cwd.as_path());
+    assert_eq!(pump.header.raw_lines()[0].to_string(), "Custom header");
+    assert_eq!(pump.header.raw_lines()[1].to_string(), expected_directory);
 }
 
 #[test]

@@ -2,6 +2,32 @@ use super::*;
 use pretty_assertions::assert_eq;
 
 #[test]
+fn session_header_settings_preserve_defaults_and_accept_templates() {
+    let empty: Tui = toml::from_str("").unwrap();
+    assert_eq!(empty.header, TuiHeader::default());
+    let configured: Tui = toml::from_str(
+        r#"
+[header]
+title = "My CLI"
+icon = "λ"
+show_version = false
+text = "{icon} {title}\n{directory}"
+file = "headers/custom.txt"
+"#,
+    )
+    .unwrap();
+    assert_eq!(configured.header.title.as_deref(), Some("My CLI"));
+    assert_eq!(configured.header.icon.as_deref(), Some("λ"));
+    assert!(!configured.header.show_version);
+    assert!(configured.header.show_directory);
+    assert_eq!(
+        configured.header.text.as_deref(),
+        Some("{icon} {title}\n{directory}")
+    );
+    assert_eq!(configured.header.file, Some("headers/custom.txt".into()));
+}
+
+#[test]
 fn plugin_activation_inherits_defaults_without_explicit_enablement() {
     for default_enabled in [None, Some(false), Some(true)] {
         let default_config = default_enabled.map_or_else(String::new, |enabled| {

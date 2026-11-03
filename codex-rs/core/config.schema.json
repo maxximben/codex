@@ -5196,6 +5196,22 @@
           "description": "Own the fullscreen transcript, including scrolling, selection, and search. Defaults to `true`; alternate-screen restrictions take precedence.",
           "type": "boolean"
         },
+        "header": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TuiHeader"
+            }
+          ],
+          "default": {
+            "file": null,
+            "icon": null,
+            "show_directory": true,
+            "show_version": true,
+            "text": null,
+            "title": null
+          },
+          "description": "Customize the session header's fields or replace it with a text/ASCII-art template."
+        },
         "keymap": {
           "allOf": [
             {
@@ -6196,6 +6212,43 @@
             }
           ],
           "description": "Toggle Vim mode for the composer input."
+        }
+      },
+      "type": "object"
+    },
+    "TuiHeader": {
+      "additionalProperties": false,
+      "description": "Appearance of the session header. Custom templates replace the standard title and directory.",
+      "properties": {
+        "file": {
+          "default": null,
+          "description": "UTF-8 template file, absolute or relative to CODEX_HOME. Takes precedence over text.",
+          "type": "string"
+        },
+        "icon": {
+          "default": null,
+          "description": "Override the prompt icon; defaults to >_. An empty string hides it.",
+          "type": "string"
+        },
+        "show_directory": {
+          "default": true,
+          "description": "Include the working directory in the standard layout. Templates choose their own fields.",
+          "type": "boolean"
+        },
+        "show_version": {
+          "default": true,
+          "description": "Include the version in the standard layout. Templates choose their own fields.",
+          "type": "boolean"
+        },
+        "text": {
+          "default": null,
+          "description": "Multiline UTF-8 template with {title}, {icon}, {version}, {directory}, {model}, and {effort}.",
+          "type": "string"
+        },
+        "title": {
+          "default": null,
+          "description": "Override the displayed name; defaults to OpenAI Codex.",
+          "type": "string"
         }
       },
       "type": "object"

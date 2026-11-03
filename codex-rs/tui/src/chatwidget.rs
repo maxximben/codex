@@ -1549,6 +1549,7 @@ impl ChatWidget {
                 config.cwd.to_path_buf(),
                 CODEX_CLI_VERSION,
             )
+            .with_header(&config.tui_header, &config.codex_home)
             .with_yolo_mode(history_cell::is_yolo_mode(config)),
         )
     }
