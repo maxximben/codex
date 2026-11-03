@@ -388,7 +388,7 @@ use crate::render::Insets;
 use crate::render::RectExt;
 use crate::render::renderable::Renderable;
 use crate::slash_command::SlashCommand;
-use crate::style::user_message_style;
+use crate::style::composer_style;
 use crate::ui_consts::FOOTER_INDENT_COLS;
 use codex_protocol::ThreadId;
 use codex_protocol::user_input::ByteRange;
@@ -4932,7 +4932,7 @@ impl ChatComposer {
             selection.register(status.intersection(buf.area), changed);
             selection.register(footer_rect.intersection(buf.area), changed);
         }
-        let style = user_message_style();
+        let style = composer_style();
         let background = composer_layout::background_rect(composer_rect, buf.area, options);
         Block::default().style(style).render(background, buf);
         if let Some(previews) = options.image_previews {
@@ -5172,7 +5172,7 @@ mod tests {
     }
 
     #[test]
-    fn light_terminal_palette_renders_light_composer_snapshot() {
+    fn light_terminal_palette_preserves_composer_background_snapshot() {
         let colors = crate::terminal_probe::DefaultColors {
             fg: (0x55, 0x57, 0x53),
             bg: (0xff, 0xff, 0xff),
@@ -5186,10 +5186,7 @@ mod tests {
             let mut buffer = Buffer::empty(area);
             composer.render(area, &mut buffer);
 
-            assert_eq!(
-                buffer[(0, 1)].bg,
-                crate::terminal_palette::rgb_color((244, 244, 244))
-            );
+            assert_eq!(buffer[(0, 1)].bg, Color::Reset);
             insta::assert_snapshot!("light_terminal_palette_composer", format!("{buffer:?}"));
         });
     }
