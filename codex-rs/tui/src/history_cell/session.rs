@@ -393,10 +393,9 @@ impl HistoryCell for SessionHeaderHistoryCell {
         title.extend(self.title_spans());
         let mut lines = vec![Line::default()];
         if let Some(custom) = self.custom_header_lines() {
-            lines.extend(custom.into_iter().map(|line| {
-                let mut spans = vec![Span::raw("  ")];
-                spans.extend(line.spans);
-                Line::from(spans)
+            lines.extend(custom.into_iter().map(|mut line| {
+                line.spans.insert(0, Span::raw("  "));
+                line
             }));
         } else {
             lines.push(Line::from(title));
@@ -424,7 +423,7 @@ impl HistoryCell for SessionHeaderHistoryCell {
 
     fn raw_lines(&self) -> Vec<Line<'static>> {
         let mut lines = if let Some(custom) = self.custom_header_lines() {
-            custom
+            plain_lines(custom)
         } else {
             let title = self.header_title();
             let title = if self.header.show_version {

@@ -1,6 +1,7 @@
 //! User-defined session header fields and UTF-8 templates, loaded before rendering.
 
 use super::*;
+use codex_ansi_escape::ansi_escape;
 use codex_config::types::TuiHeader;
 use std::io::Read;
 
@@ -63,13 +64,14 @@ impl SessionHeaderHistoryCell {
         let text = self.header_text.as_deref()?.trim_start_matches('\u{feff}');
         let title = self.header_title();
         let icon = self.header_icon();
-        let directory = self.format_directory(None);
+        let directory = single_line(&self.format_directory(None));
+        let model = single_line(&self.model);
         let values = [
             ("title", title.as_str()),
             ("icon", icon.as_str()),
             ("version", self.version),
             ("directory", directory.as_str()),
-            ("model", self.model.as_str()),
+            ("model", model.as_str()),
             ("effort", self.reasoning_label().unwrap_or_default()),
         ];
         // Expand only the original template: braces inside substituted titles and paths are literal.
@@ -92,13 +94,23 @@ impl SessionHeaderHistoryCell {
             remaining = tail;
         }
         rendered.push_str(remaining);
-        let rendered = crate::history_cell::sanitize_user_text(rendered.into());
-        Some(
-            rendered
-                .lines()
-                .map(|line| Line::from(line.replace('\t', "    ")))
-                .collect(),
-        )
+        if rendered.is_empty() {
+            return Some(Vec::new());
+        }
+        let mut lines = ansi_escape(&rendered.replace('\t', "    ")).lines;
+        for line in &mut lines {
+            for span in &mut line.spans {
+                span.content = crate::history_cell::sanitize_user_text(span.content.clone());
+                // Only glyphs carry color: preserve the terminal background behind the artwork.
+                span.style = span.style.bg(Color::Reset).not_reversed();
+                if let Some(Color::Rgb(r, g, b)) = span.style.fg {
+                    span.style = span
+                        .style
+                        .fg(crate::terminal_palette::best_color((r, g, b)));
+                }
+            }
+        }
+        Some(lines)
     }
 }
 
@@ -110,6 +122,60 @@ fn single_line(text: &str) -> String {
 mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
+
+    #[test]
+    fn ansi_header_keeps_foreground_colors_and_a_transparent_background() {
+        let home = tempfile::tempdir().unwrap();
+        crate::terminal_palette::with_test_default_colors(
+            crate::terminal_probe::DefaultColors {
+                fg: (240, 240, 240),
+                bg: (20, 20, 20),
+            },
+            || {
+                let cell = cell(
+                    &TuiHeader {
+                        text: Some(
+                            "\x1b[38;2;60;140;240m█\x1b[48;2;255;0;0;7m▓\x1b[0m {title}".into(),
+                        ),
+                        ..Default::default()
+                    },
+                    home.path(),
+                );
+                let lines = cell.display_lines(80);
+                assert_eq!(lines[1].to_string(), "  █▓ OpenAI Codex");
+                assert_eq!(
+                    lines[1].spans[1].style.fg,
+                    Some(crate::terminal_palette::rgb_color((60, 140, 240)))
+                );
+                assert!(lines[1].spans.iter().skip(1).all(|span| {
+                    span.style.bg == Some(Color::Reset)
+                        && !span.style.add_modifier.contains(Modifier::REVERSED)
+                }));
+                let raw = cell.raw_lines();
+                assert_eq!(raw[0], Line::from("█▓ OpenAI Codex"));
+            },
+        );
+    }
+
+    #[test]
+    fn ansi_header_ignores_terminal_commands_and_sanitizes_inserted_values() {
+        let home = tempfile::tempdir().unwrap();
+        let cell = cell(
+            &TuiHeader {
+                title: Some("\x1b[31mCustom\x1b[0m".into()),
+                text: Some("\x1b]0;ignored title\x07\x1b[2J{title}\tCLI\x07".into()),
+                ..Default::default()
+            },
+            home.path(),
+        );
+        assert_eq!(cell.raw_lines()[0].to_string(), "Custom    CLI");
+        assert!(
+            cell.raw_lines()[0]
+                .spans
+                .iter()
+                .all(|span| span.style == Style::default())
+        );
+    }
 
     fn cell(header: &TuiHeader, home: &Path) -> SessionHeaderHistoryCell {
         SessionHeaderHistoryCell::new(

@@ -53,7 +53,10 @@ use single quotes for Windows paths, e.g. `file = 'C:\Users\Maksim\header.txt'`.
 | `{effort}` | Reasoning effort, or an empty string |
 
 Unknown placeholders stay literal. Values inserted into the template are not
-expanded again. Templates are plain text; terminal escape sequences are removed.
+expanded again. Templates support ANSI foreground colors and text styles,
+including 24-bit RGB gradients. Background fills and reverse video are removed
+so the terminal background remains visible. Other terminal commands are ignored,
+and raw text/copy output contains no ANSI sequences.
 Each line receives the normal two-column header indentation and is clipped to
 the available terminal width, preserving ASCII-art spacing rather than wrapping.
 
@@ -65,3 +68,30 @@ The permissions notice for YOLO mode remains visible with every layout.
 
 The custom header is used during session loading, in the active session, and
 after clearing the screen. The `/status` card keeps its standard title.
+
+## Pixel-art CODEX examples
+
+![Cool and warm CODEX terminal headers](header-examples/preview.svg)
+
+Two ready-to-use Unicode block-art templates are included:
+
+- [codex-cool.ansi](header-examples/codex-cool.ansi): cyan, violet, and pink with a dithered shadow.
+- [codex-warm.ansi](header-examples/codex-warm.ansi): yellow, amber, and copper with an offset outline.
+
+Copy either file into `$CODEX_HOME/headers`, then select it:
+
+```toml
+[tui.header]
+file = "headers/codex-cool.ansi"
+```
+
+Alternatively, point `file` directly at the example in your checkout using an
+absolute path. Both presets fit an 80-column terminal, including the header's
+indentation, and include a `{directory}` line below the artwork. Matching `.txt`
+files provide the same lettering without color codes.
+
+Regenerate the examples and vector preview from the repository root with:
+
+```sh
+node scripts/generate-header-examples.mjs
+```
