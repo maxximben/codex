@@ -11,6 +11,7 @@ if ($LASTEXITCODE -or $actualSha -ne $env:CANDIDATE_SHA) { throw 'Build checkout
 
 Push-Location codex-rs
 try {
+    & (Join-Path $PSScriptRoot 'refresh-workspace-lock.ps1')
     $checks = @(
         @('codex-config', 'tui_user_message'),
         @('codex-tui', 'history_cell::session'),
@@ -19,9 +20,9 @@ try {
         @('codex-tui', 'local_load_preserves_defaults')
     )
     foreach ($check in $checks) {
-        $log = & cargo test --locked --release --target $target -p $check[0] --lib $check[1] 2>&1
+        & cargo test --locked --release --target $target -p $check[0] --lib $check[1] 2>&1 |
+            Tee-Object -Variable log | ForEach-Object { Write-Host $_ }
         $exitCode = $LASTEXITCODE
-        $log | ForEach-Object { Write-Host $_ }
         if ($exitCode -ne 0) { throw "Tests failed: $($check -join ' ')" }
         if (($log -join "`n") -notmatch 'test result: ok\. [1-9][0-9]* passed') {
             throw "Required custom UI tests were not found: $($check -join ' ')"
@@ -45,6 +46,7 @@ if ($LASTEXITCODE) { throw 'Windows package build failed' }
 Copy-Item -LiteralPath docs/header-examples -Destination (Join-Path $packageDir 'headers') -Recurse
 Copy-Item -LiteralPath docs/custom-headers.md -Destination (Join-Path $packageDir 'CUSTOM-HEADERS.md')
 Copy-Item -LiteralPath docs/custom-ui-updates.md -Destination (Join-Path $packageDir 'UPDATES.md')
+Copy-Item -LiteralPath codex-rs/Cargo.lock -Destination (Join-Path $packageDir 'Cargo.lock')
 @'
 Codex Custom UI for Windows x86_64
 
@@ -72,6 +74,7 @@ $hash = (Get-FileHash -LiteralPath $zipPath -Algorithm SHA256).Hash.ToLowerInvar
     package_version = $env:PACKAGE_VERSION
     release_tag = $env:RELEASE_TAG
     upstream_tag = $env:UPSTREAM_TAG
+    cargo_lock_sha256 = (Get-FileHash -LiteralPath codex-rs/Cargo.lock -Algorithm SHA256).Hash.ToLowerInvariant()
     target = $target
     built_at = [DateTime]::UtcNow.ToString('o')
 } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $releaseDir 'build-metadata.json') -Encoding utf8NoBOM

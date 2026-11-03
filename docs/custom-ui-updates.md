@@ -51,6 +51,12 @@ and smoke-tests the complete Windows x86_64 distribution. A missing test is a
 failure, rather than silently accepting zero tests. Windows builds use a short
 Cargo cache path and Git long-path support.
 
+Upstream release tags change the workspace version without updating `Cargo.lock`.
+Before locked validation the build runs `cargo update --workspace`, matching the
+official release workflow. This refreshes workspace package versions while keeping
+existing external dependency pins. The archive includes the resolved `Cargo.lock`,
+whose SHA256 is recorded in `build-metadata.json`.
+
 After successful checks, the workflow fast-forwards `custom-ui` to the exact
 tested commit; the update PR is then merged automatically. It never force-pushes
 or generates a different, untested merge commit. The `custom-ui/windows` commit

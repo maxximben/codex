@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: "22"
       - name: Test update safeguards
-        run: node --test .github/scripts/custom-ui-automation.test.mjs
+        run: node --test .github/scripts/custom-ui-automation.test.mjs scripts/custom-ui/refresh-workspace-lock.test.mjs
       - name: Find stable upstream release and prepare update PR
         id: prepare
         env:
