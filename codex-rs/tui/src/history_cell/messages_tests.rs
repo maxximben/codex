@@ -4,6 +4,63 @@ use assert_matches::assert_matches;
 use pretty_assertions::assert_eq;
 
 #[test]
+fn configured_user_message_text_style_keeps_voice_marker_and_plain_raw_text() {
+    let cell = new_spoken_user_prompt("spoken body".into()).with_text_style(
+        &codex_config::types::TuiUserMessage {
+            color: Some("cyan".into()),
+            bold: Some(false),
+            italic: Some(true),
+            ..Default::default()
+        },
+    );
+    for lines in [
+        cell.display_hyperlink_lines(40),
+        cell.transcript_hyperlink_lines(40),
+    ] {
+        let marker = lines
+            .iter()
+            .flat_map(|line| &line.line.spans)
+            .find(|span| span.content == "› ")
+            .unwrap();
+        assert_eq!(marker.style.fg, Some(Color::Red));
+        let body = lines
+            .iter()
+            .flat_map(|line| &line.line.spans)
+            .find(|span| span.content.contains("spoken"))
+            .unwrap();
+        assert_eq!(body.style.fg, Some(Color::Cyan));
+        assert!(body.style.add_modifier.contains(Modifier::ITALIC));
+        assert!(!body.style.add_modifier.contains(Modifier::BOLD));
+    }
+    assert_eq!(cell.raw_lines(), vec![Line::from("spoken body")]);
+}
+
+#[test]
+fn configured_user_message_text_style_applies_to_structured_answers() {
+    let home = tempfile::tempdir().unwrap();
+    let replies = vec![AsyncQuestionReply {
+        question_item_id: "question-id".into(),
+        question: "Which option?".into(),
+        answer: "**bold answer**".into(),
+    }];
+    let cell = new_user_prompt("bold answer".into(), vec![], vec![], vec![])
+        .with_async_replies(replies, home.path())
+        .with_text_style(&codex_config::types::TuiUserMessage {
+            color: Some("cyan".into()),
+            bold: Some(false),
+            ..Default::default()
+        });
+    let lines = cell.display_hyperlink_lines(50);
+    let answer = lines
+        .iter()
+        .flat_map(|line| &line.line.spans)
+        .find(|span| span.content.contains("bold answer"))
+        .unwrap();
+    assert_eq!(answer.style.fg, Some(Color::Cyan));
+    assert!(!answer.style.add_modifier.contains(Modifier::BOLD));
+}
+
+#[test]
 fn user_prompt_urls_keep_destinations_across_widths() {
     let url = "https://example.test/terminal-link-wrapping/solid-octants";
     let placeholder = "[Image #1]";

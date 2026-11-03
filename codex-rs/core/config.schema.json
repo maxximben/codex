@@ -5569,6 +5569,21 @@
           "description": "Syntax highlighting theme name (kebab-case).\n\nWhen set, overrides automatic light/dark theme detection. Use `/theme` in the TUI or see `$CODEX_HOME/themes` for custom themes.",
           "type": "string"
         },
+        "user_message": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/TuiUserMessage"
+            }
+          ],
+          "default": {
+            "bold": null,
+            "color": null,
+            "dim": null,
+            "italic": null,
+            "underline": null
+          },
+          "description": "Text appearance for sent user messages. Does not change the editable composer."
+        },
         "vim_mode_default": {
           "default": false,
           "description": "Start the composer in Vim mode (`Normal`) by default. Defaults to `false`.",
@@ -6750,6 +6765,36 @@
         "tables": {
           "default": true,
           "description": "Render pipe tables, including tables inside Markdown fences.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TuiUserMessage": {
+      "additionalProperties": false,
+      "description": "Text style for sent user messages, including restored conversation history.",
+      "properties": {
+        "bold": {
+          "default": null,
+          "description": "Unset values preserve the existing formatting; false explicitly disables the modifier.",
+          "type": "boolean"
+        },
+        "color": {
+          "default": null,
+          "description": "Foreground as #RRGGBB, a named ANSI color, or default. The background stays transparent.",
+          "pattern": "^(#[0-9a-fA-F]{6}|default|reset|black|red|green|yellow|blue|magenta|cyan|gray|dark-gray|light-red|light-green|light-yellow|light-blue|light-magenta|light-cyan|white)$",
+          "type": "string"
+        },
+        "dim": {
+          "default": null,
+          "type": "boolean"
+        },
+        "italic": {
+          "default": null,
+          "type": "boolean"
+        },
+        "underline": {
+          "default": null,
           "type": "boolean"
         }
       },

@@ -57,6 +57,7 @@ impl LocalSettings {
             ),
             tui: Tui {
                 header: config.tui_header.clone(),
+                user_message: config.tui_user_message.clone(),
                 default_hosts: Default::default(),
                 notification_settings: config.tui_notifications.clone(),
                 animations: config.animations,

@@ -1392,6 +1392,7 @@ fn config_toml_deserializes_model_availability_nux() {
         Tui {
             default_hosts: Default::default(),
             header: Default::default(),
+            user_message: Default::default(),
             notification_settings: TuiNotificationSettings::default(),
             animations: true,
             screen_reader_detection_done: None,
@@ -4755,6 +4756,7 @@ fn tui_config_missing_notifications_field_defaults_to_enabled() {
         Tui {
             default_hosts: Default::default(),
             header: Default::default(),
+            user_message: Default::default(),
             notification_settings: TuiNotificationSettings::default(),
             animations: true,
             screen_reader_detection_done: None,

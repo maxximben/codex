@@ -15,6 +15,7 @@ use std::borrow::Cow;
 
 #[derive(Debug)]
 pub(crate) struct UserHistoryCell {
+    pub(crate) text_style: Style,
     pub message: String,
     pub text_elements: Vec<TextElement>,
     pub local_image_paths: Vec<PathBuf>,
@@ -181,6 +182,36 @@ fn user_message_element_style(style: Style, accent: Color) -> Style {
 }
 
 impl UserHistoryCell {
+    pub(crate) fn with_text_style(
+        mut self,
+        settings: &codex_config::types::TuiUserMessage,
+    ) -> Self {
+        let mut style = Style::default();
+        if let Some(color) = &settings.color {
+            style = style.fg(if color == "default" {
+                Color::Reset
+            } else {
+                color.parse().unwrap_or(Color::Reset)
+            });
+        }
+        for (enabled, modifier) in [
+            (settings.bold, Modifier::BOLD),
+            (settings.italic, Modifier::ITALIC),
+            (settings.underline, Modifier::UNDERLINED),
+            (settings.dim, Modifier::DIM),
+        ] {
+            if let Some(enabled) = enabled {
+                style = if enabled {
+                    style.add_modifier(modifier)
+                } else {
+                    style.remove_modifier(modifier)
+                };
+            }
+        }
+        self.text_style = style;
+        self
+    }
+
     pub(crate) fn with_async_replies(
         mut self,
         replies: Vec<AsyncQuestionReply>,
@@ -249,27 +280,30 @@ impl HistoryCell for UserHistoryCell {
         let style = history_prompt_style();
         let element_style = user_message_element_style(style, accent_color_on(style.bg));
 
-        let wrapped_images = plain_hyperlink_lines(adaptive_wrap_lines(
+        let mut text_style = self.text_style;
+        if let Some(Color::Rgb(r, g, b)) = text_style.fg {
+            text_style = text_style.fg(crate::terminal_palette::best_color((r, g, b)));
+        }
+        let mut wrapped_images = plain_hyperlink_lines(adaptive_wrap_lines(
             self.image_labels_not_in_message()
                 .map(|label| Line::from(label).style(element_style)),
             RtOptions::new(usize::from(wrap_width))
                 .wrap_algorithm(textwrap::WrapAlgorithm::FirstFit),
         ));
+        apply_user_text_style(&mut wrapped_images, text_style);
 
         let mut wrapped_message =
             if let UserMessagePresentation::AsyncReplies { replies, cwd } = &self.presentation {
-                super::async_replies::render(replies, cwd, usize::from(wrap_width))
+                super::async_replies::render(replies, cwd, usize::from(wrap_width), text_style)
             } else {
                 let marker = if self.is_spoken() {
                     "› ".red().bold()
                 } else {
                     "› ".bold().dim()
                 };
-                prefix_hyperlink_lines(
-                    wrap_user_message(message, text_elements, style, wrap_width),
-                    marker,
-                    "  ".into(),
-                )
+                let mut body = wrap_user_message(message, text_elements, style, wrap_width);
+                apply_user_text_style(&mut body, text_style);
+                prefix_hyperlink_lines(body, marker, "  ".into())
             };
         if wrapped_images.is_empty() && wrapped_message.is_empty() {
             return Vec::new();
@@ -316,6 +350,12 @@ impl HistoryCell for UserHistoryCell {
                     line.line.style.fg = source.line_style.fg;
                 }
             }
+            if self.text_style != Style::default() {
+                lines = lines
+                    .into_iter()
+                    .map(HyperlinkLine::resolve_span_styles)
+                    .collect();
+            }
         }
         lines
     }
@@ -331,6 +371,24 @@ impl HistoryCell for UserHistoryCell {
             lines.extend(image_labels.map(Line::from));
         }
         lines
+    }
+}
+
+/// Patch body spans and their logical source together, so resize and copying retain the text.
+pub(super) fn apply_user_text_style(lines: &mut [HyperlinkLine], style: Style) {
+    if style == Style::default() {
+        return;
+    }
+    for row in lines {
+        row.line.style = row.line.style.patch(style);
+        for span in &mut row.line.spans {
+            span.style = span.style.patch(style);
+        }
+        if let Some(source) = &mut row.source {
+            source.line_style = source.line_style.patch(style);
+            source.span_style = source.span_style.patch(style);
+        }
+        *row = std::mem::take(row).resolve_span_styles();
     }
 }
 
@@ -809,6 +867,7 @@ pub(crate) fn new_user_prompt(
     remote_image_urls: Vec<String>,
 ) -> UserHistoryCell {
     UserHistoryCell {
+        text_style: Style::default(),
         message,
         text_elements,
         local_image_paths,

@@ -22,6 +22,7 @@ fn markdown_transcript_preserves_messages_and_formats_activity() {
     assert!(render_markdown_transcript(&[]).is_err());
     let user = |message: &str, local_image_paths| {
         Arc::new(UserHistoryCell {
+            text_style: Default::default(),
             presentation: Default::default(),
             message: message.to_string(),
             text_elements: Vec::new(),

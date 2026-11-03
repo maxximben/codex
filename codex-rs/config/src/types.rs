@@ -52,6 +52,7 @@ pub use crate::tui_keymap::TuiVimNormalKeymap;
 pub use crate::tui_keymap::TuiVimOperatorKeymap;
 pub use crate::tui_keymap::TuiVimSearchKeymap;
 pub use crate::tui_rendering::TuiRendering;
+pub use crate::tui_user_message::TuiUserMessage;
 
 pub const DEFAULT_OTEL_ENVIRONMENT: &str = "dev";
 pub const DEFAULT_MEMORIES_MAX_ROLLOUTS_PER_STARTUP: usize = 2;
@@ -907,6 +908,10 @@ pub struct Tui {
     /// Customize the session header's fields or replace it with a text/ASCII-art template.
     #[serde(default)]
     pub header: TuiHeader,
+
+    /// Text appearance for sent user messages. Does not change the editable composer.
+    #[serde(default)]
+    pub user_message: TuiUserMessage,
 
     /// Preferred hosts for new conversations, indexed by project and local user identity.
     /// Read from the user configuration only; values are never endpoints or credentials.

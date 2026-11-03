@@ -1220,6 +1220,7 @@ mod tests {
         assert!(!has_backtrack_target(&cells));
 
         cells.push(Arc::new(UserHistoryCell {
+            text_style: Default::default(),
             presentation: Default::default(),
             message: "hello".to_string(),
             text_elements: Vec::new(),

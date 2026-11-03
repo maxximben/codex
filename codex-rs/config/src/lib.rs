@@ -52,6 +52,7 @@ mod tui_effects;
 mod tui_keymap;
 mod tui_mouse_scroll;
 mod tui_rendering;
+mod tui_user_message;
 pub mod types;
 
 pub const CONFIG_TOML_FILE: &str = "config.toml";

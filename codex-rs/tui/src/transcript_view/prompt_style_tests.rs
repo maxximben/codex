@@ -15,6 +15,58 @@ use ratatui::text::Line;
 use ratatui::widgets::Widget;
 
 #[test]
+fn configured_user_message_text_style_survives_resize_and_preserves_copy() {
+    use codex_config::types::TuiUserMessage;
+    use ratatui::style::Color;
+    use ratatui::style::Modifier;
+
+    crate::terminal_palette::with_test_default_colors(
+        crate::terminal_probe::DefaultColors {
+            fg: (240, 240, 240),
+            bg: (20, 20, 20),
+        },
+        || {
+            let message = "sample words long enough to wrap https://example.com/path";
+            let cell = new_user_prompt(message.into(), Vec::new(), Vec::new(), Vec::new())
+                .with_text_style(&TuiUserMessage {
+                    color: Some("#DDBBFF".into()),
+                    bold: Some(true),
+                    italic: Some(true),
+                    underline: Some(true),
+                    ..Default::default()
+                });
+            let mut layout = TextLayout::new(cell.transcript_hyperlink_lines(70), 70);
+            for width in [70, 18, 70] {
+                layout = layout.rewrap(width);
+                assert_eq!(layout.text(), format!("\n{message}\n"));
+                let area = Rect::new(0, 0, width, layout.row_count() as u16);
+                let mut buffer = Buffer::empty(area);
+                layout.render(area, &mut buffer, 0);
+                let mut checked = 0;
+                for painted in &buffer.content {
+                    if painted.symbol().trim().is_empty() || painted.symbol() == "›" {
+                        continue;
+                    }
+                    assert_eq!(
+                        painted.fg,
+                        crate::terminal_palette::rgb_color((221, 187, 255))
+                    );
+                    assert_eq!(painted.bg, Color::Reset);
+                    assert!(
+                        painted
+                            .modifier
+                            .contains(Modifier::BOLD | Modifier::ITALIC | Modifier::UNDERLINED)
+                    );
+                    checked += 1;
+                }
+                assert!(checked > 0);
+            }
+            assert_eq!(cell.raw_lines(), vec![Line::from(message)]);
+        },
+    );
+}
+
+#[test]
 fn visible_rows_fill_inherited_styles_without_painting_outside_the_viewport() {
     let style = Style::default().green().on_dark_gray().italic();
     let layout = TextLayout::new(
@@ -135,6 +187,15 @@ fn styled_prompt_lines(cell: &dyn HistoryCell, width: u16, style: Style) -> Vec<
         .into_iter()
         .map(|mut line| {
             line.line.style = style;
+            // Prompt spans explicitly reset their background. Override both painted spans
+            // and retained source styles when this fixture supplies a different surface.
+            for span in &mut line.line.spans {
+                span.style = span.style.patch(style);
+            }
+            if let Some(source) = &mut line.source {
+                source.line_style = source.line_style.patch(style);
+                source.span_style = source.span_style.patch(style);
+            }
             line
         })
         .collect()

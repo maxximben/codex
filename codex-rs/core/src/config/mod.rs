@@ -839,6 +839,9 @@ pub struct Config {
     /// Client-owned session header appearance and template settings.
     pub tui_header: codex_config::types::TuiHeader,
 
+    /// Client-owned text appearance for submitted user messages.
+    pub tui_user_message: codex_config::types::TuiUserMessage,
+
     /// Override the terminal default for copying transcript, footer, and composer selections.
     pub tui_copy_on_select: codex_config::types::CopyOnSelect,
 
@@ -4800,6 +4803,11 @@ impl Config {
                 .tui
                 .as_ref()
                 .map(|tui| tui.header.clone())
+                .unwrap_or_default(),
+            tui_user_message: cfg
+                .tui
+                .as_ref()
+                .map(|tui| tui.user_message.clone())
                 .unwrap_or_default(),
             tui_copy_on_select: cfg
                 .tui

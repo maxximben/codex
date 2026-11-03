@@ -147,6 +147,7 @@ pub(crate) fn thread_items_to_transcript_cells(
                 cwd,
                 raw_reasoning_visibility,
                 inline_visualization_context.clone(),
+                config,
             ) {
                 match group {
                     PendingActivity::Computer(group) => group.group.push_detail(cell),
@@ -211,6 +212,7 @@ pub(crate) fn thread_items_to_transcript_cells(
                     cwd,
                     raw_reasoning_visibility,
                     inline_visualization_context.clone(),
+                    config,
                 );
                 if !projected.is_empty() {
                     PendingActivity::flush(&mut pending, &mut cells);
@@ -229,6 +231,7 @@ fn item_to_cells(
     cwd: &AbsolutePathBuf,
     raw_reasoning_visibility: RawReasoningVisibility,
     inline_visualization_context: Option<InlineVisualizationContext>,
+    config: Option<&Config>,
 ) -> TranscriptCells {
     let mut cells: TranscriptCells = Vec::new();
     match item {
@@ -266,12 +269,15 @@ fn item_to_cells(
                     Vec::new(),
                 )
             };
-            let cell = crate::history_cell::new_user_prompt(
+            let mut cell = crate::history_cell::new_user_prompt(
                 message,
                 elements,
                 item.local_image_paths(),
                 item.image_urls(),
             );
+            if let Some(config) = config {
+                cell = cell.with_text_style(&config.tui_user_message);
+            }
             cells.push(Arc::new(cell.with_async_replies(replies, cwd.as_path())));
         }
         ThreadItemPayload::AgentMessage {
@@ -350,4 +356,43 @@ fn item_to_cells(
         other => cells.extend(other_items::cells(other, cwd)),
     }
     cells
+}
+
+#[cfg(test)]
+mod appearance_tests {
+    use super::*;
+    use crate::legacy_core::config::ConfigBuilder;
+    use ratatui::style::Color;
+
+    #[tokio::test]
+    async fn configured_user_message_text_style_applies_to_restored_messages() {
+        let home = tempfile::tempdir().unwrap();
+        let mut config = ConfigBuilder::default()
+            .codex_home(home.path().to_path_buf())
+            .loader_overrides(codex_config::LoaderOverrides::without_managed_config_for_tests())
+            .build()
+            .await
+            .unwrap();
+        config.tui_user_message.color = Some("cyan".into());
+        let cells = thread_items_to_transcript_cells(
+            None,
+            &config.cwd,
+            [ThreadItemPayload::UserMessage {
+                id: "restored-user".into(),
+                client_id: None,
+                content: vec![UserInput::Text {
+                    text: "restored message".into(),
+                    text_elements: Vec::new(),
+                }],
+            }],
+            RawReasoningVisibility::Hidden,
+            Some(&config),
+        );
+        let user = cells[0]
+            .as_any()
+            .downcast_ref::<crate::history_cell::UserHistoryCell>()
+            .unwrap();
+        assert_eq!(user.text_style.fg, Some(Color::Cyan));
+        assert_eq!(user.message, "restored message");
+    }
 }

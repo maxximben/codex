@@ -1426,7 +1426,8 @@ impl ChatWidget {
                     display.local_images,
                     display.remote_image_urls,
                 )
-                .with_async_replies(display.replies, self.config.cwd.as_path()),
+                .with_async_replies(display.replies, self.config.cwd.as_path())
+                .with_text_style(&self.local_settings.tui.user_message),
             );
         }
     }

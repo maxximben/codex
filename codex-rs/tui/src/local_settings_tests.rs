@@ -173,6 +173,8 @@ fast_default_opt_out = true
             ("tui.right_click_paste".into(), "on".into()),
             ("tui.mouse_scroll_speed".into(), 1.5.into()),
             ("tui.header.title".into(), "Custom Codex".into()),
+            ("tui.user_message.color".into(), "#DDBBFF".into()),
+            ("tui.user_message.bold".into(), false.into()),
             // The removed flag must not override the TUI preference.
             (
                 "features.transcript_v2".into(),
@@ -190,6 +192,8 @@ fast_default_opt_out = true
         assert_eq!(config.startup_warnings, Vec::<String>::new());
         assert_eq!(config.tui_mouse_scroll_speed, Some(1.5));
         assert_eq!(config.tui_header.title.as_deref(), Some("Custom Codex"));
+        assert_eq!(config.tui_user_message.color.as_deref(), Some("#DDBBFF"));
+        assert_eq!(config.tui_user_message.bold, Some(false));
         assert!(config.tui_fullscreen_transcript);
         let bootstrap = crate::legacy_core::config::load_config_toml_with_layer_stack(
             home.path(),
