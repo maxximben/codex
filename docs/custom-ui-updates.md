@@ -1,8 +1,36 @@
 # Automatic updates for the custom-ui fork
 
-The default branch of [maxximben/codex](https://github.com/maxximben/codex) is
-`custom-ui`. All UI modifications and maintenance automation live there. `main`
-is kept as the original base; it is not the branch used for custom builds.
+All UI modifications and maintenance automation in
+[maxximben/codex](https://github.com/maxximben/codex) live on `custom-ui`. Set this
+as the default branch during activation. `main` is kept as the original base;
+it is not the branch used for custom builds.
+
+## Activate once
+
+After pushing `custom-ui`, authenticate GitHub CLI for this repository with
+**Administration: read and write**, **Actions: read and write**, and the existing
+code access. Run from the repository root:
+
+```powershell
+.\scripts\custom-ui\enable-updates.ps1
+```
+
+The script sets the default branch, enables the workflow and PR creation, disables
+inherited OpenAI workflows, then requests the first run. It does not store a token
+in the repository or in Actions secrets. Without these permissions GitHub returns
+HTTP 403 and activation must be completed by the repository owner.
+
+Alternatively, activate through GitHub's website:
+
+1. [Repository settings](https://github.com/maxximben/codex/settings): change the
+   default branch to `custom-ui`.
+2. [Actions settings](https://github.com/maxximben/codex/settings/actions): enable
+   Actions and **Allow GitHub Actions to create and approve pull requests**. Keep
+   the default workflow token permissions read-only; the workflow requests its own
+   required permissions per job.
+3. [Actions](https://github.com/maxximben/codex/actions): enable workflows if GitHub
+   asks for confirmation on this fork. Disable inherited OpenAI workflows, enable
+   **Custom UI daily update**, then select **Run workflow**, branch `custom-ui`.
 
 ## Daily maintenance
 
@@ -62,6 +90,6 @@ if that happens, enable this workflow again in Actions. Keep Actions enabled and
 allow GitHub Actions to create pull requests in the repository Actions settings.
 No personal access token or external scheduling service is required.
 
-Inherited OpenAI workflows are disabled in this fork. Fork maintenance runs its own
-tests in the daily workflow; it does not rely on PR/push events emitted by
+Activation disables inherited OpenAI workflows. Fork maintenance runs its own tests
+in the daily workflow; it does not rely on PR/push events emitted by
 `GITHUB_TOKEN` to launch another workflow.

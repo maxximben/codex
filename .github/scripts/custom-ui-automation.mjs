@@ -122,6 +122,11 @@ async function status(sha, state, description) {
 export async function prepare() {
   if (repo() !== "maxximben/codex")
     throw new Error("This automation is configured for maxximben/codex");
+  const settings = await api(`/repos/${repo()}`);
+  if (settings.default_branch !== branch)
+    throw new Error(
+      "Set custom-ui as the default branch to activate daily maintenance; see docs/custom-ui-updates.md",
+    );
   const upstream = await api("/repos/openai/codex/releases/latest");
   const version = stableVersion(upstream.tag_name);
   const base = (await getRef(branch)).object.sha;
