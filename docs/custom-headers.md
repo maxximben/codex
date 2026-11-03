@@ -95,3 +95,27 @@ Regenerate the examples and vector preview from the repository root with:
 ```sh
 node scripts/generate-header-examples.mjs
 ```
+
+## Convert an image into ANSI art
+
+On Windows, the PowerShell converter uses System.Drawing and requires no extra
+packages. It accounts for terminal cell proportions and emits foreground-only
+24-bit RGB blocks, compatible with the header renderer:
+
+```powershell
+pwsh -NoProfile -File scripts/convert-image-to-ansi.ps1 `
+  -InputPath 'C:\path\picture.jpg' `
+  -OutputPath docs/header-examples/picture.ansi `
+  -Columns 76 `
+  -PreviewPath out/picture-preview.png
+```
+
+The output must fit the 64 KiB header limit. For a square image, 76 columns
+produce 38 terminal rows; use `-Columns 48` for a compact 48-by-24 version.
+The converter leaves the original image unchanged.
+
+Ready-made portrait examples:
+
+- [pink-portrait.ansi](header-examples/pink-portrait.ansi): 76 columns by 38 rows.
+- [pink-portrait-compact.ansi](header-examples/pink-portrait-compact.ansi): 48 columns by 24 rows.
+- [Preview](header-examples/pink-portrait-preview.png).
