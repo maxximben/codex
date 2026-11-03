@@ -1,0 +1,154 @@
+name: Custom UI daily update
+
+on:
+  schedule:
+    # 03:17 UTC = 09:17 Asia/Omsk. Avoid the busy start of the hour.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      force_build:
+        description: Recheck the current commit even if a release already exists
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: custom-ui-maintenance
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'maxximben/codex'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+    outputs:
+      build: ${{ steps.prepare.outputs.build }}
+      base_sha: ${{ steps.prepare.outputs.base_sha }}
+      candidate_sha: ${{ steps.prepare.outputs.candidate_sha }}
+      pr_number: ${{ steps.prepare.outputs.pr_number }}
+      upstream_tag: ${{ steps.prepare.outputs.upstream_tag }}
+      upstream_sha: ${{ steps.prepare.outputs.upstream_sha }}
+      package_version: ${{ steps.prepare.outputs.package_version }}
+      release_tag: ${{ steps.prepare.outputs.release_tag }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: custom-ui
+          fetch-depth: 0
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: "22"
+      - name: Test update safeguards
+        run: node --test .github/scripts/custom-ui-automation.test.mjs
+      - name: Find stable upstream release and prepare update PR
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE_BUILD: ${{ inputs.force_build || false }}
+        run: node .github/scripts/custom-ui-automation.mjs prepare
+
+  windows:
+    needs: prepare
+    if: needs.prepare.outputs.build == 'true'
+    runs-on: windows-2022
+    timeout-minutes: 240
+    env:
+      CARGO_HOME: C:\c
+      CARGO_TARGET_DIR: C:\t
+      CARGO_NET_GIT_FETCH_WITH_CLI: "true"
+      CARGO_BUILD_JOBS: "2"
+      CARGO_PROFILE_RELEASE_DEBUG: "0"
+      CARGO_PROFILE_RELEASE_LTO: "false"
+      CARGO_PROFILE_RELEASE_CODEGEN_UNITS: "16"
+      RUST_MIN_STACK: "8388608"
+      FORCE_COLOR: "0"
+      CODEX_REPO_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ needs.prepare.outputs.candidate_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: "22"
+      - name: Configure Git and install repository Rust toolchain
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git config --global core.longpaths true
+          if ($LASTEXITCODE) { throw 'Could not enable long paths' }
+          $toolchain = (Select-String -Path codex-rs/rust-toolchain.toml -Pattern '^channel\s*=\s*"([^"]+)"').Matches.Groups[1].Value
+          if (-not $toolchain) { throw 'No Rust toolchain channel found' }
+          rustup toolchain install $toolchain --profile minimal --component rustfmt,clippy,rust-src
+          if ($LASTEXITCODE) { throw 'Rust toolchain installation failed' }
+      - uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: |
+            C:\c\registry
+            C:\c\git
+          key: custom-ui-cargo-windows-${{ hashFiles('codex-rs/Cargo.lock') }}
+          restore-keys: custom-ui-cargo-windows-
+      - uses: ./.github/actions/setup-msvc-env
+        with:
+          target: x86_64-pc-windows-msvc
+      - uses: ./.github/actions/setup-rusty-v8
+        with:
+          target: x86_64-pc-windows-msvc
+      - name: Validate customizations and build Windows distribution
+        shell: pwsh
+        env:
+          CANDIDATE_SHA: ${{ needs.prepare.outputs.candidate_sha }}
+          PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          UPSTREAM_TAG: ${{ needs.prepare.outputs.upstream_tag }}
+        run: ./scripts/custom-ui/build-windows.ps1
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: custom-ui-windows
+          path: out/release/*
+          if-no-files-found: error
+          retention-days: 14
+
+  finalize:
+    needs: [prepare, windows]
+    if: always() && needs.prepare.result == 'success' && needs.prepare.outputs.build == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+      actions: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ needs.prepare.outputs.base_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: "22"
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        if: needs.windows.result == 'success'
+        with:
+          name: custom-ui-windows
+          path: out/release
+      - name: Accept tested update and publish Windows release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_RESULT: ${{ needs.windows.result }}
+          BASE_SHA: ${{ needs.prepare.outputs.base_sha }}
+          CANDIDATE_SHA: ${{ needs.prepare.outputs.candidate_sha }}
+          PR_NUMBER: ${{ needs.prepare.outputs.pr_number }}
+          PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
+          RELEASE_TAG: ${{ needs.prepare.outputs.release_tag }}
+          UPSTREAM_TAG: ${{ needs.prepare.outputs.upstream_tag }}
+        run: node .github/scripts/custom-ui-automation.mjs finalize

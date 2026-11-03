@@ -1,6 +1,7 @@
 # Configuration
 
 For session header customization in this fork, see [Custom session headers](custom-headers.md).
+For daily upstream synchronization and Windows builds, see [Automatic fork updates](custom-ui-updates.md).
 
 For submitted message colors and text formatting, see [User message text](user-message-style.md).
 
