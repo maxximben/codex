@@ -1,9 +1,9 @@
-name: Custom UI daily update
+name: Custom UI weekly update
 
 on:
   schedule:
-    # 03:17 UTC = 09:17 Asia/Omsk. Avoid the busy start of the hour.
-    - cron: "17 3 * * *"
+    # Mondays at 03:17 UTC = 09:17 Asia/Omsk. Avoid the busy start of the hour.
+    - cron: "17 3 * * 1"
   workflow_dispatch:
     inputs:
       force_build:

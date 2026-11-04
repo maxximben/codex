@@ -184,7 +184,7 @@ test("merge includes upstream source, preserves customizations and freezes all w
   f.run(["switch", "-c", "custom-ui", f.ancestor]);
   f.write("custom.txt", "custom UI stays\n");
   f.write(".github/workflows/upstream.yml", "fork workflow\n");
-  f.write(".github/workflows/custom-ui-update.yml", "daily updater\n");
+  f.write(".github/workflows/custom-ui-update.yml", "weekly updater\n");
   f.run(["add", "."]);
   f.run(["commit", "-m", "custom UI"]);
   const base = f.run(["rev-parse", "HEAD"]);

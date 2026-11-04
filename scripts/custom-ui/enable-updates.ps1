@@ -41,5 +41,5 @@ Invoke-GitHubApi -Arguments @('--method', 'POST', "repos/$repository/actions/wor
 
 $verified = Invoke-GitHubApi -Arguments @("repos/$repository/actions/workflows/custom-ui-update.yml") | ConvertFrom-Json
 if ($verified.state -ne 'active') { throw 'The custom UI workflow is not active' }
-Write-Host 'Daily checks are enabled: 03:17 UTC / 09:17 Asia/Omsk.'
+Write-Host 'Weekly checks are enabled: Mondays at 03:17 UTC / 09:17 Asia/Omsk.'
 Write-Host "First run requested: https://github.com/$repository/actions/workflows/custom-ui-update.yml"

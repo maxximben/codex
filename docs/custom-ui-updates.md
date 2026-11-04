@@ -30,13 +30,13 @@ Alternatively, activate through GitHub's website:
    required permissions per job.
 3. [Actions](https://github.com/maxximben/codex/actions): enable workflows if GitHub
    asks for confirmation on this fork. Disable inherited OpenAI workflows, enable
-   **Custom UI daily update**, then select **Run workflow**, branch `custom-ui`.
+   **Custom UI weekly update**, then select **Run workflow**, branch `custom-ui`.
 
-## Daily maintenance
+## Weekly maintenance
 
-[Custom UI daily update](https://github.com/maxximben/codex/actions/workflows/custom-ui-update.yml)
-runs every 24 hours at **03:17 UTC / 09:17 Asia/Omsk**. GitHub can delay scheduled
-runs. A new release is normally picked up within the next daily check.
+[Custom UI weekly update](https://github.com/maxximben/codex/actions/workflows/custom-ui-update.yml)
+runs every Monday at **03:17 UTC / 09:17 Asia/Omsk**. GitHub can delay scheduled
+runs. A new release is normally picked up within the next weekly check.
 
 The workflow checks the latest stable `rust-vX.Y.Z` release of `openai/codex`.
 Prereleases are excluded. When the release commit is not already included in
@@ -102,5 +102,5 @@ allow GitHub Actions to create pull requests in the repository Actions settings.
 No personal access token or external scheduling service is required.
 
 Activation disables inherited OpenAI workflows. Fork maintenance runs its own tests
-in the daily workflow; it does not rely on PR/push events emitted by
+in the weekly workflow; it does not rely on PR/push events emitted by
 `GITHUB_TOKEN` to launch another workflow.

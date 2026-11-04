@@ -125,7 +125,7 @@ export async function prepare() {
   const settings = await api(`/repos/${repo()}`);
   if (settings.default_branch !== branch)
     throw new Error(
-      "Set custom-ui as the default branch to activate daily maintenance; see docs/custom-ui-updates.md",
+      "Set custom-ui as the default branch to activate weekly maintenance; see docs/custom-ui-updates.md",
     );
   const upstream = await api("/repos/openai/codex/releases/latest");
   const version = stableVersion(upstream.tag_name);
@@ -181,7 +181,7 @@ export async function prepare() {
           title: `Update custom-ui to Codex ${version}`,
           base: branch,
           head: candidateBranch,
-          body: `Updates from [${upstream.tag_name}](${upstream.html_url}).\n\nThe daily maintenance workflow tests custom headers, transparent backgrounds and sent-message styling, verifies the config schema and builds the Windows package before fast-forwarding custom-ui to this exact commit.\n\nFork-owned .github/workflows files are preserved. Other source conflicts require manual resolution.\n\n[Build and update run](${runUrl()}).`,
+          body: `Updates from [${upstream.tag_name}](${upstream.html_url}).\n\nThe weekly maintenance workflow tests custom headers, transparent backgrounds and sent-message styling, verifies the config schema and builds the Windows package before fast-forwarding custom-ui to this exact commit.\n\nFork-owned .github/workflows files are preserved. Other source conflicts require manual resolution.\n\n[Build and update run](${runUrl()}).`,
         },
       });
     prNumber = pr.number;
