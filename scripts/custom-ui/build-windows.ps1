@@ -23,7 +23,12 @@ try {
             @('codex-tui', 'history_cell::session'),
             @('codex-tui', 'configured_user_message_text_style'),
             @('codex-tui', 'prompt_style_tests'),
-            @('codex-tui', 'local_load_preserves_defaults')
+            @('codex-tui', 'local_load_preserves_defaults'),
+            @('codex-tui', 'transparent_'),
+            @('codex-tui', 'bottom_pane::selection_tabs::tests'),
+            @('codex-tui', 'config_panel::tests'),
+            @('codex-tui', 'transcript_view::follow_control::tests'),
+            @('codex-tui', 'bottom_pane::chat_composer::sparkle::tests')
         )
         foreach ($check in $checks) {
             & cargo test --locked --profile ci-test --target $target -p $check[0] --lib $check[1] 2>&1 |
@@ -55,6 +60,7 @@ if ($LASTEXITCODE) { throw 'Windows package build failed' }
 Copy-Item -LiteralPath docs/header-examples -Destination (Join-Path $packageDir 'headers') -Recurse
 Copy-Item -LiteralPath docs/custom-headers.md -Destination (Join-Path $packageDir 'CUSTOM-HEADERS.md')
 Copy-Item -LiteralPath docs/custom-ui-updates.md -Destination (Join-Path $packageDir 'UPDATES.md')
+Copy-Item -LiteralPath docs/transparent-ui.md -Destination (Join-Path $packageDir 'APPEARANCE.md')
 Copy-Item -LiteralPath codex-rs/Cargo.lock -Destination (Join-Path $packageDir 'Cargo.lock')
 @'
 Codex Custom UI for Windows x86_64
@@ -68,7 +74,8 @@ For a ready-made header, copy headers into %USERPROFILE%\.codex\headers and add:
 [tui.header]
 file = "headers/codex-cool.ansi"
 
-See CUSTOM-HEADERS.md for all header options and UPDATES.md for updates.
+See CUSTOM-HEADERS.md for header options, APPEARANCE.md for the transparent UI,
+and UPDATES.md for updates.
 '@ | Set-Content -LiteralPath (Join-Path $packageDir 'README.txt') -Encoding utf8
 $executable = Join-Path $packageDir 'bin/codex.exe'
 & $executable --version

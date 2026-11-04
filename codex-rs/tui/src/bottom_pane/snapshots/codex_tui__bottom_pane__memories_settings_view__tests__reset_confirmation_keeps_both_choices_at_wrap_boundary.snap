@@ -3,7 +3,7 @@ source: tui/src/bottom_pane/memories_settings_view_tests.rs
 expression: "snapshots.join(\"\\n\\n\")"
 ---
 width=68
-
+────────────────────────────────────────────────────────────────────
   Reset all memories?
   This clears local memory files and rollout summaries for the
   current Codex home.
@@ -14,11 +14,11 @@ width=68
   Go back             Return to memory settings
 
 
-
+────────────────────────────────────────────────────────────────────
   enter select · esc back
 
 width=69
-
+─────────────────────────────────────────────────────────────────────
   Reset all memories?
   This clears local memory files and rollout summaries for the
   current Codex home.
@@ -28,11 +28,11 @@ width=69
   Go back             Return to memory settings
 
 
-
+─────────────────────────────────────────────────────────────────────
   enter select · esc back
 
 width=70
-
+──────────────────────────────────────────────────────────────────────
   Reset all memories?
   This clears local memory files and rollout summaries for the
   current Codex home.
@@ -42,11 +42,11 @@ width=70
   Go back             Return to memory settings
 
 
-
+──────────────────────────────────────────────────────────────────────
   enter select · esc back
 
 width=71
-
+───────────────────────────────────────────────────────────────────────
   Reset all memories?
   This clears local memory files and rollout summaries for the
   current Codex home.
@@ -56,11 +56,11 @@ width=71
   Go back             Return to memory settings
 
 
-
+───────────────────────────────────────────────────────────────────────
   enter select · esc back
 
 width=72
-
+────────────────────────────────────────────────────────────────────────
   Reset all memories?
   This clears local memory files and rollout summaries for the current
   Codex home.
@@ -70,5 +70,5 @@ width=72
   Go back             Return to memory settings
 
 
-
+────────────────────────────────────────────────────────────────────────
   enter select · esc back

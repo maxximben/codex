@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/request_user_input/mod.rs
 expression: visible
 ---
-
+────────────────────────────────────────
   Question 1/1 (1 unanswered)
   Review the release
 
@@ -19,3 +19,4 @@ expression: visible
 
   enter to submit answer
   esc to interrupt
+────────────────────────────────────────

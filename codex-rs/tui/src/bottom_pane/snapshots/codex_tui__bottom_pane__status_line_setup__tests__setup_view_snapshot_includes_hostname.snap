@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/status_line_setup.rs
 expression: "render_lines(&view,\n100).lines().map(str::trim_end).collect::<Vec<_>>().join(\"\\n\")"
 ---
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Configure Status Line
   Select which items to display in the status line.
 
@@ -16,6 +16,6 @@ expression: "render_lines(&view,\n100).lines().map(str::trim_end).collect::<Vec<
   [ ] model-with-reasoning  Current model name with reasoning level
   [ ] reasoning             Current reasoning level
   [ ] project-name          Project name (omitted when unavailable)
-↓
+↓───────────────────────────────────────────────────────────────────────────────────────────────────
   ssh-build-01.example.com · ~/codex-rs
   space toggle · ←/→ reorder · enter save · esc cancel

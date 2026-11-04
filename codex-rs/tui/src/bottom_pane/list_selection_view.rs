@@ -1764,7 +1764,7 @@ impl Renderable for ListSelectionView {
             if self.on_demand_search_active() {
                 let label = "Search › ";
                 buf.set_style(search_area, crate::bottom_pane::active_tab_style());
-                Line::from(vec![label.cyan().bold(), query_span]).render(search_area, buf);
+                Line::from(vec![label.bold(), query_span]).render(search_area, buf);
                 let cursor_offset = (label.width() + self.search_query.width())
                     .min(usize::from(search_area.width.saturating_sub(/*rhs*/ 1)));
                 self.search_cursor.set(Some((
@@ -1905,6 +1905,9 @@ impl Renderable for ListSelectionView {
                 };
                 Paragraph::new(hint_lines).dim().render(hint_area, buf);
             }
+        }
+        if self.picker_surface == PickerSurface::Panel {
+            super::selection_popup_common::render_menu_rules(outer_content_area, buf);
         }
     }
 }

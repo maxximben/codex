@@ -1,9 +1,8 @@
 ---
 source: tui/src/bottom_pane/selection_picker_tests.rs
-assertion_line: 79
 expression: text
 ---
-
+────────────────────────────────────────────────────────────
   Keymap
   All configurable shortcuts.
 
@@ -19,5 +18,5 @@ expression: text
   Action 06  Ctrl+6
   Action 07  Ctrl+7
 › Action 08  Ctrl+8
-↓
+↓───────────────────────────────────────────────────────────
   left/right group · enter edit · esc close

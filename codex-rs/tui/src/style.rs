@@ -93,6 +93,28 @@ pub(crate) fn history_prompt_style() -> Style {
     composer_style()
 }
 
+/// Lavender rules separate transparent panels without painting a rectangular backdrop.
+pub(crate) fn menu_rule_style() -> Style {
+    let color = if default_bg().is_some_and(is_light) {
+        (91, 75, 160)
+    } else {
+        (184, 180, 250)
+    };
+    Style::reset().fg(best_color(color))
+}
+
+/// Compact filled labels are the only opaque chrome on otherwise transparent panels.
+pub(crate) fn active_control_style() -> Style {
+    let fill = best_color((184, 180, 250));
+    let base = Style::default().bold().not_dim().not_underlined();
+    if fill == Color::Reset {
+        return base.fg(Color::Reset).bg(Color::Reset).reversed();
+    }
+    base.fg(readable_color_on(Color::Black, Some(fill)))
+        .bg(fill)
+        .not_reversed()
+}
+
 pub fn proposed_plan_style() -> Style {
     proposed_plan_style_for(default_bg())
 }
@@ -171,17 +193,12 @@ pub(crate) fn secondary_text_style() -> Style {
         .not_bold()
 }
 
-/// Bring a focusable surface closer to the terminal background while keeping its text readable.
+/// De-emphasize a focusable surface through its foreground, preserving terminal transparency.
 pub(crate) fn quiet_workspace_style() -> Style {
-    let base = Style::default().not_bold().not_reversed().not_underlined();
-    let Some(bg) = default_bg() else {
-        return base.fg(Color::Reset).bg(Color::Reset).dim();
-    };
-    let fill = best_color(blend(user_message_bg_rgb(bg), bg, /*alpha*/ 0.40));
-    let foreground = default_fg().map_or(Color::Reset, |fg| {
-        best_color(blend(fg, bg, /*alpha*/ 0.66))
-    });
-    base.bg(fill).fg(readable_color_on(foreground, Some(fill)))
+    secondary_text_style()
+        .bg(Color::Reset)
+        .not_reversed()
+        .not_underlined()
 }
 
 pub(crate) fn selection_style() -> Style {
@@ -237,19 +254,13 @@ pub(crate) fn footer_hint_label_style() -> Style {
     secondary_text_style()
 }
 
-/// Returns the style for a user-authored message using the provided terminal background.
-pub fn user_message_style_for(terminal_bg: Option<(u8, u8, u8)>) -> Style {
-    match terminal_bg {
-        Some(bg) => Style::default().bg(user_message_bg(bg)),
-        None => Style::default(),
-    }
+/// Shared cards and menu bodies preserve the terminal's transparent background.
+pub fn user_message_style_for(_terminal_bg: Option<(u8, u8, u8)>) -> Style {
+    composer_style()
 }
 
-pub fn proposed_plan_style_for(terminal_bg: Option<(u8, u8, u8)>) -> Style {
-    match terminal_bg {
-        Some(bg) => Style::default().bg(proposed_plan_bg(bg)),
-        None => Style::default(),
-    }
+pub fn proposed_plan_style_for(_terminal_bg: Option<(u8, u8, u8)>) -> Style {
+    composer_style()
 }
 
 /// Returns the shared accent style for the provided terminal background.
@@ -282,11 +293,6 @@ fn table_separator_style_for(
     }
 }
 
-#[allow(clippy::disallowed_methods)]
-pub fn user_message_bg(terminal_bg: (u8, u8, u8)) -> Color {
-    best_color(user_message_bg_rgb(terminal_bg))
-}
-
 pub(crate) fn user_message_bg_rgb(terminal_bg: (u8, u8, u8)) -> (u8, u8, u8) {
     let (top, alpha) = if is_light(terminal_bg) {
         ((0, 0, 0), 0.04)
@@ -296,15 +302,34 @@ pub(crate) fn user_message_bg_rgb(terminal_bg: (u8, u8, u8)) -> (u8, u8, u8) {
     blend(top, terminal_bg, alpha)
 }
 
-#[allow(clippy::disallowed_methods)]
-pub fn proposed_plan_bg(terminal_bg: (u8, u8, u8)) -> Color {
-    user_message_bg(terminal_bg)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use pretty_assertions::assert_eq;
+
+    #[test]
+    fn transparent_panels_and_plans_preserve_the_terminal_background() {
+        for background in [None, Some((16, 16, 16)), Some((255, 255, 255))] {
+            assert_eq!(user_message_style_for(background).bg, Some(Color::Reset));
+            assert_eq!(proposed_plan_style_for(background).bg, Some(Color::Reset));
+        }
+        for (fg, bg) in [
+            ((240, 240, 240), (16, 16, 16)),
+            ((20, 20, 20), (255, 255, 255)),
+        ] {
+            crate::terminal_palette::with_test_default_colors(
+                crate::terminal_probe::DefaultColors { fg, bg },
+                || {
+                    assert_eq!(quiet_workspace_style().bg, Some(Color::Reset));
+                    assert_eq!(menu_rule_style().bg, Some(Color::Reset));
+                    let active = active_control_style();
+                    assert_eq!(active.bg, Some(rgb_color((184, 180, 250))));
+                    assert_eq!(active.fg, Some(Color::Black));
+                    assert!(active.add_modifier.contains(Modifier::BOLD));
+                },
+            );
+        }
+    }
 
     #[test]
     fn status_colors_preserve_light_terminal_themes() {

@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/request_user_input/mod.rs
 expression: "render_snapshot(&overlay, area)"
 ---
-                                                                                                                        
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Question 1/1 (1 unanswered)                                                                                           
   Share details.                                                                                                        
                                                                                                                         
@@ -10,4 +10,5 @@ expression: "render_snapshot(&overlay, area)"
                                                                                                                         
                                                                                                                         
                                                                                                                         
-  enter to submit answer | esc to interrupt
+  enter to submit answer | esc to interrupt                                                                             
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

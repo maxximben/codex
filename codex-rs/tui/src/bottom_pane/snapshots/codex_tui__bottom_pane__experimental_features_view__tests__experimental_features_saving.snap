@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/experimental_features_view_tests.rs
 expression: buffer_text(&buffer)
 ---
-
+────────────────────────────────────────────────────────────────────────────────
   Experimental features
   Checked features are configured on. Some experimental features take effect
   only in new tasks or after restarting the Codex server.
@@ -13,5 +13,5 @@ expression: buffer_text(&buffer)
   [ ] Server future_feature      Description supplied by the server.
   [ ] Server prevent_idle_sleep  Description supplied by the server.
 
-
+────────────────────────────────────────────────────────────────────────────────
   Saving… Closing this popup will not cancel the write.

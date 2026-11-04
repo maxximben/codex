@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/hooks_browser_render_tests.rs
 expression: "render_lines(&view, 44)"
 ---
-                                            
+────────────────────────────────────────────
   PreToolUse hooks                          
   Turn hooks on or off. Your changes are    
   saved automatically.                      
@@ -19,5 +19,5 @@ expression: "render_lines(&view, 44)"
   Timeout   30s                             
   Trust     Trusted                         
                                             
-                                            
+────────────────────────────────────────────
   space/enter toggle · esc back

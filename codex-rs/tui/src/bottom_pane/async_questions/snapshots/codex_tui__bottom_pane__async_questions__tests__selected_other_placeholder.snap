@@ -1,9 +1,8 @@
 ---
 source: tui/src/bottom_pane/async_questions/state_tests.rs
-assertion_line: 253
 expression: buffer_text(&buffer)
 ---
-
+──────────────────────────────────────────────────
   Long question Long question Long question Long
   question Long question Long question Long
   question Long question Long question Long
@@ -12,3 +11,4 @@ expression: buffer_text(&buffer)
   question Long question Long question Long
   question Long question Long question Long
   › 2. Other
+──────────────────────────────────────────────────

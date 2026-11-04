@@ -875,6 +875,7 @@ impl crate::render::renderable::Renderable for AppLinkView {
             .render(inner, buf);
         crate::terminal_hyperlinks::mark_url_hyperlink(buf, inner, &self.url);
 
+        super::selection_popup_common::render_menu_rules(content_area, buf);
         if actions_area.height > 0 {
             let action_rows = self.action_rows();
             let action_state = self.action_state();

@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/experimental_features_view_tests.rs
 expression: buffer_text(&buffer)
 ---
-
+────────────────────────────────────────────────────────────────────────────────
   Experimental features
   Checked features are configured on. Some experimental features take effect
   only in new tasks or after restarting the Codex server.
@@ -12,5 +12,5 @@ expression: buffer_text(&buffer)
 
   No experimental features available for now
 
-
+────────────────────────────────────────────────────────────────────────────────
   space toggle · enter save · esc save/close

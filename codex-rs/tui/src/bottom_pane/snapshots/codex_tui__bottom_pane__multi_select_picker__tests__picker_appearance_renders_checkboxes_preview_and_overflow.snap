@@ -6,7 +6,7 @@ First page:
 Buffer {
     area: Rect { x: 0, y: 0, width: 48, height: 17 },
     content: [
-        "                                                ",
+        "────────────────────────────────────────────────",
         "  Status line                                   ",
         "                                                ",
         "  Type to search                                ",
@@ -19,7 +19,7 @@ Buffer {
         "  [ ] Field 4              Status detail        ",
         "  [ ] Field 5              Status detail        ",
         "  [ ] Field 6              Status detail        ",
-        "↓                                               ",
+        "↓───────────────────────────────────────────────",
         "  Field 0                                       ",
         "  space toggle · ←/→ reorder · enter save · esc ",
         "  cancel                                        ",
@@ -63,7 +63,7 @@ Last page:
 Buffer {
     area: Rect { x: 0, y: 0, width: 48, height: 17 },
     content: [
-        "                                                ",
+        "────────────────────────────────────────────────",
         "  Status line                                   ",
         "                                                ",
         "  Type to search                                ",
@@ -76,7 +76,7 @@ Buffer {
         "  [ ] Field 9   Status detail                   ",
         "› [x] Field 11  Status detail                   ",
         "  [ ] Field 10  Status detail                   ",
-        "                                                ",
+        "────────────────────────────────────────────────",
         "  Field 0 · Field 11                            ",
         "  space toggle · ←/→ reorder · enter save · esc ",
         "  cancel                                        ",
@@ -121,13 +121,13 @@ No matches:
 Buffer {
     area: Rect { x: 0, y: 0, width: 48, height: 10 },
     content: [
-        "                                                ",
+        "────────────────────────────────────────────────",
         "  Status line                                   ",
         "                                                ",
         "  z                                             ",
         "                                                ",
         "no matches                                      ",
-        "                                                ",
+        "────────────────────────────────────────────────",
         "  Field 0 · Field 11                            ",
         "  space toggle · ←/→ reorder · enter save · esc ",
         "  cancel                                        ",

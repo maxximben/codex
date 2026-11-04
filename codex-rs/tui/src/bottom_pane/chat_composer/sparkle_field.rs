@@ -1,7 +1,8 @@
 //! Paint the deterministic Astra starfield without owning its eligibility, timer, or redraws.
 //!
-//! Only blank, unstyled true-color cells outside protected content and the terminal cursor can be
-//! decorated. The caller supplies elapsed time and visibility to preserve the original appearance.
+//! Only blank, unstyled cells outside protected content and the terminal cursor can be decorated.
+//! Transparent cells sample the terminal background for foreground blending without painting a fill.
+//! The caller supplies elapsed time and visibility to preserve the original appearance.
 
 use std::time::Duration;
 
@@ -13,6 +14,7 @@ use ratatui::style::Color;
 use unicode_width::UnicodeWidthStr;
 
 use crate::color::blend;
+use crate::terminal_palette::default_bg;
 use crate::terminal_palette::rgb_color;
 
 pub(super) const DOTS: [&str; 8] = ["⠁", "⠂", "⠄", "⠈", "⠐", "⠠", "⡀", "⢀"];
@@ -27,6 +29,7 @@ pub(super) fn render_stars(
     buf: &mut Buffer,
 ) {
     let time = elapsed.as_secs_f32();
+    let terminal_background = default_bg();
     for y in area.y..area.bottom() {
         let mut occupied_until = area.x;
         for x in area.x..area.right() {
@@ -45,7 +48,11 @@ pub(super) fn render_stars(
             {
                 continue;
             }
-            let Color::Rgb(r, g, b) = cell.bg else {
+            let Some((r, g, b)) = (match cell.bg {
+                Color::Rgb(r, g, b) => Some((r, g, b)),
+                Color::Reset => terminal_background,
+                _ => None,
+            }) else {
                 continue;
             };
             let mut hash = u64::from(y - area.y) * 65537 + u64::from(x - area.x);

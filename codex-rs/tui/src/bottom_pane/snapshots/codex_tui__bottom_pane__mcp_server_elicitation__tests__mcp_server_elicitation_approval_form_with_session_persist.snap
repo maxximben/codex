@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/mcp_server_elicitation.rs
 expression: "render_snapshot(&overlay, Rect::new(0, 0, 120, 16))"
 ---
-                                                                                                                        
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Field 1/1                                                                                                             
   Allow this request?                                                                                                   
   › 1. Allow                   Run the tool and continue                                                                
@@ -16,4 +16,5 @@ expression: "render_snapshot(&overlay, Rect::new(0, 0, 120, 16))"
                                                                                                                         
                                                                                                                         
                                                                                                                         
-  enter to submit | esc to cancel
+  enter to submit | esc to cancel                                                                                       
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

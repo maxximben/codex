@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/hooks_browser_view.rs
 expression: "render_lines(&view, 112)"
 ---
-                                                                                                                
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Hooks                                                                                                         
   Lifecycle hooks from config and enabled plugins.                                                              
                                                                                                                 
@@ -17,5 +17,5 @@ expression: "render_lines(&view, 112)"
   PreModelRequest       0           0           Before a model request                                          
 › PostModelRequest      0           0           After a model request, including failures                       
                                                                                                                 
-                                                                                                                
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   enter details · esc close

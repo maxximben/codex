@@ -1,6 +1,5 @@
 ---
 source: tui/src/transcript_view/follow_control_tests.rs
-assertion_line: 212
 expression: "snapshots.join(\"\\n\\n\")"
 ---
 paused
@@ -14,24 +13,12 @@ Buffer {
     ],
     styles: [
         x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+        x: 28, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: BOLD | REVERSED,
+        x: 52, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
     ]
 }
 
 activity at 80
-Buffer {
-    area: Rect { x: 0, y: 0, width: 80, height: 4 },
-    content: [
-        "one                                                                             ",
-        "two                                                                             ",
-        "three                                                                           ",
-        "                     New activity · ↓ Back to bottom · esc                      ",
-    ],
-    styles: [
-        x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
-    ]
-}
-
-hover
 Buffer {
     area: Rect { x: 0, y: 0, width: 80, height: 4 },
     content: [
@@ -47,6 +34,22 @@ Buffer {
     ]
 }
 
+hover
+Buffer {
+    area: Rect { x: 0, y: 0, width: 80, height: 4 },
+    content: [
+        "one                                                                             ",
+        "two                                                                             ",
+        "three                                                                           ",
+        "                     New activity · ↓ Back to bottom · esc                      ",
+    ],
+    styles: [
+        x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+        x: 20, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: BOLD | UNDERLINED | REVERSED,
+        x: 59, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+    ]
+}
+
 activity at 20
 Buffer {
     area: Rect { x: 0, y: 0, width: 20, height: 4 },
@@ -58,5 +61,7 @@ Buffer {
     ],
     styles: [
         x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+        x: 2, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: BOLD | REVERSED,
+        x: 18, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
     ]
 }

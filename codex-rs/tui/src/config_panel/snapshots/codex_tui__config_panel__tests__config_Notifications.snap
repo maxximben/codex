@@ -2,7 +2,7 @@
 source: tui/src/config_panel/config_panel_tests.rs
 expression: "render(&panel, 140)"
 ---
-
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Configuration
   Changes save automatically
 
@@ -14,5 +14,5 @@ expression: "render(&panel, 140)"
 
 
 
-
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   left/right group · / search · enter toggle · esc clear search/close

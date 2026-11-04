@@ -7,7 +7,7 @@ use ratatui::style::Style;
 use ratatui::style::Stylize;
 use ratatui::text::Line;
 use ratatui::text::Span;
-use ratatui::widgets::Block;
+use ratatui::widgets::Clear;
 use ratatui::widgets::Widget;
 
 use crate::key_hint::ShortcutHint;
@@ -16,7 +16,6 @@ use crate::line_truncation::truncate_line_with_ellipsis_if_overflow;
 use crate::render::Insets;
 use crate::render::RectExt as _;
 use crate::style::accent_style;
-use crate::style::user_message_style;
 
 use super::scroll_state::ScrollState;
 use super::selection_row_layout::SelectionDescriptionLayout;
@@ -106,7 +105,7 @@ pub(crate) const fn menu_surface_padding_height() -> u16 {
     MENU_SURFACE_INSET_V * 2
 }
 
-/// Paint the shared menu background and return the inset content area.
+/// Clear the menu to the terminal background, draw its rules, and return the content area.
 ///
 /// This keeps the surface treatment consistent across selection-style overlays
 /// (for example `/model`, approvals, and request-user-input). Callers should
@@ -115,10 +114,33 @@ pub(crate) fn render_menu_surface(area: Rect, buf: &mut Buffer) -> Rect {
     if area.is_empty() {
         return area;
     }
-    Block::default()
-        .style(user_message_style())
-        .render(area, buf);
+    Clear.render(area, buf);
+    render_menu_rules(area, buf);
     menu_surface_inset(area)
+}
+
+/// Use existing spacer rows for rules; leave very short menus free to show their controls.
+pub(crate) fn render_menu_rules(area: Rect, buf: &mut Buffer) {
+    if area.width == 0 || area.height < 3 {
+        return;
+    }
+    let rule_style = crate::style::menu_rule_style();
+    for y in [area.y, area.bottom() - 1] {
+        let available = (area.x..area.right()).all(|x| {
+            let cell = &buf[(x, y)];
+            (cell.symbol().trim().is_empty() || matches!(cell.symbol(), "↑" | "↓"))
+                && cell.bg == ratatui::style::Color::Reset
+                && !cell.modifier.contains(Modifier::REVERSED)
+        });
+        if available {
+            for x in area.x..area.right() {
+                let cell = &mut buf[(x, y)];
+                if !matches!(cell.symbol(), "↑" | "↓") {
+                    cell.set_symbol("─").set_style(rule_style);
+                }
+            }
+        }
+    }
 }
 
 /// Wrap a styled line while preserving span styles.
@@ -738,6 +760,43 @@ mod tests {
     use ratatui::layout::Rect;
     use ratatui::style::Color;
     use ratatui::style::Modifier;
+
+    #[test]
+    fn transparent_menu_surface_clears_old_fills_and_draws_only_horizontal_rules() {
+        let area = Rect::new(2, 1, 12, 5);
+        let mut buf = Buffer::empty(Rect::new(0, 0, 16, 8));
+        buf.set_style(buf.area, Style::default().bg(Color::DarkGray).reversed());
+        let content = render_menu_surface(area, &mut buf);
+        assert_eq!(content, Rect::new(4, 2, 8, 3));
+        for y in area.y..area.bottom() {
+            for x in area.x..area.right() {
+                let cell = &buf[(x, y)];
+                assert_eq!(cell.bg, Color::Reset);
+                assert!(!cell.modifier.contains(Modifier::REVERSED));
+                assert_eq!(
+                    cell.symbol(),
+                    if y == area.y || y == area.bottom() - 1 {
+                        "─"
+                    } else {
+                        " "
+                    }
+                );
+            }
+        }
+        assert_eq!(buf[(1, 1)].bg, Color::DarkGray);
+        let short = Rect::new(0, 0, 12, 3);
+        let mut buf = Buffer::empty(short);
+        buf.set_string(0, 2, "Last option", Style::default());
+        render_menu_rules(short, &mut buf);
+        assert_eq!(buf[(11, 2)].symbol(), " ");
+        assert_eq!(buf[(0, 2)].symbol(), "L");
+        for height in 0..3 {
+            let tiny = Rect::new(0, 0, 1, height);
+            let mut buf = Buffer::empty(tiny);
+            render_menu_rules(tiny, &mut buf);
+            assert_eq!(buf, Buffer::empty(tiny));
+        }
+    }
 
     #[test]
     fn narrow_description_columns_hide_without_stacking() {

@@ -10,13 +10,9 @@ use ratatui::text::Line;
 use ratatui::widgets::Widget;
 
 use super::selection_popup_common::RenderedRows;
-use crate::color::is_light;
 pub(crate) use crate::style::selection_style;
-use crate::terminal_palette::best_color;
-use crate::terminal_palette::default_bg;
-use ratatui::style::Color;
 
-/// The shared picker can blend into the transcript or form a shaded browser panel.
+/// The shared picker can blend into the transcript or form a ruled, transparent panel.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub(crate) enum PickerSurface {
     #[default]
@@ -25,29 +21,7 @@ pub(crate) enum PickerSurface {
 }
 
 pub(crate) fn active_tab_style() -> Style {
-    let fallback = Style::default()
-        .fg(Color::Reset)
-        .bg(Color::Reset)
-        .bold()
-        .not_dim()
-        .underlined();
-    let Some(background) = default_bg() else {
-        return fallback;
-    };
-    let fill = best_color(if is_light(background) {
-        (220, 220, 220)
-    } else {
-        (76, 76, 76)
-    });
-    if fill == Color::Reset {
-        return fallback;
-    }
-    Style::default()
-        .fg(crate::style::readable_color_on(Color::Reset, Some(fill)))
-        .bg(fill)
-        .bold()
-        .not_dim()
-        .not_underlined()
+    crate::style::active_control_style()
 }
 
 /// Draw overflow hints against the background already painted beneath each cell.

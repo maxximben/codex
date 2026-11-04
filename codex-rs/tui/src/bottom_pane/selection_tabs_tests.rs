@@ -66,7 +66,7 @@ fn filled_tabs_truncate_unicode_without_hiding_active_tab() {
 // Non-Windows tests have an unprobed default palette; Windows retains its console probe.
 #[cfg(not(windows))]
 #[test]
-fn filled_tab_unknown_palette_uses_readable_underlined_defaults() {
+fn filled_tab_unknown_palette_uses_readable_reversed_defaults() {
     let (_, buf) = rendered_strip(&["All"], /*active_idx*/ 0, /*width*/ 5);
     assert_eq!(
         buf.content()
@@ -77,7 +77,7 @@ fn filled_tab_unknown_palette_uses_readable_underlined_defaults() {
             (
                 Color::Reset,
                 Color::Reset,
-                Modifier::BOLD | Modifier::UNDERLINED
+                Modifier::BOLD | Modifier::REVERSED
             );
             5
         ],

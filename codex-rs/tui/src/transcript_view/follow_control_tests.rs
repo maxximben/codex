@@ -293,6 +293,31 @@ fn control_tracks_pause_activity_hover_resize_and_click() {
 }
 
 #[test]
+fn follow_control_uses_the_active_tab_label_style_and_underlines_on_hover() {
+    let cells = vec![cell("one\ntwo\nthree\nfour\nfive")];
+    let mut view = TranscriptView::default();
+    paint(&mut view, &cells, 60);
+    view.scroll(&cells, -2);
+    let buf = paint(&mut view, &cells, 60);
+    let target = view.follow_control.area.unwrap();
+    let active = crate::bottom_pane::active_tab_style();
+    let cell = &buf[(target.x, target.y)];
+    assert_eq!(cell.fg, active.fg.unwrap());
+    assert_eq!(cell.bg, active.bg.unwrap());
+    assert!(cell.modifier.contains(ratatui::style::Modifier::BOLD));
+    assert_eq!(
+        buf[(target.x - 1, target.y)].bg,
+        ratatui::style::Color::Reset
+    );
+    mouse(&mut view, &cells, MouseEventKind::Moved, target.x, target.y);
+    let buf = paint(&mut view, &cells, 60);
+    let cell = &buf[(target.x, target.y)];
+    assert_eq!(cell.fg, active.fg.unwrap());
+    assert_eq!(cell.bg, active.bg.unwrap());
+    assert!(cell.modifier.contains(ratatui::style::Modifier::UNDERLINED));
+}
+
+#[test]
 fn hidden_control_does_not_consume_clicks_and_drag_out_cancels() {
     let cells = vec![cell("one\ntwo\nthree\nfour")];
     let mut view = TranscriptView::default();

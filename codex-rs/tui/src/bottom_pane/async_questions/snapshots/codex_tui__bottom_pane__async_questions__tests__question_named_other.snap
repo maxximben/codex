@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/async_questions/state_tests.rs
 expression: buffer_text(&buffer)
 ---
-
+──────────────────────────────────────────────────
   2 of 2
   Second
 
@@ -10,3 +10,7 @@ expression: buffer_text(&buffer)
     2. Other (write an answer)
 
   enter submit   ⌃] skip   ⇧→ prev question
+
+
+
+──────────────────────────────────────────────────

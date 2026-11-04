@@ -93,6 +93,9 @@ impl CustomPromptView {
             );
         }
 
+        if areas.panel.height >= 4 {
+            crate::bottom_pane::selection_popup_common::render_menu_rules(areas.panel, buf);
+        }
         let cancel_label = if self.prefer_esc_to_handle_key_event() {
             " normal mode"
         } else {

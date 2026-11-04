@@ -616,6 +616,7 @@ impl Renderable for MultiSelectPicker {
             picker_style::render_scroll_indicators(list_area, buf, rendered);
         }
 
+        super::selection_popup_common::render_menu_rules(content_area, buf);
         let hint_area = if let Some(preview_line) = &self.preview_line {
             let [preview_area, hint_area] =
                 Layout::vertical([Constraint::Length(1), Constraint::Length(hint_height)])

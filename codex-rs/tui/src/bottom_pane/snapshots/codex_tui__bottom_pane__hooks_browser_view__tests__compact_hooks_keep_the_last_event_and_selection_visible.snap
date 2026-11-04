@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/hooks_browser_view.rs
 expression: text
 ---
-
+────────────────────────────────────────
   Hooks
   Lifecycle hooks from config and
   enabled plugins.
@@ -16,5 +16,5 @@ expression: text
   PreModelRequest     0/0
 › PostModelRequest    0/0
 
-
+────────────────────────────────────────
   enter details · esc close

@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/title_setup.rs
 expression: "render_lines(&view, 84)"
 ---
-                                                                                    
+────────────────────────────────────────────────────────────────────────────────────
   Configure Terminal Title                                                          
   Select which items to display in the terminal title.                              
                                                                                     
@@ -16,6 +16,6 @@ expression: "render_lines(&view, 84)"
   [ ] current-dir   Current working directory                                       
   [ ] thread-name   Current thread name (omitted when unnamed)                      
   [ ] git-branch    Current Git branch (omitted when unavailable)                   
-↓                                                                                   
+↓───────────────────────────────────────────────────────────────────────────────────
   [ ! ] Action Required | my-project | Working | thread title                       
   space toggle · ←/→ reorder · enter save · esc cancel

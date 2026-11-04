@@ -39,13 +39,8 @@ impl TranscriptView {
             .pointer
             .is_some_and(|point| target.contains(point));
         self.follow_control.area = Some(target);
-        let style =
-            crate::style::user_message_style().fg(crate::style::user_message_accent_color());
-        let style = if hovered {
-            style.reversed().bold()
-        } else {
-            style
-        };
+        let style = crate::style::active_control_style();
+        let style = if hovered { style.underlined() } else { style };
         Paragraph::new(label).style(style).render(target, buf);
     }
 

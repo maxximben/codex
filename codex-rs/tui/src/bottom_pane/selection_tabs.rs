@@ -6,6 +6,7 @@ use ratatui::buffer::Buffer;
 use ratatui::layout::Rect;
 use ratatui::style::Stylize;
 use ratatui::text::Line;
+use ratatui::widgets::Clear;
 use ratatui::widgets::Widget;
 
 use crate::line_truncation::truncate_line_with_ellipsis_if_overflow;
@@ -48,6 +49,7 @@ pub(crate) fn render_filled_tab_bar(
     if labels.is_empty() || area.is_empty() {
         return Vec::new();
     }
+    Clear.render(area, buf);
     let active_idx = active_idx.min(labels.len() - 1);
     let widths = labels
         .iter()
@@ -86,7 +88,7 @@ pub(crate) fn render_filled_tab_bar(
         let line = if idx == active_idx {
             line.style(active_tab_style())
         } else {
-            line.dim()
+            line.style(crate::style::composer_style()).not_dim()
         };
         let tab = Rect::new(x, area.y, width, /*height*/ 1);
         line.render(tab, buf);

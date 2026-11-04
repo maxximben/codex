@@ -2,7 +2,7 @@
 source: tui/src/config_panel/config_panel_tests.rs
 expression: "render(&picker, 100)"
 ---
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Right-click paste
   Paste when nothing is selected, with Auto following platform defaults and On also enabling macOS
 
@@ -10,5 +10,5 @@ expression: "render(&picker, 100)"
 › 1. Auto (default) (current)
   2. On
   3. Off
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

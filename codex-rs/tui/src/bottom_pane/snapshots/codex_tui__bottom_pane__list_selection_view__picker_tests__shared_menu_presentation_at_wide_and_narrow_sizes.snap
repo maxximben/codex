@@ -1,10 +1,9 @@
 ---
 source: tui/src/bottom_pane/selection_picker_tests.rs
-assertion_line: 103
 expression: "snapshots.join(\"\\n\\n\")"
 ---
 80x24
-
+────────────────────────────────────────────────────────────────────────────────
   Choose an option
   A menu with descriptions and disabled choices.
 
@@ -26,11 +25,11 @@ expression: "snapshots.join(\"\\n\\n\")"
 
 
 
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back
 
 40x16
-
+────────────────────────────────────────
   Choose an option
   A menu with descriptions and
   disabled choices.
@@ -44,5 +43,5 @@ expression: "snapshots.join(\"\\n\\n\")"
 
 
 
-
+────────────────────────────────────────
   enter select · esc back

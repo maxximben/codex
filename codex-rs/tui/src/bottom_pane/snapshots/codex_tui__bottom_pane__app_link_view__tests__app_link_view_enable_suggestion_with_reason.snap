@@ -2,7 +2,7 @@
 source: tui/src/bottom_pane/app_link_view.rs
 expression: "render_snapshot(&view, Rect::new(0, 0, 72, view.desired_height(72)))"
 ---
-
+────────────────────────────────────────────────────────────────────────
   Google Calendar
   Plan events and schedules.
 
@@ -13,7 +13,7 @@ expression: "render_snapshot(&view, Rect::new(0, 0, 72, view.desired_height(72))
   Enable this app to use it for the current request.
   Newly installed apps can take a few minutes to appear in /apps.
 
-
+────────────────────────────────────────────────────────────────────────
 › 1. Manage on ChatGPT
   2. Enable app
   3. Back

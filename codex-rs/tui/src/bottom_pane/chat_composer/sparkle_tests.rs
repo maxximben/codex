@@ -192,11 +192,13 @@ fn sparkle_fades_without_adding_dots_and_finishes_by_fifteen_seconds() {
         let (finished, _) = draw(&pane.composer, /*width*/ 80, now + IDLE_TIMEOUT);
         assert!(!dots(&fading).is_empty());
         assert!(dots(&fading).iter().all(|dot| dots(&last).contains(dot)));
-        let contrast = |cell: &ratatui::buffer::Cell| match (cell.fg, cell.bg) {
-            (Color::Rgb(fr, fg, fb), Color::Rgb(br, bg, bb)) => {
-                u32::from(fr.abs_diff(br)) + u32::from(fg.abs_diff(bg)) + u32::from(fb.abs_diff(bb))
-            }
-            colors => panic!("expected true color: {colors:?}"),
+        let contrast = |cell: &ratatui::buffer::Cell| {
+            assert_eq!(cell.bg, Color::Reset);
+            let Color::Rgb(fr, fg, fb) = cell.fg else {
+                panic!("expected true-color star: {:?}", cell.fg);
+            };
+            let (br, bg, bb) = crate::terminal_palette::default_bg().expect("test background");
+            u32::from(fr.abs_diff(br)) + u32::from(fg.abs_diff(bg)) + u32::from(fb.abs_diff(bb))
         };
         for (x, y, _) in dots(&fading) {
             assert!(contrast(&fading[(x, y)]) < contrast(&last[(x, y)]));

@@ -59,6 +59,48 @@ fn render_browser(view: &ListSelectionView, width: u16, height: u16) -> (String,
 }
 
 #[test]
+fn transparent_picker_panels_keep_rules_and_readable_selection() {
+    crate::terminal_palette::with_test_default_colors(
+        crate::terminal_probe::DefaultColors {
+            fg: (240, 240, 240),
+            bg: (24, 24, 24),
+        },
+        || {
+            let mut view = browser();
+            let (text, buf) = render_browser(&view, 80, view.desired_height(80));
+            assert!(text.contains("Action 00"));
+            let rule_rows = (0..buf.area.height)
+                .filter(|&y| (1..80).all(|x| buf[(x, y)].symbol() == "─"))
+                .count();
+            assert_eq!(rule_rows, 2);
+            let tab_fill = crate::bottom_pane::active_tab_style().bg.unwrap();
+            let selected_fill = selection_style().bg.unwrap();
+            for cell in buf.content() {
+                assert!(
+                    [Color::Reset, tab_fill, selected_fill].contains(&cell.bg),
+                    "unexpected panel fill: {:?}",
+                    cell.bg,
+                );
+            }
+            insta::assert_snapshot!("transparent_panel_with_lavender_tabs", text);
+            view.search_mode = SearchMode::OnDemand(crate::key_hint::plain(KeyCode::Char('/')));
+            view.search_active = true;
+            let (text, buf) = render_browser(&view, 80, view.desired_height(80));
+            let y = text
+                .lines()
+                .position(|line| line.contains("Search ›"))
+                .unwrap() as u16;
+            for x in 2..8 {
+                assert_eq!(
+                    buf[(x, y)].fg,
+                    crate::bottom_pane::active_tab_style().fg.unwrap()
+                );
+            }
+        },
+    );
+}
+
+#[test]
 fn shared_menu_presentation_at_wide_and_narrow_sizes() {
     let keymap = crate::keymap::RuntimeKeymap::defaults().list;
     let (tx, _rx) = unbounded_channel();

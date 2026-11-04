@@ -329,6 +329,7 @@ impl Renderable for SkillsToggleView {
             );
         }
 
+        super::selection_popup_common::render_menu_rules(content_area, buf);
         let hint_area = Rect {
             x: footer_area.x + 2,
             y: footer_area.y,

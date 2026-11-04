@@ -417,6 +417,7 @@ impl Renderable for MemoriesSettingsView {
             crate::terminal_hyperlinks::mark_url_hyperlink(buf, docs_area, MEMORIES_DOC_URL);
         }
 
+        super::selection_popup_common::render_menu_rules(content_area, buf);
         let hint_area = Rect {
             x: footer_area.x + 2,
             y: footer_area.y,
