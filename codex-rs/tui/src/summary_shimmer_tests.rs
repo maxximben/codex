@@ -32,7 +32,7 @@ fn short_and_long_labels_sweep_smoothly_in_both_themes() {
                     let levels = spans
                         .iter()
                         .map(|span| match span.style.fg {
-                            Some(ratatui::style::Color::Rgb(level, _, _)) => level,
+                            Some(Color::Rgb(r, g, b)) => (r, g, b),
                             color => panic!("expected interpolated RGB, got {color:?}"),
                         })
                         .collect::<Vec<_>>();
@@ -64,13 +64,13 @@ fn working_has_overlapping_highlights_without_frame_to_frame_flashes() {
                         color => panic!("expected interpolated RGB, got {color:?}"),
                     })
                     .collect::<Vec<_>>();
-                if brightness.iter().any(|value| *value > 220) {
-                    assert!(brightness.iter().filter(|value| **value > 160).count() >= 2);
+                if brightness.iter().any(|value| *value > 230) {
+                    assert!(brightness.iter().filter(|value| **value > 210).count() >= 2);
                 }
                 for (current, previous) in brightness.iter().zip(&previous) {
                     // At this speed the cosine band's maximum change over 32 ms is
-                    // 112 * sin(PI * (13 * 0.032) / 6), rounded up.
-                    assert!(u8::abs_diff(*current, *previous) <= 25);
+                    // 49 * sin(PI * (13 * 0.032) / 6), rounded up.
+                    assert!(u8::abs_diff(*current, *previous) <= 12);
                 }
                 previous = brightness;
             }
@@ -81,11 +81,11 @@ fn working_has_overlapping_highlights_without_frame_to_frame_flashes() {
             );
             let expected = "Working"
                 .chars()
-                .zip([128, 156, 212, 240, 212, 156, 128])
-                .map(|(ch, level)| {
+                .zip([0.0, 0.25, 0.75, 1.0, 0.75, 0.25, 0.0])
+                .map(|(ch, intensity)| {
                     Span::styled(
                         ch.to_string(),
-                        Style::default().fg(rgb_color((level, level, level))),
+                        Style::default().fg(rgb_color(blend(LIGHT_LILAC, LILAC, intensity))),
                     )
                 })
                 .collect::<Vec<_>>();
@@ -111,8 +111,71 @@ fn sweep_preserves_combining_characters_and_emoji_clusters() {
             .collect::<Vec<_>>(),
         vec!["e\u{301}", "👨‍👩‍👧‍👦", "界"]
     );
-    assert_eq!(
-        summary_shimmer(text, Duration::from_secs(/*secs*/ 1), MotionMode::Reduced),
-        vec![Span::from(text.to_owned())]
-    );
+    for span in spans {
+        assert!(span.style.bg.is_none());
+    }
+}
+
+#[test]
+fn reduced_motion_keeps_lilac_and_limited_palettes_stay_static() {
+    for background in [None, Some((16, 16, 16)), Some((240, 240, 240))] {
+        for level in [
+            StdoutColorLevel::TrueColor,
+            StdoutColorLevel::Ansi256,
+            StdoutColorLevel::Ansi16,
+            StdoutColorLevel::Unknown,
+        ] {
+            let before = summary_shimmer_for(
+                "Working",
+                Duration::ZERO,
+                MotionMode::Reduced,
+                background,
+                level,
+            );
+            let after = summary_shimmer_for(
+                "Working",
+                Duration::from_millis(1100),
+                MotionMode::Reduced,
+                background,
+                level,
+            );
+            assert_eq!(before, after);
+            assert_eq!(before.len(), 1);
+            assert_eq!(before[0].content, "Working");
+            assert_eq!(before[0].style.bg, None);
+            assert!(
+                !before[0]
+                    .style
+                    .add_modifier
+                    .contains(ratatui::style::Modifier::DIM)
+            );
+            match level {
+                StdoutColorLevel::TrueColor => {
+                    let expected = if background.is_some_and(is_light) {
+                        (96, 51, 150)
+                    } else {
+                        LILAC
+                    };
+                    assert_eq!(before[0].style.fg, Some(rgb_color(expected)));
+                }
+                StdoutColorLevel::Ansi256 => {
+                    assert!(matches!(before[0].style.fg, Some(Color::Indexed(_))))
+                }
+                StdoutColorLevel::Ansi16 => assert_eq!(before[0].style.fg, Some(Color::Magenta)),
+                StdoutColorLevel::Unknown => assert_eq!(before[0].style.fg, Some(Color::Reset)),
+            }
+            if level != StdoutColorLevel::TrueColor {
+                assert_eq!(
+                    before,
+                    summary_shimmer_for(
+                        "Working",
+                        Duration::from_millis(1100),
+                        MotionMode::Animated,
+                        background,
+                        level,
+                    )
+                );
+            }
+        }
+    }
 }

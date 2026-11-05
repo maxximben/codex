@@ -14,7 +14,7 @@ expression: text
   Stop                0/0
   Interrupt           0/0
   PreModelRequest     0/0
-› PostModelRequest    0/0
+❯ PostModelRequest    0/0
 
 ────────────────────────────────────────
   enter details · esc close

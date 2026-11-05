@@ -429,7 +429,7 @@ impl HooksBrowserView {
                     HookTrustStatus::Managed | HookTrustStatus::Trusted => "",
                 };
                 let prefix = if self.state.selected_idx == Some(idx) {
-                    "› "
+                    "❯ "
                 } else {
                     "  "
                 };
@@ -933,7 +933,7 @@ mod tests {
         insta::assert_snapshot!(text);
         let selected_y = text
             .lines()
-            .position(|line| line.starts_with("› "))
+            .position(|line| line.starts_with("❯ "))
             .unwrap() as u16;
         assert_eq!(buf[(0, selected_y)].bg, selection_style().bg.unwrap());
         assert_eq!(buf[(39, selected_y)].bg, selection_style().bg.unwrap());
@@ -1045,7 +1045,7 @@ mod tests {
                 || {
                     let buf = render_buffer(&view, /*width*/ 112);
                     let selected_y = (0..buf.area.height)
-                        .find(|&y| buf[(0, y)].symbol() == "›")
+                        .find(|&y| buf[(0, y)].symbol() == "❯")
                         .expect("selected hook row");
                     for y in [selected_y, selected_y + 1] {
                         assert!(buf[(7, y)].modifier.contains(Modifier::DIM));

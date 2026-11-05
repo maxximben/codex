@@ -9,7 +9,7 @@ expression: popup
 
 
   Action                    Rationale
-› curl -sS --data-binary @… Would send a
+❯ curl -sS --data-binary @… Would send a
                             local source
                             file to an
                             external

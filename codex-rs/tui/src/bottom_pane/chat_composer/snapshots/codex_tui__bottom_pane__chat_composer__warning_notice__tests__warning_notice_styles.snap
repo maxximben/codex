@@ -7,7 +7,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 80, height: 5 },
     content: [
         "                                                                                ",
-        "› keep this draft                                                               ",
+        "❯ keep this draft                                                               ",
         "                                                                                ",
         "  MODEL · ~/project                                                             ",
         "                                                      ⚠ 3 warnings · f2 to view ",

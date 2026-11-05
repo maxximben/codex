@@ -29,7 +29,7 @@ fn wide_titles_preserve_reverse_video_selection_and_dim_index() {
         .not_dim()
         .reversed();
     let row = Line::from(vec![
-        "› [x] ".into(),
+        "❯ [x] ".into(),
         " 1".dim(),
         "  检查 🦀 shell commands".into(),
     ])

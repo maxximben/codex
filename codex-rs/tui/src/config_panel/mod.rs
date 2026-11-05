@@ -255,7 +255,7 @@ impl ConfigSettingValue {
                 dependency_met: true,
                 ..
             } => if *enabled { "[x] On" } else { "[ ] Off" }.to_string(),
-            Self::Editor { label, .. } => format!("{label} ›"),
+            Self::Editor { label, .. } => format!("{label} ❯"),
             Self::NotificationTest => "Send in 5s".to_string(),
             Self::DependentToggle {
                 dependency_met: false,

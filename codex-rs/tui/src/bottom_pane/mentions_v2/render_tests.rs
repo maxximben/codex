@@ -93,7 +93,7 @@ fn selection_covers_the_row_and_empty_filter_clears_previous_results() {
         "",
     );
     let selected_y = (0..buffer.area.height)
-        .find(|y| buffer[(0, *y)].symbol() == "›")
+        .find(|y| buffer[(0, *y)].symbol() == "❯")
         .expect("selected result");
     let selected_styles = (0..buffer.area.width)
         .map(|x| {

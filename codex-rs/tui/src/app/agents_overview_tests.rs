@@ -1495,7 +1495,7 @@ async fn shared_overview_shows_only_root_sessions() {
     assert!(
         rendered
             .lines()
-            .any(|line| line.contains("› ● Inspect unnamed task"))
+            .any(|line| line.contains("❯ ● Inspect unnamed task"))
     );
 
     app.transcript_cells.push(std::sync::Arc::new(
@@ -1675,7 +1675,7 @@ async fn root_switch_preserves_vim_line_yank() -> Result<()> {
         .take(2)
         .collect::<Vec<_>>()
         .join("\n");
-    insta::assert_snapshot!(composer_lines, @"› new line\n  saved line");
+    insta::assert_snapshot!(composer_lines, @"❯ new line\n  saved line");
     app_server.shutdown().await?;
     Ok(())
 }
@@ -2244,7 +2244,7 @@ async fn command_center_cursor_tracks_fixed_footer() {
         )],
         /*selected_thread_id*/ None,
     );
-    for (key, label) in [('/', "Search ›"), ('r', "Rename ›")] {
+    for (key, label) in [('/', "Search ❯"), ('r', "Rename ❯")] {
         view.handle_key_event(KeyCode::Esc.into());
         view.handle_key_event(KeyEvent::new(KeyCode::Char(key), KeyModifiers::NONE));
         for width in [48, 96, 120] {

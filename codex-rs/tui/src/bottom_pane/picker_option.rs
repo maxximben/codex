@@ -47,7 +47,7 @@ pub(crate) fn picker_option_list(
 }
 
 fn numbered_row(index: usize, label: Line<'static>, is_selected: bool) -> GenericDisplayRow {
-    let marker = if is_selected { '›' } else { ' ' };
+    let marker = if is_selected { '❯' } else { ' ' };
     let prefix = format!("{marker} {}. ", index + 1);
     let prefix_width = prefix.chars().count();
     let mut spans = vec![prefix.into()];

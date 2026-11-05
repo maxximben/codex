@@ -4,7 +4,7 @@ assertion_line: 51
 expression: terminal.backend()
 ---
 "                                                                      "
-"› git status                                                          "
+"❯ git status                                                          "
 "                                                                      "
 "                                                                      "
 "  reverse-i-search: git status  enter accept · esc cancel             "

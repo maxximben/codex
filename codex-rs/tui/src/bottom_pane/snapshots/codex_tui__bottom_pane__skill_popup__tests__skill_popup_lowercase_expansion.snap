@@ -6,7 +6,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 48, height: 7 },
     content: [
         "                                                ",
-        "› ai̇x  [Skill]                                  ",
+        "❯ ai̇x  [Skill]                                  ",
         "  aİx  [Skill]                                  ",
         "  i̇x   [Skill]                                  ",
         "  İx   [Skill]                                  ",

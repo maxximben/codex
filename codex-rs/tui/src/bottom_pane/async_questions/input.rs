@@ -59,7 +59,7 @@ impl AsyncQuestions {
     }
 
     pub(super) fn other_prefix_width(&self, width: u16) -> u16 {
-        let full = format!("› {}. ", self.options_len()).width() as u16;
+        let full = format!("❯ {}. ", self.options_len()).width() as u16;
         if full + 2 <= width {
             full
         } else {
@@ -115,9 +115,9 @@ impl AsyncQuestions {
             input.x.saturating_sub(area.x),
             input.height.min(1),
         );
-        let prefix = format!("› {}. ", self.options_len());
+        let prefix = format!("❯ {}. ", self.options_len());
         Line::from(if usize::from(margin.width) < prefix.width() {
-            "› ".to_string()
+            "❯ ".to_string()
         } else {
             prefix
         })

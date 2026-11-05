@@ -7,7 +7,7 @@ expression: terminal.backend()
   Choose a local AI server for this session.
 
   1. LM Studio · ● Running
-› 2. Ollama · ● Running                                                         
+❯ 2. Ollama · ● Running                                                         
 
   Local Ollama server (Responses API, default port 11434)
 

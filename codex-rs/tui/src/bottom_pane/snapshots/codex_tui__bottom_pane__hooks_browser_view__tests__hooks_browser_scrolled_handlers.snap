@@ -13,7 +13,7 @@ expression: "render_lines(&view, 112)"
   [x]  7  Check tool 7                                                                                          
   [x]  8  Unnamed hook                                                                                          
   [x]  9  Check tool 9                                                                                          
-› [x] 10  Unnamed hook                                                                                          
+❯ [x] 10  Unnamed hook                                                                                          
 ↓                                                                                                               
   Event     PreToolUse                                                                                          
   Matcher   Bash                                                                                                

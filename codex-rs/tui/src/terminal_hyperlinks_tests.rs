@@ -69,7 +69,7 @@ fn decorated_hyperlinks_preserve_joined_emoji_columns() {
 #[test]
 fn source_wrapping_clips_a_cursor_sentinel_at_the_input_boundary() {
     let destination = "https://example.test/pull/9410";
-    let text = format!("› [configuration editor]({destination})");
+    let text = format!("❯ [configuration editor]({destination})");
     let source = annotate_web_urls_in_line(Line::from(text.clone()));
     let mut wrapped = crate::wrapping::word_wrap_line_with_source(&source.line, text.len());
     wrapped.last_mut().expect("wrapped line").range.end += 1;

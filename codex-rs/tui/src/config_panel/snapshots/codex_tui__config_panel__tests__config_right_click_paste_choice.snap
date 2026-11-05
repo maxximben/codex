@@ -7,7 +7,7 @@ expression: "render(&picker, 100)"
   Paste when nothing is selected, with Auto following platform defaults and On also enabling macOS
 
 
-› 1. Auto (default) (current)
+❯ 1. Auto (default) (current)
   2. On
   3. Off
 ────────────────────────────────────────────────────────────────────────────────────────────────────

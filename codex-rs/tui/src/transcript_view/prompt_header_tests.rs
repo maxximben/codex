@@ -101,32 +101,98 @@ fn header_sanitizes_controls_and_truncates_by_display_width() {
 
 #[test]
 fn pinned_prompt_matches_the_original_prompt_style() {
-    for prompt in [
-        new_user_prompt("keep going".into(), Vec::new(), Vec::new(), Vec::new()),
-        new_spoken_user_prompt("keep going".into()),
-    ] {
-        let width = 30;
-        let mut expected = Buffer::empty(Rect::new(
-            /*x*/ 0, /*y*/ 0, width, /*height*/ 3,
-        ));
-        TextLayout::new(prompt.transcript_hyperlink_lines(width), width).render(
-            expected.area,
-            &mut expected,
-            /*start_row*/ 0,
-        );
-        let cells: Vec<Arc<dyn HistoryCell>> = vec![
-            Arc::new(prompt),
-            cell("one\ntwo\nthree\nfour\nfive\nsix\nseven\neight"),
-        ];
-        let mut view = TranscriptView::default();
-        let actual = render(&mut view, &cells, width, /*height*/ 7);
+    use codex_config::types::TuiUserMessage;
 
-        assert_eq!(
-            &actual.content[..usize::from(width)],
-            &expected.content[usize::from(width)..usize::from(width * 2)]
-        );
-        assert_eq!(view.area.y, 1);
+    for settings in [
+        TuiUserMessage::default(),
+        TuiUserMessage {
+            color: Some("#DDBBFF".into()),
+            bold: Some(false),
+            italic: Some(true),
+            underline: Some(true),
+            dim: Some(false),
+        },
+        TuiUserMessage {
+            color: Some("cyan".into()),
+            bold: Some(true),
+            ..Default::default()
+        },
+    ] {
+        for spoken in [false, true] {
+            for width in [18, 30] {
+                let prompt = if spoken {
+                    new_spoken_user_prompt("keep going".into())
+                } else {
+                    new_user_prompt("keep going".into(), Vec::new(), Vec::new(), Vec::new())
+                }
+                .with_text_style(&settings);
+                let mut expected = Buffer::empty(Rect::new(
+                    /*x*/ 0, /*y*/ 0, width, /*height*/ 3,
+                ));
+                TextLayout::new(prompt.transcript_hyperlink_lines(width), width).render(
+                    expected.area,
+                    &mut expected,
+                    /*start_row*/ 0,
+                );
+                let cells: Vec<Arc<dyn HistoryCell>> = vec![
+                    Arc::new(prompt),
+                    cell("one\ntwo\nthree\nfour\nfive\nsix\nseven\neight"),
+                ];
+                let mut view = TranscriptView::default();
+                let actual = render(&mut view, &cells, width, /*height*/ 7);
+
+                assert_eq!(
+                    &actual.content[..usize::from(width)],
+                    &expected.content[usize::from(width)..usize::from(width * 2)]
+                );
+                assert_eq!(view.area.y, 1);
+                assert_eq!(actual[(0, 0)].symbol(), "❯");
+                assert_eq!(actual[(0, 0)].fg, actual[(2, 0)].fg);
+                assert_eq!(actual[(0, 0)].bg, ratatui::style::Color::Reset);
+            }
+        }
     }
+}
+
+#[test]
+fn configured_user_message_text_style_reaches_truncated_pinned_prompts() {
+    crate::terminal_palette::with_test_default_colors(
+        crate::terminal_probe::DefaultColors {
+            fg: (240, 240, 240),
+            bg: (20, 20, 20),
+        },
+        || {
+            let prompt = new_user_prompt(
+                "A long question with enough text to truncate".into(),
+                vec![],
+                vec![],
+                vec![],
+            )
+            .with_text_style(&codex_config::types::TuiUserMessage {
+                color: Some("#DDBBFF".into()),
+                bold: Some(false),
+                underline: Some(true),
+                ..Default::default()
+            });
+            let cells: Vec<Arc<dyn HistoryCell>> = vec![Arc::new(prompt), cell("answer")];
+            let (pinned, _) = line(&cells, 1, 18, false).unwrap();
+            let mut buffer = Buffer::empty(Rect::new(0, 0, 18, 1));
+            ratatui::widgets::Widget::render(pinned, buffer.area, &mut buffer);
+            assert!(text(&buffer).contains('…'));
+            assert_eq!(buffer[(0, 0)].symbol(), "❯");
+            for painted in &buffer.content {
+                if !painted.symbol().trim().is_empty() {
+                    assert_eq!(
+                        painted.fg,
+                        crate::terminal_palette::rgb_color((221, 187, 255))
+                    );
+                    assert_eq!(painted.bg, ratatui::style::Color::Reset);
+                    assert!(painted.modifier.contains(Modifier::UNDERLINED));
+                    assert!(!painted.modifier.contains(Modifier::BOLD));
+                }
+            }
+        },
+    );
 }
 
 #[test]

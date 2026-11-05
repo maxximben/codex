@@ -170,7 +170,7 @@ impl MemoriesSettingsView {
                     selection_style: Some(super::picker_style::selection_style()),
                     wrap_indent: Some(2),
                     name: if state.selected_idx == Some(idx) {
-                        format!("› {name}")
+                        format!("❯ {name}")
                     } else {
                         format!("  {name}")
                     },
@@ -190,7 +190,7 @@ impl MemoriesSettingsView {
             .enumerate()
             .map(|(idx, item)| {
                 let prefix = if selected_idx == Some(idx) {
-                    '›'
+                    '❯'
                 } else {
                     ' '
                 };

@@ -171,7 +171,7 @@ async fn global_chord_keeps_hints_and_completes_before_deadline() -> Result<()> 
         render_bottom_popup(&app.chat_widget, /*width*/ 80)
             .replace(&test_path_display("/tmp/project"), "/tmp/project"),
         @"
-    › Ask Codex to do anything
+    ❯ Ask Codex to do anything
 
       ⌃x then · ⌃t open transcript · ⌃u interrupt turn · esc cancel
     "
@@ -816,7 +816,7 @@ async fn physical_chords_route_list_and_mixed_request_input_modals() -> Result<(
     let contexts = app.chat_widget.keymap_contexts();
     assert!(contexts.contains(KeymapContext::Chat));
     assert!(contexts.contains(KeymapContext::List));
-    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("› 1. First"));
+    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("❯ 1. First"));
 
     press(&mut app, &mut tui, &mut app_server, ctrl('x')).await?;
     assert!(app.key_chord_matcher.is_pending());
@@ -827,7 +827,7 @@ async fn physical_chords_route_list_and_mixed_request_input_modals() -> Result<(
         KeyCode::Char('j').into(),
     )
     .await?;
-    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("› 2. Second"));
+    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("❯ 2. Second"));
 
     press(&mut app, &mut tui, &mut app_server, ctrl('x')).await?;
     press(&mut app, &mut tui, &mut app_server, ctrl('u')).await?;
@@ -880,7 +880,7 @@ async fn command_center_chords_do_not_capture_search_text() -> Result<()> {
         assert_eq!(app.route_key_chord_event(&mut tui, event), Some(event));
         app.chat_widget.handle_key_event(event);
     }
-    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("Search › new"));
+    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("Search ❯ new"));
     assert_eq!(app.route_key_chord_event(&mut tui, ctrl('x')), None);
     assert!(app.key_chord_matcher.is_pending());
     app.route_key_chord_event(&mut tui, KeyCode::Esc.into());

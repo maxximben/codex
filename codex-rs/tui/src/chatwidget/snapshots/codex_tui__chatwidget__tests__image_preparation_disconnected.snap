@@ -8,6 +8,6 @@ expression: "normalize_snapshot_paths(render_bottom_popup(&chat, 80)).replace('�
   ↳ x
     ⇧← edit last queued message
 
-› describe
+❯ describe
 
   ⌃c quit

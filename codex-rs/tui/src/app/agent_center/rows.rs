@@ -128,7 +128,7 @@ impl AgentsOverviewView {
                     } else {
                         "Show more"
                     };
-                    let marker = if selected { "›" } else { " " };
+                    let marker = if selected { "❯" } else { " " };
                     line(
                         Line::from(format!("{marker}   {label}")).style(style),
                         rect,
@@ -207,7 +207,7 @@ impl AgentsOverviewView {
                 dot.style = style;
             }
             line(
-                Line::from(if index == self.selected { "›" } else { " " }).style(style),
+                Line::from(if index == self.selected { "❯" } else { " " }).style(style),
                 rect,
                 buf,
             );

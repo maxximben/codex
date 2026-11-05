@@ -3,11 +3,11 @@ source: tui/src/bottom_pane/chat_composer.rs
 expression: terminal.backend()
 ---
 "                                                                                                    "
-"› status         [Skill] Example skill used in tests.                                               "
+"❯ status         [Skill] Example skill used in tests.                                               "
 "  statsig        [Skill] Example skill used in tests.                                               "
 "↓                                                                                                   "
 "  enter insert · esc close                                                                          "
 "                                                                                                    "
-"› $stat                                                                                             "
+"❯ $stat                                                                                             "
 "                                                                                                    "
 "                                                                                 100% context left  "

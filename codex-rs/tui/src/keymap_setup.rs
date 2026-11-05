@@ -1448,11 +1448,11 @@ mod tests {
             let item_count = params.items.len();
             let mut view =
                 ListSelectionView::new(params, app_event_sender(), RuntimeKeymap::defaults().list);
-            let initial = render_picker_from_view(&view, /*width*/ 160).replace('›', " ");
+            let initial = render_picker_from_view(&view, /*width*/ 160).replace('❯', " ");
             for _ in 1..item_count {
                 view.handle_key_event(KeyEvent::from(KeyCode::Down));
                 assert_eq!(
-                    render_picker_from_view(&view, /*width*/ 160).replace('›', " "),
+                    render_picker_from_view(&view, /*width*/ 160).replace('❯', " "),
                     initial,
                 );
             }

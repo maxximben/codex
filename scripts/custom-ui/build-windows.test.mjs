@@ -107,7 +107,7 @@ test("checks validate all UI groups and the schema without invoking the package 
   const result = runStage(t, "checks");
   assert.equal(result.error, null);
   const tests = result.calls.filter((call) => call.startsWith("cargo test "));
-  assert.equal(tests.length, 10);
+  assert.equal(tests.length, 14);
   assert.ok(tests.every((call) => call.includes("--locked --profile ci-test")));
   assert.equal(
     result.calls.filter((call) => call.startsWith("cargo run ")).length,

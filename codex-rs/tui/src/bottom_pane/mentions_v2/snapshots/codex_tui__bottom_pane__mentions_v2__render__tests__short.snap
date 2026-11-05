@@ -5,8 +5,8 @@ expression: text(&buffer)
 ---
   Mentions
   Files, directories, plugins, skills
-   All Results   Filesystem Only     ›
+   All Results   Filesystem Only     ❯
   Type to search mentions
   界.rs      src/                 File
-› plain.rs   src/                 File
+❯ plain.rs   src/                 File
   enter/tab insert · esc close · ↑/↓ …

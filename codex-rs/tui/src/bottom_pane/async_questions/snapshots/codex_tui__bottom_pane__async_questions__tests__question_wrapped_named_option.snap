@@ -5,7 +5,7 @@ expression: buffer_text(&buffer)
 ────────────────────────────────────
   Second
 
-  › 1. A suggested answer that is
+  ❯ 1. A suggested answer that is
        long enough to wrap across
        multiple rows
     2. Other

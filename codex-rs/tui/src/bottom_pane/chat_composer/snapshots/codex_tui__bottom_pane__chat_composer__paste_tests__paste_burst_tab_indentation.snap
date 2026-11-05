@@ -4,7 +4,7 @@ assertion_line: 38
 expression: terminal.backend()
 ---
 "                                                            "
-"› first line                                                "
+"❯ first line                                                "
 "    second line                                             "
 "   third line                                               "
 "                                                            "

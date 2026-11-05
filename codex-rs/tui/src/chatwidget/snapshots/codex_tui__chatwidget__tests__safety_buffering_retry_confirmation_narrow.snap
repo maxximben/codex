@@ -10,10 +10,10 @@ expression: "render_bottom_popup(&chat, 40)"
     other actions already taken will
     remain.
 
-›   Your message will be sent again
+❯   Your message will be sent again
     using Faster Model, which may be
     less capable on complex tasks.
 
 
-  › 1. Keep waiting
+  ❯ 1. Keep waiting
     2. Stop and retry

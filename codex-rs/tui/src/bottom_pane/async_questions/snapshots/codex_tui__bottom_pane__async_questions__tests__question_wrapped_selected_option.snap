@@ -5,7 +5,7 @@ expression: buffer_text(&clipped)
 ────────────────────────────────────
   Second
 
-  › 2. A suggested answer that is
+  ❯ 2. A suggested answer that is
        long enough to wrap across
        multiple rows
 

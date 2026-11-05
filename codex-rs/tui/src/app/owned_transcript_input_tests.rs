@@ -277,7 +277,7 @@ async fn plan_menu_allows_transcript_wheel_scrolling_and_keeps_keyboard_ownershi
         if close == KeyCode::Esc {
             insta::assert_snapshot!("plan_prompt_scrolled", scrolled);
         }
-        for (key, selected) in [(KeyCode::PageDown, "› 3."), (KeyCode::PageUp, "› 1.")] {
+        for (key, selected) in [(KeyCode::PageDown, "❯ 3."), (KeyCode::PageUp, "❯ 1.")] {
             app.handle_tui_event(&mut tui, &mut server, TuiEvent::Key(key.into()))
                 .await?;
             app.render_owned_transcript(&mut tui, size)?;
@@ -426,7 +426,7 @@ async fn plan_menu_allows_transcript_selection_and_copy_but_respects_popup_bound
     let popup = screen(&tui);
     let popup_row = popup
         .lines()
-        .position(|line| line.contains("› /model"))
+        .position(|line| line.contains("❯ /model"))
         .unwrap() as u16;
     assert!(!app.chat_widget.has_active_modal());
     assert!(!app.chat_widget.no_modal_or_popup_active());

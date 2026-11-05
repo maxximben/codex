@@ -41,7 +41,7 @@ impl HooksBrowserView {
         }
         for (index, line) in rows.iter_mut().enumerate() {
             let prefix = if self.state.selected_idx == Some(index) {
-                "› "
+                "❯ "
             } else {
                 "  "
             };

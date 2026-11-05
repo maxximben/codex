@@ -5,7 +5,7 @@ expression: normalize_snapshot_paths(screen)
 ····································
 ····································
 ·····                          ·····
-·····› Second prompt           ·····
+·····❯ Second prompt           ·····
 ·····                          ·····
 ·····                          ·····
 ·····• For the complete        ·····
@@ -14,7 +14,7 @@ expression: normalize_snapshot_paths(screen)
 ·····  example.com/docs).      ·····
 ·····                          ·····
 ·····                          ·····
-·····› preserved draft         ·····
+·····❯ preserved draft         ·····
 ·····                          ·····
 ·····  gpt-test default · /tmp…·····
 ·····                          ·····

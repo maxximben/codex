@@ -960,7 +960,7 @@ mod tests {
                 for (idx, action) in screen.available_actions().iter().enumerate() {
                     let marker =
                         if focus == FocusArea::Actions && *action == screen.highlighted_action {
-                            '›'
+                            '❯'
                         } else {
                             ' '
                         };
@@ -978,7 +978,7 @@ mod tests {
                         buf[(2, y)].modifier.contains(ratatui::style::Modifier::DIM),
                         focus == FocusArea::Items
                     );
-                    if marker == '›' {
+                    if marker == '❯' {
                         assert_eq!(
                             buf[(2, y)].bg,
                             crate::bottom_pane::selection_style().bg.unwrap()

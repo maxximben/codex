@@ -16,7 +16,7 @@ expression: "render_bottom_popup(&app.chat_widget,\nwidth).replace(r\"C:\\cli-bu
       Codex exits to update in this terminal. Relaunch it afterward.
 
 
-    › 1. Cancel
+    ❯ 1. Cancel
       2. Update and exit
 
       enter select · esc back

@@ -4,7 +4,7 @@ assertion_line: 75
 expression: "format!(\"{}\\nCursor: {cursor:?}\", terminal.backend())"
 ---
 "                                                                                "
-"› draft                                                                         "
+"❯ draft                                                                         "
 "                                                                                "
 "                                                                                "
 "  reverse-i-search: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

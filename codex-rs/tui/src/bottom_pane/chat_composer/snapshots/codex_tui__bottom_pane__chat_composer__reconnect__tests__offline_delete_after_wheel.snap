@@ -4,7 +4,7 @@ assertion_line: 58
 expression: rows
 ---
                                         
-› line 16 abc                          ↑
+❯ line 16 abc                          ↑
   line 17 abc                           
   line 18 abc                           
   line 19 abc                           

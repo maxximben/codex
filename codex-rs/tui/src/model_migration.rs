@@ -597,7 +597,7 @@ mod tests {
             .draw(|frame| frame.render_widget_ref(&screen, frame.area()))
             .expect("render resized model migration picker");
         let rendered = terminal.backend().to_string();
-        assert!(rendered.contains("› 2. Use existing model"));
+        assert!(rendered.contains("❯ 2. Use existing model"));
         assert!(rendered.contains("enter/esc confirm"));
         assert!(!screen.is_done());
         assert_snapshot!(format!("model_picker_selected_{width}x{height}"), rendered);

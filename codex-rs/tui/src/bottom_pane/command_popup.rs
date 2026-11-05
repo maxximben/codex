@@ -238,7 +238,7 @@ impl CommandPopup {
                     name_prefix_spans: vec![if self.state.selected_idx == Some(index)
                         && !unavailable
                     {
-                        "› ".into()
+                        "❯ ".into()
                     } else {
                         "  ".into()
                     }],

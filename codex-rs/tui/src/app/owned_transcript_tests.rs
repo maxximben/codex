@@ -1518,7 +1518,7 @@ async fn slash_picker_overlays_history_without_moving_the_transcript_or_composer
         if composer_y > 0 {
             let menu_y = open_text
                 .lines()
-                .position(|line| line.contains("› /model"))
+                .position(|line| line.contains("❯ /model"))
                 .expect("available rows show command matches");
             let prefix_len = menu_y * usize::from(width);
             assert_eq!(
@@ -1545,7 +1545,7 @@ async fn slash_picker_overlays_history_without_moving_the_transcript_or_composer
             filtered
                 .lines()
                 .take(usize::from(composer_y))
-                .any(|line| line.contains("› /model")),
+                .any(|line| line.contains("❯ /model")),
             composer_y > 0,
             "a single command remains visible when the menu has room",
         );

@@ -15,7 +15,7 @@ expression: "render_lines(&view, 112)"
   Stop                  0           0           Right before Codex ends its turn                                
   Interrupt             0           0           Right before an interrupted turn is aborted                     
   PreModelRequest       0           0           Before a model request                                          
-› PostModelRequest      0           0           After a model request, including failures                       
+❯ PostModelRequest      0           0           After a model request, including failures                       
                                                                                                                 
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   enter details · esc close

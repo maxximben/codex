@@ -6,7 +6,7 @@ expression: "format!(\"{buffer:?}\")"
 Buffer {
     area: Rect { x: 3, y: 2, width: 32, height: 1 },
     content: [
-        "›       tabs:   ]8;;https://example.com/oneo]8;;]8;;https://example.com/onen]8;;]8;;https://example.com/onee]8;;     ]8;;https://example.com/twot]8;;]8;;https://example.com/twow]8;;]8;;https://example.com/twoo]8;;     ",
+        "❯       tabs:   ]8;;https://example.com/oneo]8;;]8;;https://example.com/onen]8;;]8;;https://example.com/onee]8;;     ]8;;https://example.com/twot]8;;]8;;https://example.com/twow]8;;]8;;https://example.com/twoo]8;;     ",
     ],
     styles: [
         x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: BOLD,

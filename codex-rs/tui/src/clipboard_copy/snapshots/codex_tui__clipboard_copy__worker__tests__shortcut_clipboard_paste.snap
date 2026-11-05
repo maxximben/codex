@@ -2,7 +2,7 @@
 source: tui/src/clipboard_copy/worker_tests.rs
 expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_widget, 80)"
 ---
-› draft café
+❯ draft café
   second line
 
 

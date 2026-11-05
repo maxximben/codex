@@ -80,7 +80,7 @@ impl AnalyticsView {
             let heading = format!(
                 "{} {title}",
                 if self.plan.window == window {
-                    "›"
+                    "❯"
                 } else {
                     " "
                 }
@@ -108,7 +108,7 @@ impl AnalyticsView {
                     let selected = self.plan.cursor[window] == index;
                     let label = format!(
                         "{} {} – {}{}",
-                        if selected { "›" } else { " " },
+                        if selected { "❯" } else { " " },
                         period.start.format(self.clock_format.date_time_format()),
                         period.end.format(self.clock_format.date_time_format()),
                         if period.start <= report.as_of && period.end > report.as_of {

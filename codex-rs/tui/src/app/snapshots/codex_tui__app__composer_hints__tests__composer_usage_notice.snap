@@ -9,7 +9,7 @@ Conversation
   breakdown.
                                                   ⚠ 5h limit: 8% left · /status
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   GPT-5.6-Sol default · /tmp/project
   ? for shortcuts                                      ⚠ 1 warning · f2 to view
@@ -23,7 +23,7 @@ Conversation
 
                                              ⚠ 5h limit: only 2% left · /status
 
-› draft stays
+❯ draft stays
 
   GPT-5.6-Sol default · /tmp/project
   tab to queue message
@@ -35,7 +35,7 @@ Conversation
 
                   ⚠ 5h <1% left
 
-› draft stays
+❯ draft stays
 
   GPT-5.6-Sol default · /tmp/pr…
   tab to queue message
@@ -47,7 +47,7 @@ Conversation
 
      ⚠ 5h 5% left
 
-› draft stays
+❯ draft stays
 
   GPT-5.6-Sol def…
   tab to queue mes
@@ -66,7 +66,7 @@ Conversation row 19
     ⇧← edit last queued message
                                              ⚠ 5h limit: only 2% left · /status
 
-› draft stays
+❯ draft stays
   second line
 
   GPT-5.6-Sol default · /tmp/project
@@ -79,7 +79,7 @@ Conversation row 19
   ↳ queued follow-up
     ⇧← edit last queued message
 
-› draft stays
+❯ draft stays
   second line
 
   GPT-5.6-Sol default · /tmp/project
@@ -88,7 +88,7 @@ Conversation row 19
 80 columns, 6 rows, running=true, queued=false
 • Working (0s • esc to interrupt)
 
-› draft stays
+❯ draft stays
 
   GPT-5.6-Sol default · /tmp/project
   tab to queue message

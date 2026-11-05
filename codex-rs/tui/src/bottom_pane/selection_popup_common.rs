@@ -803,7 +803,7 @@ mod tests {
         let rows = [
             GenericDisplayRow {
                 name: "日本語".into(),
-                name_prefix_spans: vec!["› 1. ".into()],
+                name_prefix_spans: vec!["❯ 1. ".into()],
                 description: Some("Details".into()),
                 ..Default::default()
             },

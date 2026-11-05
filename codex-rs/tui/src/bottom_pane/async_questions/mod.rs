@@ -174,7 +174,7 @@ impl AsyncQuestions {
             .enumerate()
             .map(|(index, label)| {
                 let prefix = if self.selected_option_index() == Some(index) {
-                    '›'
+                    '❯'
                 } else {
                     ' '
                 };

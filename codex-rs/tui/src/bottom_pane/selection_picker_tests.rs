@@ -88,7 +88,7 @@ fn transparent_picker_panels_keep_rules_and_readable_selection() {
             let (text, buf) = render_browser(&view, 80, view.desired_height(80));
             let y = text
                 .lines()
-                .position(|line| line.contains("Search ›"))
+                .position(|line| line.contains("Search ❯"))
                 .unwrap() as u16;
             for x in 2..8 {
                 assert_eq!(
@@ -136,7 +136,7 @@ fn shared_menu_presentation_at_wide_and_narrow_sizes() {
     let mut snapshots = Vec::new();
     for (width, height) in [(80, 24), (40, 16)] {
         let (text, buffer) = render_browser(&view, width, height);
-        let selected_y = text.lines().position(|line| line.starts_with('›')).unwrap() as u16;
+        let selected_y = text.lines().position(|line| line.starts_with('❯')).unwrap() as u16;
         assert_eq!(
             (0..width)
                 .map(|x| buffer[(x, selected_y)].bg)
@@ -196,7 +196,7 @@ fn browser_page_navigation_uses_rows_that_fit() {
     assert_eq!(view.selected_actual_idx(), Some(visible));
     let selected_row = text
         .lines()
-        .position(|line| line.starts_with('›'))
+        .position(|line| line.starts_with('❯'))
         .expect("focused row");
     assert_eq!(
         buf[(0, selected_row as u16)].bg,
@@ -224,7 +224,7 @@ fn shrinking_the_browser_keeps_selection_visible_without_navigation() {
         assert_eq!(view.selected_actual_idx(), Some(7));
         let focused = text
             .lines()
-            .find(|line| line.starts_with('›'))
+            .find(|line| line.starts_with('❯'))
             .expect("focused row");
         assert!(focused.contains("Action 07"), "{text}");
     }
@@ -249,7 +249,7 @@ fn overflow_arrows_follow_the_painted_picker_surface() {
                     let (text, buf) = render_browser(&view, /*width*/ 60, /*height*/ 18);
                     let selected_y = text
                         .lines()
-                        .position(|line| line.starts_with('›'))
+                        .position(|line| line.starts_with('❯'))
                         .expect("focused row") as u16;
                     let selected_background = selection_style().bg.unwrap();
                     assert_eq!(

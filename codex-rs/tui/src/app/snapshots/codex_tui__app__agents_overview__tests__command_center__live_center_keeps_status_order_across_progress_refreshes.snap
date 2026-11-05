@@ -13,7 +13,7 @@ Initial display:
   Working  3                                              │
     ● Bravo                                               │ Model: Unknown
     ● Charlie                                             │ Reasoning: Unknown
-  › ● Alpha                                               │
+  ❯ ● Alpha                                               │
                                                           │ Project
   Ready  1                                                │ /tmp/project
     ○ Ready task                                          │
@@ -32,7 +32,7 @@ After subagents fail under Alpha and Ready task:
                                                           │ ● Working
   Working  3                                              │
     ● 📌  Charlie                                          │ Model: Unknown
-  › ● Alpha                                               │ Reasoning: Unknown
+  ❯ ● Alpha                                               │ Reasoning: Unknown
     ● Bravo                                               │
                                                           │ Project
   Ready  1                                                │ /tmp/project

@@ -9,7 +9,7 @@ expression: "snapshots.join(\"\\n\")"
         "                                ",
         "  [Image #2]                    ",
         "                                ",
-        "› [Image #1] describe these     ",
+        "❯ [Image #1] describe these     ",
         "                                ",
     ],
     styles: [
@@ -28,7 +28,7 @@ expression: "snapshots.join(\"\\n\")"
         "                                ",
         "  [Image #2]                    ",
         "                                ",
-        "› [Image #1] describe these     ",
+        "❯ [Image #1] describe these     ",
         "                                ",
     ],
     styles: [
@@ -47,7 +47,7 @@ expression: "snapshots.join(\"\\n\")"
         "                                ",
         "  [Image #2]                    ",
         "                                ",
-        "› [Image #1] describe these     ",
+        "❯ [Image #1] describe these     ",
         "                                ",
     ],
     styles: [

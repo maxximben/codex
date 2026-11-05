@@ -104,7 +104,7 @@ impl SidePaneLayout {
             crate::style::quiet_workspace_style(),
         );
         let inset = u16::from(composer_height > 1);
-        let draft = Text::from(format!("› {}", companion.display.draft));
+        let draft = Text::from(format!("❯ {}", companion.display.draft));
         let lines = crate::wrapping::word_wrap_lines(
             draft.lines,
             crate::wrapping::RtOptions::new(usize::from(composer.width))

@@ -7,7 +7,7 @@ expression: terminal.backend()
   Choose a local AI server for this
   session.
 
-› 1. LM Studio · ? Unknown              
+❯ 1. LM Studio · ? Unknown              
   2. Ollama · ? Unknown
 
   Local LM Studio server (default port

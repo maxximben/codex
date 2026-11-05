@@ -9,6 +9,6 @@ expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_wi
   will reconnect automatically.
 
 
-› 1. Return to command center
+❯ 1. Return to command center
 
   enter select · esc back

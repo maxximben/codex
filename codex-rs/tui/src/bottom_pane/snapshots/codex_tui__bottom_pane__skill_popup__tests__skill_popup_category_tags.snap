@@ -7,7 +7,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 32, height: 5 },
     content: [
         "                                ",
-        "› Shared  [App]                 ",
+        "❯ Shared  [App]                 ",
         "  Shared  [Skill]               ",
         "                                ",
         "  enter insert · esc close      ",
@@ -35,7 +35,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 72, height: 5 },
     content: [
         "                                                                        ",
-        "› Shared  [App] Secondary details                                       ",
+        "❯ Shared  [App] Secondary details                                       ",
         "  Shared  [Skill] Secondary details                                     ",
         "                                                                        ",
         "  enter insert · esc close                                              ",
@@ -63,7 +63,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 32, height: 5 },
     content: [
         "                                ",
-        "› Shared mention with a …  [App]",
+        "❯ Shared mention with a …  [App]",
         "  Shared mention with …  [Skill]",
         "                                ",
         "  enter insert · esc close      ",
@@ -90,7 +90,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 72, height: 5 },
     content: [
         "                                                                        ",
-        "› Shared mention with a ver...  [App] Secondary details                 ",
+        "❯ Shared mention with a ver...  [App] Secondary details                 ",
         "  Shared mention with a ver...  [Skill] Secondary details               ",
         "                                                                        ",
         "  enter insert · esc close                                              ",

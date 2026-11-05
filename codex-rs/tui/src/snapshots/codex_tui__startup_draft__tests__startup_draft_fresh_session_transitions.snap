@@ -9,7 +9,7 @@ before:
      loading
   Resuming session…
 
-› draft while loading
+❯ draft while loading
 
 
 after:
@@ -18,7 +18,7 @@ after:
      loading
 
 
-› draft while loading
+❯ draft while loading
 
 
 ---
@@ -29,7 +29,7 @@ before:
      loading
   Forking session…
 
-› draft while loading
+❯ draft while loading
 
 
 after:
@@ -38,7 +38,7 @@ after:
      loading
 
 
-› draft while loading
+❯ draft while loading
 
 
 ---
@@ -51,7 +51,7 @@ after:
      loading
 
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   ? for shortcuts
 ---
@@ -64,6 +64,6 @@ after:
      loading
 
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   ? for shortcuts

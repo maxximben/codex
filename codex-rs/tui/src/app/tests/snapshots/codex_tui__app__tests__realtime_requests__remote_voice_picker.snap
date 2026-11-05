@@ -13,6 +13,6 @@ expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_wi
   5. vale
   6. breeze
   7. arbor
-› 8. sol (current)
+❯ 8. sol (current)
 ↓
   enter select · esc back

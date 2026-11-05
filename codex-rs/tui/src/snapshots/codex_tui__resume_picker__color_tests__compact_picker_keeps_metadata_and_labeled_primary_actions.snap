@@ -9,7 +9,7 @@ Resume 118x30
 
  Type to search
 
-  › Session 1                                                                                                       
+  ❯ Session 1                                                                                                       
     now            fcoury/contrast                                                                                 
 
     Session 2
@@ -36,7 +36,7 @@ Resume 70x12
  Resume a previous session
  Filter: Cwd   Active  Sort: Updated 
  Type to search
-  › Session 1                                                       
+  ❯ Session 1                                                       
     now            fcoury/contrast                                 
 
     Session 2
@@ -48,7 +48,7 @@ Resume 38x12
  Resume a previous session
  Filter: Cwd   Active  Sort: Updated 
  Type to search
-  › Session 1                       
+  ❯ Session 1                       
     now            fcoury/contrast 
 
     Session 2
@@ -60,7 +60,7 @@ Fork 38x12
  Fork a previous session
  Filter: Cwd    Sort: Updated 
  Type to search
-  › Session 1                       
+  ❯ Session 1                       
     now            fcoury/contrast 
 
     Session 2

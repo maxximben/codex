@@ -16,5 +16,11 @@ limited color support use reverse video for the active label.
 Composer stars blend their foreground against the terminal palette while retaining
 the transparent background.
 
+User prompts and navigation markers use `❯`. Pinned prompts inherit the same text
+color and formatting as the original submitted message, including the marker.
+The working status uses lilac text with a smooth lighter-lilac sweep. Disabling
+animations or shimmer keeps the lilac base color without motion. Light terminal
+themes use deeper lilac shades for readable text.
+
 The same treatment applies to configuration groups, model and effort pickers,
 approvals, questions and other menus that use the shared picker components.

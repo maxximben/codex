@@ -9,7 +9,7 @@ expression: snapshot_buffer(&buf)
   choosing.                             
                                         
   Continue                              
-  › 1. True                             
+  ❯ 1. True                             
     2. False                            
                                         
                                         

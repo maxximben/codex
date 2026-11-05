@@ -7,7 +7,7 @@ expression: popup
   only in new tasks or after restarting the Codex server.
 
 
-› [x] Shell tool  Allow the model to run shell commands.
+❯ [x] Shell tool  Allow the model to run shell commands.
 
 
   space toggle · ⌃x enter save · esc save/close

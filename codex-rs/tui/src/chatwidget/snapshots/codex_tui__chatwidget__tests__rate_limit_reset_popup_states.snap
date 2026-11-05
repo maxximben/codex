@@ -6,7 +6,7 @@ expression: "states.join(\"\\n---\\n\")"
   Checking your available resets...
 
 
-›    Loading...
+❯    Loading...
 
   enter select · esc back
 ---
@@ -14,7 +14,7 @@ expression: "states.join(\"\\n---\\n\")"
   2 usage limit resets available.
 
 
-› 1. Full reset (Weekly + 5 hr)  Expires 09:39 on 18 Jun 2026
+❯ 1. Full reset (Weekly + 5 hr)  Expires 09:39 on 18 Jun 2026
   2. Full reset (Weekly + 5 hr)  Expires 08:59 on 27 Jun 2026
   3. Cancel
 
@@ -24,7 +24,7 @@ expression: "states.join(\"\\n---\\n\")"
   You don't have any usage limit resets available.
 
 
-› 1. Close
+❯ 1. Close
 
   enter select · esc back
 ---
@@ -32,7 +32,7 @@ expression: "states.join(\"\\n---\\n\")"
   Couldn't load usage limit resets. Please try again.
 
 
-› 1. Try again
+❯ 1. Try again
   2. Close
 
   enter select · esc back
@@ -41,13 +41,13 @@ expression: "states.join(\"\\n---\\n\")"
   Resetting your usage...
 
 
-›    Using a reset...
+❯    Using a reset...
 ---
   Usage limit resets
   Couldn't reset usage. Please try again.
 
 
-› 1. Try again
+❯ 1. Try again
   2. Close
 
   enter select · esc back
@@ -56,7 +56,7 @@ expression: "states.join(\"\\n---\\n\")"
   Your usage does not need a reset right now.
 
 
-› 1. Close
+❯ 1. Close
 
   enter select · esc back
 ---
@@ -64,7 +64,7 @@ expression: "states.join(\"\\n---\\n\")"
   No usage limit resets are available.
 
 
-› 1. Close
+❯ 1. Close
 
   enter select · esc back
 ---
@@ -72,12 +72,12 @@ expression: "states.join(\"\\n---\\n\")"
   Usage reset. Checking your remaining resets...
 
 
-›    Refreshing...
+❯    Refreshing...
 ---
   Usage limit resets
   Usage reset. You have 1 usage limit reset left.
 
 
-› 1. Close
+❯ 1. Close
 
   enter select · esc back

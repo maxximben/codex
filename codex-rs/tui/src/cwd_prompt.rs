@@ -478,7 +478,7 @@ mod tests {
             .draw(|frame| frame.render_widget_ref(&screen, frame.area()))
             .expect("render resized directory picker");
         let rendered = terminal.backend().to_string();
-        assert!(rendered.contains("› 4. Always use current directory"));
+        assert!(rendered.contains("❯ 4. Always use current directory"));
         assert!(rendered.contains("esc use session"));
         assert_eq!(screen.selection(), None);
         insta::assert_snapshot!(format!("cwd_picker_selected_{width}x{height}"), rendered);

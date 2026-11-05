@@ -5,18 +5,18 @@ expression: "snapshots.join(\"\\n---\\n\")"
 48×6:
 ────────────────────────────────────────────────
   Keymap
-   All   Common   Customized (3)             ›
+   All   Common   Customized (3)             ❯
   Type to search shortcuts
-› Action 00  Ctrl+0
+❯ Action 00  Ctrl+0
   left/right group · enter edit · esc close
 ---
 48×7:
 ────────────────────────────────────────────────
   Keymap
   All configurable shortcuts.
-   All   Common   Customized (3)             ›
+   All   Common   Customized (3)             ❯
   Type to search shortcuts
-› Action 00  Ctrl+0
+❯ Action 00  Ctrl+0
   left/right group · enter edit · esc close
 ---
 48×13:
@@ -24,11 +24,11 @@ expression: "snapshots.join(\"\\n---\\n\")"
   Keymap
   All configurable shortcuts.
 
-   All   Common   Customized (3)             ›
+   All   Common   Customized (3)             ❯
 
   Type to search shortcuts
 
-› Action 00  Ctrl+0
+❯ Action 00  Ctrl+0
   Action 01  Ctrl+1
   Action 02  Ctrl+2
 ↓───────────────────────────────────────────────
@@ -37,16 +37,16 @@ expression: "snapshots.join(\"\\n---\\n\")"
 24×6:
 ────────────────────────
   Keymap
-   All   Common      ›
+   All   Common      ❯
   Type to search short
-› Action 00  Ctrl+0
+❯ Action 00  Ctrl+0
   left/right group ·
 ---
 24×7:
 ────────────────────────
   Keymap
-   All   Common      ›
+   All   Common      ❯
   Type to search short
-› Action 00  Ctrl+0
+❯ Action 00  Ctrl+0
   left/right group ·
   enter edit · esc close

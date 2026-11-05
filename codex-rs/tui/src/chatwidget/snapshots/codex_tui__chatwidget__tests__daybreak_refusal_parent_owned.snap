@@ -8,6 +8,6 @@ expression: "format!(\"{}\\n{}\", lines_to_single_string(cells.last().unwrap()),
   on and try your request again.
   Learn more: https://help.openai.com/en/articles/20001326
 
-› Viewing sub-agent — direct input is disabled
+❯ Viewing sub-agent — direct input is disabled
 
   GPT-6.1-Sol default · /tmp/project

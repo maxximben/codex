@@ -464,7 +464,7 @@ async fn stopping_voice_preserves_the_live_transcript_once() {
         insta::allow_duplicates! {
             insta::assert_snapshot!(rendered.join("\n"), @r"
 
-            › Earlier question
+            ❯ Earlier question
 
             • Earlier answer
             • Answer in progress
@@ -733,7 +733,7 @@ async fn live_voice_split_flap_animates_without_changing_final_history() {
 }
 
 #[tokio::test]
-async fn spoken_user_transcript_preserves_red_chevron_and_canonical_history() {
+async fn spoken_user_transcript_preserves_chevron_and_canonical_history() {
     let (mut chat, _sender, mut events, _ops) = make_chatwidget_manual_with_sender().await;
     activate_voice(&mut chat);
     chat.on_realtime_transcript_delta("user".to_string(), " hello".to_string());
@@ -745,9 +745,9 @@ async fn spoken_user_transcript_preserves_red_chevron_and_canonical_history() {
         .display_lines(/*width*/ 32)
         .into_iter()
         .flat_map(|line| line.spans)
-        .find(|span| span.content == "›")
+        .find(|span| span.content == "❯")
         .expect("genuine spoken user marker");
-    assert_eq!(marker.style.fg, Some(ratatui::style::Color::Red));
+    assert_eq!(marker.style.fg, Some(ratatui::style::Color::Cyan));
     assert!(
         marker
             .style
@@ -768,7 +768,7 @@ async fn spoken_user_transcript_preserves_red_chevron_and_canonical_history() {
     assert!(
         cell.display_lines(/*width*/ 32)
             .iter()
-            .any(|line| line.to_string() == "› hello world")
+            .any(|line| line.to_string() == "❯ hello world")
     );
 }
 
@@ -839,7 +839,7 @@ async fn completed_user_caption_stays_visible_until_history_commit() {
     let visible = chat.active_cell_transcript_lines(/*width*/ 80).unwrap();
     insta::assert_snapshot!(visible.iter().map(ToString::to_string).collect::<Vec<_>>().join("\n"), @r"
 
-    › Keep these words visible.
+    ❯ Keep these words visible.
     ");
     assert!(chat.active_cell_transcript_key().is_some());
     let viewport = render_bottom_popup(&chat, /*width*/ 80);
@@ -911,13 +911,13 @@ async fn animated_interleaved_captions_keep_settled_words_visible() {
     insta::assert_snapshot!(settled.join("\n"), @"
     user first:
 
-    › Keep these words visible please
+    ❯ Keep these words visible please
 
 
     • Other speaker.
     assistant first:
 
-    › Other speaker.
+    ❯ Other speaker.
 
 
     • Keep these words visible please

@@ -161,7 +161,7 @@ async fn lost_mutation_reply_preserves_work_without_resubmitting() -> Result<()>
     );
     let rendered = render_bottom_popup(&app.chat_widget, /*width*/ 80);
     let draft = rendered
-        .split_once("› ")
+        .split_once("❯ ")
         .unwrap()
         .1
         .split("\n\n")
@@ -233,7 +233,7 @@ async fn disconnected_command_center_keeps_input_and_blocks_actions() -> Result<
         .await?;
     let searching =
         normalize_agent_center_snapshot(render_bottom_popup(&app.chat_widget, /*width*/ 100));
-    assert!(searching.contains("Search › search query!"));
+    assert!(searching.contains("Search ❯ search query!"));
     for key in [
         KeyEvent::new(KeyCode::Esc, KeyModifiers::NONE),
         KeyEvent::new(KeyCode::Char('n'), KeyModifiers::NONE),
@@ -260,7 +260,7 @@ async fn disconnected_command_center_keeps_input_and_blocks_actions() -> Result<
         ))
     );
     assert!(app.chat_widget.has_active_view());
-    assert!(!render_bottom_popup(&app.chat_widget, /*width*/ 100).contains("Search ›"));
+    assert!(!render_bottom_popup(&app.chat_widget, /*width*/ 100).contains("Search ❯"));
     assert_snapshot!("offline_command_center", searching);
     session.shutdown().await?;
     Ok(())
@@ -298,7 +298,7 @@ async fn disconnected_config_panel_keeps_input() -> Result<()> {
     app.handle_tui_event(&mut tui, &mut session, TuiEvent::Paste("heme".into()))
         .await?;
 
-    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("\n  Search › theme\n"));
+    assert!(render_bottom_popup(&app.chat_widget, /*width*/ 80).contains("\n  Search ❯ theme\n"));
 
     assert_eq!(app.chat_widget.local_settings.tui.terminal_title, None);
     app.chat_widget

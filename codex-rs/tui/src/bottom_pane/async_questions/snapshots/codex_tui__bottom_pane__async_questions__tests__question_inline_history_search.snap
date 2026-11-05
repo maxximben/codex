@@ -8,7 +8,7 @@ expression: buffer_text(&buffer)
 
     11. Option 11
     12. Option 12
-  › 13. earlier answer
+  ❯ 13. earlier answer
         reverse-i-search: e  enter accept · esc
 
   enter submit   ⌃] skip   option 13/13

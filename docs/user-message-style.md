@@ -15,7 +15,8 @@ dim = false
 
 Only sent messages are styled. The editable composer keeps its existing
 appearance. Restored conversations, older transcript pages, spoken user
-messages, and submitted answers to questions use the same preferences.
+messages, pinned prompts at the top of the transcript, and submitted answers to
+questions use the same preferences. The `❯` marker uses the message text color.
 
 `color` accepts `#RRGGBB` or these names:
 
@@ -30,8 +31,8 @@ the available terminal palette. The message background remains transparent.
 
 All settings are optional. Omitted modifiers preserve the original formatting;
 `true` enables a modifier and `false` explicitly disables it on message text.
-Display markers, attachment/link destinations, copied text, and the message
-sent to the model retain their existing contents.
+Attachment/link destinations, copied text, and the message sent to the model
+retain their existing contents; the `❯` marker is only a display decoration.
 
 Restart Codex after editing the configuration. Remove `[tui.user_message]` and
 its settings to restore the default text appearance.

@@ -6,7 +6,7 @@ expression: buffer_text(&buffer)
   2 of 2
   Second
 
-  › 1. Option 1 is long enough to wrap across
+  ❯ 1. Option 1 is long enough to wrap across
        rows
     2. Option 2 is long enough to wrap across
        rows

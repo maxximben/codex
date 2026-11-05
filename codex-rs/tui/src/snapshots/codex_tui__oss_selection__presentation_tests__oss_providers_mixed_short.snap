@@ -7,7 +7,7 @@ expression: terminal.backend()
 
   1. LM Studio · ○ Not
      running
-› 2. Ollama · ● Running     
+❯ 2. Ollama · ● Running     
 
   ↑/↓ choose · enter
   select · esc LM Studio ·

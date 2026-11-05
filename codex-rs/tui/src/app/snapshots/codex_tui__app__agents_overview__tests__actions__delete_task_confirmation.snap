@@ -7,7 +7,7 @@ expression: "render_bottom_popup(&app.chat_widget, 80)"
   ────────────────────────────────────────────────────────────────────────────
       Tasks                                            Status         Updated
   /tmp/project  1
-  › ○ Current task                                     Ready           2m ago
+  ❯ ○ Current task                                     Ready           2m ago
 
 
       Permanently delete “Current task”?
@@ -15,7 +15,7 @@ expression: "render_bottom_popup(&app.chat_widget, 80)"
       permanently deletes their history. This cannot be undone.
 
 
-    › 1. Cancel
+    ❯ 1. Cancel
       2. Permanently delete task and child agents
 
       enter select · esc back

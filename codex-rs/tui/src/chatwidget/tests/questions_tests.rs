@@ -613,7 +613,7 @@ async fn question_editor_keeps_working_status_and_queued_messages_visible() {
     chat.handle_key_event(KeyEvent::from(KeyCode::Esc));
     chat.bottom_pane.set_status_line_enabled(/*enabled*/ false);
     let completed = render_bottom_popup(&chat, /*width*/ 80);
-    let completed = completed.split("\n\n›").next().unwrap();
+    let completed = completed.split("\n\n❯").next().unwrap();
     insta::assert_snapshot!(
         "questions_with_status_and_queue",
         format!("OPEN\n{open}\n\nONLY QUESTIONS\n{completed}")

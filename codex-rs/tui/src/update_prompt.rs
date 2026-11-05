@@ -356,7 +356,7 @@ mod tests {
             .draw(|frame| frame.render_widget_ref(&screen, frame.area()))
             .expect("render resized update picker");
         let rendered = terminal.backend().to_string();
-        assert!(rendered.contains("› 3. Skip until next version"));
+        assert!(rendered.contains("❯ 3. Skip until next version"));
         let words = rendered.split_whitespace().collect::<Vec<_>>().join(" ");
         assert!(words.contains("enter continue · esc skip"));
         assert_eq!(screen.selection(), None);

@@ -8,7 +8,7 @@ expression: buffer_text(&buffer)
   after restarting the Codex server.
 
 
-› [x] Server network_proxy       Description supplied by the server.
+❯ [x] Server network_proxy       Description supplied by the server.
   [x] Server future_feature      Description supplied by the server.
   [x] Server prevent_idle_sleep  Description supplied by the server.
 

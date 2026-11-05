@@ -21,7 +21,7 @@ expression: normalize_snapshot_paths(expanded)
   Destination: /tmp/project/z-deleted.txt
 
 
-› 1. Yes, proceed (y)
+❯ 1. Yes, proceed (y)
   2. Yes, and don't ask again for these files (a)
   3. No, and tell Codex what to do differently (esc)
 

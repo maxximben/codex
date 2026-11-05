@@ -7,6 +7,6 @@ expression: "setup.replace(&chat.config.cwd.display().to_string(), \"[CWD]\")"
   └ Hang tight, this may take a few minutes
 
 
-› Input disabled until setup completes.
+❯ Input disabled until setup completes.
 
   GPT-5.6-Sol default · [CWD]

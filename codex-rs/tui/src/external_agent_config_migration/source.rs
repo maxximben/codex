@@ -178,7 +178,7 @@ impl WidgetRef for &ExternalAgentConfigSourceScreen {
         column.push("");
         for (index, source) in self.sources.iter().enumerate() {
             let prefix = if index == self.highlighted_idx {
-                "›"
+                "❯"
             } else {
                 " "
             };

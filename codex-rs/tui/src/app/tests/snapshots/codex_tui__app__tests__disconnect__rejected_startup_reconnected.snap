@@ -2,6 +2,6 @@
 source: tui/src/app/tests/disconnect_tests.rs
 expression: "render_bottom_popup(&app.chat_widget, 80)"
 ---
-› startup draft
+❯ startup draft
 
   gpt-retry high · /tmp/project

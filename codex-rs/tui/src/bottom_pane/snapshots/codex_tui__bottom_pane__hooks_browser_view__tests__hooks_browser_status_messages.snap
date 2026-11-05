@@ -6,7 +6,7 @@ expression: "render_lines(&view, 112)"
   PreToolUse hooks                                                                                              
   Turn hooks on or off. Your changes are saved automatically.                                                   
                                                                                                                 
-› [x]  1  检 查  🦀  shell commands                                                                                
+❯ [x]  1  检 查  🦀  shell commands                                                                                
   [ ]  2  Unnamed hook                                                                                          
   [x]  3  Unnamed hook                                                                                          
                                                                                                                 

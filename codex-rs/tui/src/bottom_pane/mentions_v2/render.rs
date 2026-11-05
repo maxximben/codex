@@ -207,7 +207,7 @@ fn build_line(
     let dim_style = Style::default().dim();
     let tag = row.mention_type.span(base_style);
     let tag_width = tag.width();
-    let gutter = if selected { "› " } else { "  " };
+    let gutter = if selected { "❯ " } else { "  " };
     let gutter_width = UnicodeWidthStr::width(gutter);
     let content_width =
         width.saturating_sub(gutter_width.saturating_add(tag_width).saturating_add(2));

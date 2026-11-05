@@ -273,7 +273,7 @@ async fn archiving_selects_the_next_displayed_task() -> Result<()> {
                     let rendered = render_bottom_popup(&app.chat_widget, /*width*/ 100);
                     let selected_row = rendered
                         .lines()
-                        .find(|line| line.trim_start().starts_with('›'))
+                        .find(|line| line.trim_start().starts_with('❯'))
                         .expect("selected task");
                     let selected_row = selected_row.split('│').next().unwrap().trim();
                     if !filtered && grouping == AgentsOverviewGrouping::Status {
@@ -514,7 +514,7 @@ async fn hiding_tasks_keeps_selection_adjacent_in_display_order() -> Result<()> 
                 let rendered = render_bottom_popup(&app.chat_widget, /*width*/ 100);
                 let selected_row = rendered
                     .lines()
-                    .find(|line| line.trim_start().starts_with('›'))
+                    .find(|line| line.trim_start().starts_with('❯'))
                     .expect("selected task row");
                 let selected_row = selected_row.split('│').next().unwrap().trim();
                 selections.push(format!(

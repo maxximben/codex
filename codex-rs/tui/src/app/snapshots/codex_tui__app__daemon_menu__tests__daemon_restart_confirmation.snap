@@ -15,7 +15,7 @@ expression: "render_bottom_popup(&app.chat_widget, 80)"
       Codex will reconnect automatically.
 
 
-    › 1. Cancel
+    ❯ 1. Cancel
       2. Restart
 
       enter select · esc back

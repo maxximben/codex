@@ -10,7 +10,7 @@ width=68
   server.
 
 
-› [x] First feature  A description that fits exactly at this
+❯ [x] First feature  A description that fits exactly at this
                      boundary.
   [ ] Last feature   Keep this choice visible.
 
@@ -25,7 +25,7 @@ width=69
   server.
 
 
-› [x] First feature  A description that fits exactly at this
+❯ [x] First feature  A description that fits exactly at this
                      boundary.
   [ ] Last feature   Keep this choice visible.
 
@@ -40,7 +40,7 @@ width=70
   server.
 
 
-› [x] First feature  A description that fits exactly at this boundary.
+❯ [x] First feature  A description that fits exactly at this boundary.
   [ ] Last feature   Keep this choice visible.
 
 ──────────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ width=71
   effect only in new tasks or after restarting the Codex server.
 
 
-› [x] First feature  A description that fits exactly at this boundary.
+❯ [x] First feature  A description that fits exactly at this boundary.
   [ ] Last feature   Keep this choice visible.
 
 ───────────────────────────────────────────────────────────────────────
@@ -66,7 +66,7 @@ width=72
   effect only in new tasks or after restarting the Codex server.
 
 
-› [x] First feature  A description that fits exactly at this boundary.
+❯ [x] First feature  A description that fits exactly at this boundary.
   [ ] Last feature   Keep this choice visible.
 
 ────────────────────────────────────────────────────────────────────────

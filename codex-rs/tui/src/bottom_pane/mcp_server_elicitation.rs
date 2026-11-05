@@ -913,7 +913,7 @@ impl McpServerElicitationOverlay {
             .enumerate()
             .map(|(idx, option)| {
                 let prefix = if selected_idx.is_some_and(|selected| selected == idx) {
-                    '›'
+                    '❯'
                 } else {
                     ' '
                 };

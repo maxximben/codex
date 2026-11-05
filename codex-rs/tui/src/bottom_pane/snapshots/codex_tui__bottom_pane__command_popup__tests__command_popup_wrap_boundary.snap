@@ -6,7 +6,7 @@ width 32
 Buffer {
     area: Rect { x: 0, y: 0, width: 32, height: 3 },
     content: [
-        "› /tier-one  Use faster         ",
+        "❯ /tier-one  Use faster         ",
         "             inference          ",
         "  /tier-two  Keep default speed ",
     ],
@@ -28,7 +28,7 @@ width 33
 Buffer {
     area: Rect { x: 0, y: 0, width: 33, height: 2 },
     content: [
-        "› /tier-one  Use faster inference",
+        "❯ /tier-one  Use faster inference",
         "  /tier-two  Keep default speed  ",
     ],
     styles: [
@@ -46,7 +46,7 @@ width 34
 Buffer {
     area: Rect { x: 0, y: 0, width: 34, height: 2 },
     content: [
-        "› /tier-one  Use faster inference ",
+        "❯ /tier-one  Use faster inference ",
         "  /tier-two  Keep default speed   ",
     ],
     styles: [

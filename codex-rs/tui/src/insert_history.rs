@@ -850,10 +850,10 @@ mod tests {
                     ));
                 }
                 insta::assert_snapshot!(snapshots.join("\n"), @"
-                PreWrap: › hello from voice
-                marker: Idx(1), text: Default, background: Idx(8)
-                Terminal: › hello from voice
-                marker: Idx(1), text: Default, background: Idx(8)
+                PreWrap: ❯ hello from voice
+                marker: Default, text: Default, background: Default
+                Terminal: ❯ hello from voice
+                marker: Default, text: Default, background: Default
                 ");
             },
         );
@@ -910,7 +910,7 @@ mod tests {
 
         assert!(message_rows.len() > 1, "expected wrapped URL: {rows:?}");
         assert!(
-            message_rows[0].1.starts_with("› "),
+            message_rows[0].1.starts_with("❯ "),
             "the first user-message row must retain its prompt: {rows:?}"
         );
         assert!(
@@ -926,7 +926,7 @@ mod tests {
                 .enumerate()
                 .map(|(index, (_, row))| {
                     if index == 0 {
-                        row.strip_prefix("› ").unwrap().trim()
+                        row.strip_prefix("❯ ").unwrap().trim()
                     } else {
                         row.trim()
                     }

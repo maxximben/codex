@@ -760,7 +760,7 @@ impl ListSelectionView {
             .filter_map(|(visible_idx, actual_idx)| {
                 self.active_items().get(*actual_idx).map(|item| {
                     let is_selected = self.state.selected_idx == Some(visible_idx);
-                    let prefix = if is_selected { '›' } else { ' ' };
+                    let prefix = if is_selected { '❯' } else { ' ' };
                     let name = item.name.as_str();
                     let marker = if item.is_current { " (current)" } else { "" };
                     let name_with_marker = format!("{name}{marker}");
@@ -1762,7 +1762,7 @@ impl Renderable for ListSelectionView {
                 self.search_query.clone().into()
             };
             if self.on_demand_search_active() {
-                let label = "Search › ";
+                let label = "Search ❯ ";
                 buf.set_style(search_area, crate::bottom_pane::active_tab_style());
                 Line::from(vec![label.bold(), query_span]).render(search_area, buf);
                 let cursor_offset = (label.width() + self.search_query.width())
@@ -2857,7 +2857,7 @@ mod tests {
 
         let rendered = render_lines_with_width(&view, /*width*/ 60);
         assert!(
-            rendered.contains("› 1. Alpha"),
+            rendered.contains("❯ 1. Alpha"),
             "expected first enabled row to be selected and numbered 1, got:\n{rendered}"
         );
         assert!(

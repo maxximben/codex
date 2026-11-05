@@ -6,7 +6,7 @@ expression: popup
   Choose how Codex uses and creates memories. Changes are saved to config.toml
 
 
-› [x] Use memories       Use memories starting with the next thread
+❯ [x] Use memories       Use memories starting with the next thread
   [ ] Generate memories  Generate memories from this thread and future threads
   Reset all memories     Clear local memory files and summaries without changing
                          existing threads

@@ -351,11 +351,11 @@ async fn live_center_columns() {
         let selected_row = buf
             .content
             .chunks(usize::from(area.width))
-            .find(|row| row.iter().any(|cell| cell.symbol() == "›"))
+            .find(|row| row.iter().any(|cell| cell.symbol() == "❯"))
             .unwrap();
         let marker = selected_row
             .iter()
-            .position(|cell| cell.symbol() == "›")
+            .position(|cell| cell.symbol() == "❯")
             .unwrap();
         selected_status_styles.push(format!(
             "{} | {:?}",
@@ -445,7 +445,7 @@ async fn live_center_metadata_clips_at_grapheme_boundaries() {
         /*selected_thread_id*/ None,
     );
     let input = format!("{}日本語 e\u{301} 👩\u{200d}💻", "界".repeat(/*n*/ 100_000));
-    for (key, label) in [('r', "Rename › "), ('/', "Search › ")] {
+    for (key, label) in [('r', "Rename ❯ "), ('/', "Search ❯ ")] {
         view.handle_key_event(KeyCode::Char(key).into());
         view.handle_paste(input.clone());
         let rendered = screen(&view, /*width*/ 40, /*height*/ 18);

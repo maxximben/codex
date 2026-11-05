@@ -13,7 +13,7 @@ struct PlainTranscriptCell(String);
 
 impl HistoryCell for PlainTranscriptCell {
     fn display_lines(&self, _width: u16) -> Vec<Line<'static>> {
-        vec![Line::from(vec![Span::raw("› "), Span::raw(self.0.clone())])]
+        vec![Line::from(vec![Span::raw("❯ "), Span::raw(self.0.clone())])]
     }
 
     fn raw_lines(&self) -> Vec<Line<'static>> {
@@ -59,18 +59,18 @@ fn split_flap_frames_assemble_a_transcript_from_dark_tiles() {
         .join("\n");
 
     insta::assert_snapshot!(frames, @r"
-      0ms ›
-     45ms › T
-     90ms › ATGG AG
-    180ms › GGTT ET GAT
-    285ms › GATE 73 TEG
-    675ms › GATE 73
+      0ms ❯
+     45ms ❯ T
+     90ms ❯ ATGG AG
+    180ms ❯ GGTT ET GAT
+    285ms ❯ GATE 73 TEG
+    675ms ❯ GATE 73
     ");
 
     let punctuated = cell("HELLO, WORLD?!", MotionMode::Animated);
     assert!(!frame(&punctuated, /*milliseconds*/ 90).contains(','));
     assert!(!frame(&punctuated, /*milliseconds*/ 180).contains(','));
-    assert_eq!(frame(&punctuated, /*milliseconds*/ 285), "› HELLO, WORLD?!");
+    assert_eq!(frame(&punctuated, /*milliseconds*/ 285), "❯ HELLO, WORLD?!");
     assert_ne!(
         frame(&board, /*milliseconds*/ 285),
         frame(&board, /*milliseconds*/ 330)
@@ -156,7 +156,7 @@ fn reduced_motion_keeps_the_original_transcript_and_requests_no_frames() {
         frame_requester,
     );
 
-    assert_eq!(cell.display_lines(/*width*/ 16)[0].to_string(), "› GATE 73");
+    assert_eq!(cell.display_lines(/*width*/ 16)[0].to_string(), "❯ GATE 73");
     assert_eq!(cell.transcript_animation_tick(), None);
     assert!(requests.try_recv().is_err());
 }
@@ -177,7 +177,7 @@ fn appended_transcript_keeps_the_previous_words_settled() {
         FrameRequester::test_dummy(),
     );
 
-    assert!(frame(&appended, /*milliseconds*/ 0).starts_with("› GATE "));
+    assert!(frame(&appended, /*milliseconds*/ 0).starts_with("❯ GATE "));
     assert_eq!(appended.phase_started_at, first.phase_started_at);
     assert_eq!(appended.tile_arrivals[..4], first.tile_arrivals);
 }
@@ -248,10 +248,10 @@ fn retained_words_stay_visible_while_the_new_window_tail_flips() {
         .join("\n");
 
     insta::assert_snapshot!(frames, @r"
-      0ms › GATE E  GAT
-    180ms › GATE 73 GAT
-    285ms › GATE 73 TEG
-    675ms › GATE 73
+      0ms ❯ GATE E  GAT
+    180ms ❯ GATE 73 GAT
+    285ms ❯ GATE 73 TEG
+    675ms ❯ GATE 73
     ");
 }
 
@@ -367,7 +367,7 @@ fn settled_split_flap_stops_scheduling_animation_frames() {
     assert_eq!(cell.transcript_animation_tick(), None);
     assert_eq!(
         cell.display_lines(/*width*/ 12)[0].to_string().trim_end(),
-        "› GATE"
+        "❯ GATE"
     );
     assert!(requests.try_recv().is_err());
 }

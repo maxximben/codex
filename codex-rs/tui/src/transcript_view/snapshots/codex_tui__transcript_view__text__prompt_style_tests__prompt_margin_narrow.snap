@@ -6,7 +6,7 @@ Buffer {
     area: Rect { x: 0, y: 0, width: 20, height: 8 },
     content: [
         "                    ",
-        "› 12345678901234567 ",
+        "❯ 12345678901234567 ",
         "  89012345678901234 ",
         "  56789012345678901 ",
         "  2345678           ",
@@ -16,7 +16,7 @@ Buffer {
     ],
     styles: [
         x: 0, y: 0, fg: Reset, bg: DarkGray, underline: Reset, modifier: NONE,
-        x: 0, y: 1, fg: Reset, bg: DarkGray, underline: Reset, modifier: BOLD | DIM,
+        x: 0, y: 1, fg: Reset, bg: DarkGray, underline: Reset, modifier: BOLD,
         x: 2, y: 1, fg: Reset, bg: DarkGray, underline: Reset, modifier: NONE,
     ]
 }

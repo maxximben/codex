@@ -7,6 +7,6 @@ expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_wi
   start failed: replacement unavailable (code -32603)
 
 
-› 1. Return to command center
+❯ 1. Return to command center
 
   enter select · esc back

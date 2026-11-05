@@ -2613,7 +2613,7 @@ fn render_uses_wrapping_for_long_url_like_line() {
         .enumerate()
         .map(|(index, row)| {
             if index == 0 {
-                row.strip_prefix("› ").unwrap().trim()
+                row.strip_prefix("❯ ").unwrap().trim()
             } else {
                 row.trim()
             }

@@ -10,7 +10,7 @@ expression: "render_lines(&view, 40)"
   Trusting hooks...
 
 
-›    Review hooks
+❯    Review hooks
      Trust all and continue
      Continue without trusting (hooks
      won't run)

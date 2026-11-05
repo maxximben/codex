@@ -8,7 +8,7 @@ NORMAL
   Which way?
 
     1. Named
-  › 2. alpha beta
+  ❯ 2. alpha beta
        alpha gamma
                                                                    Vim: Normal
   enter submit   ⌃] skip   ⇧→ main prompt
@@ -19,7 +19,7 @@ SEARCH
   Which way?
 
     1. Named
-  › 2. alpha beta
+  ❯ 2. alpha beta
        alpha gamma
        /gamma
                                                                    Vim: Normal

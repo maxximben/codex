@@ -7,7 +7,7 @@ expression: buffer_text(&buffer)
 
     1. A suggested answer that is long enough to
        wrap across multiple rows
-  › 2. long draft
+  ❯ 2. long draft
        long draft
        long draft
        long draft

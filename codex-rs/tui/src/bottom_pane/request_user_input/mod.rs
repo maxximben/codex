@@ -436,7 +436,7 @@ impl RequestUserInputOverlay {
                     .enumerate()
                     .map(|(idx, opt)| {
                         let selected = selected_idx.is_some_and(|sel| sel == idx);
-                        let prefix = if selected { '›' } else { ' ' };
+                        let prefix = if selected { '❯' } else { ' ' };
                         let label = opt.label.as_str();
                         let number = idx + 1;
                         let prefix_label = format!("{prefix} {number}. ");
@@ -454,7 +454,7 @@ impl RequestUserInputOverlay {
                 if Self::other_option_enabled_for_question(question) {
                     let idx = options.len();
                     let selected = selected_idx.is_some_and(|sel| sel == idx);
-                    let prefix = if selected { '›' } else { ' ' };
+                    let prefix = if selected { '❯' } else { ' ' };
                     let number = idx + 1;
                     let prefix_label = format!("{prefix} {number}. ");
                     let wrap_indent = UnicodeWidthStr::width(prefix_label.as_str());
@@ -1008,7 +1008,7 @@ impl RequestUserInputOverlay {
             .iter()
             .enumerate()
             .map(|(idx, (label, description))| {
-                let prefix = if idx == selected { '›' } else { ' ' };
+                let prefix = if idx == selected { '❯' } else { ' ' };
                 let number = idx + 1;
                 GenericDisplayRow {
                     selection_style: Some(crate::bottom_pane::selection_style()),
@@ -3588,7 +3588,7 @@ mod tests {
 
         let rendered = render_snapshot(&overlay, Rect::new(0, 0, 80, 20));
         assert!(
-            rendered.contains("› 3. Use Detailed Hint C"),
+            rendered.contains("❯ 3. Use Detailed Hint C"),
             "expected selected option to be visible in viewport\n{rendered}"
         );
     }
@@ -3813,7 +3813,7 @@ mod tests {
           Question 1/1 (1 unanswered)
           Share details.
 
-          › Type your answer (optional)
+          ❯ Type your answer (optional)
 
 
 

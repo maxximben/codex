@@ -254,7 +254,7 @@ async fn completion_failed_and_interrupted_turns_do_not_report_success() {
 fn completion_snapshot_normalization_preserves_clock_only_message_lines() {
     let timestamp = "Sep 6, 2000 at 2:32 PM";
     let transcript = format!(
-        "› {timestamp}\n• {timestamp}\n  └ {timestamp}\n  The job was done {timestamp}\n  {timestamp} is the expected text\n  Worked for 2m 5s · {timestamp} is quoted\n\n  3:24 PM\n  Worked for 1h 2m 3s · {timestamp}\n"
+        "❯ {timestamp}\n• {timestamp}\n  └ {timestamp}\n  The job was done {timestamp}\n  {timestamp} is the expected text\n  Worked for 2m 5s · {timestamp} is quoted\n\n  3:24 PM\n  Worked for 1h 2m 3s · {timestamp}\n"
     );
     let message = history_cell::PlainHistoryCell::new(
         transcript

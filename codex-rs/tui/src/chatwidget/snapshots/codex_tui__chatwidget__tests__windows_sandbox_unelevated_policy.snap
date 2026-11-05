@@ -6,7 +6,7 @@ expression: "render_bottom_popup(&chat, 100)"
   <https://developers.openai.com/codex/windows>
 
 
-› 1. Use non-admin sandbox (higher risk if prompt injected)
+❯ 1. Use non-admin sandbox (higher risk if prompt injected)
   2. Quit
 
   enter select · esc back

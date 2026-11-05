@@ -230,6 +230,22 @@ impl UserHistoryCell {
         matches!(self.presentation, UserMessagePresentation::Spoken)
     }
 
+    /// Resolve the same configured foreground for history, its gutter, and pinned context.
+    pub(crate) fn resolved_text_style(&self) -> Style {
+        let mut style = self.text_style;
+        if let Some(Color::Rgb(r, g, b)) = style.fg {
+            style = style.fg(crate::terminal_palette::best_color((r, g, b)));
+        }
+        style
+    }
+
+    pub(crate) fn prompt_marker(&self) -> Span<'static> {
+        Span::styled(
+            "❯ ",
+            Style::default().bold().patch(self.resolved_text_style()),
+        )
+    }
+
     pub(crate) fn has_visible_content(&self) -> bool {
         !sanitize_user_text(Cow::Borrowed(&self.message))
             .trim()
@@ -280,10 +296,7 @@ impl HistoryCell for UserHistoryCell {
         let style = history_prompt_style();
         let element_style = user_message_element_style(style, accent_color_on(style.bg));
 
-        let mut text_style = self.text_style;
-        if let Some(Color::Rgb(r, g, b)) = text_style.fg {
-            text_style = text_style.fg(crate::terminal_palette::best_color((r, g, b)));
-        }
+        let text_style = self.resolved_text_style();
         let mut wrapped_images = plain_hyperlink_lines(adaptive_wrap_lines(
             self.image_labels_not_in_message()
                 .map(|label| Line::from(label).style(element_style)),
@@ -292,18 +305,13 @@ impl HistoryCell for UserHistoryCell {
         ));
         apply_user_text_style(&mut wrapped_images, text_style);
 
-        let mut wrapped_message =
+        let wrapped_message =
             if let UserMessagePresentation::AsyncReplies { replies, cwd } = &self.presentation {
                 super::async_replies::render(replies, cwd, usize::from(wrap_width), text_style)
             } else {
-                let marker = if self.is_spoken() {
-                    "› ".red().bold()
-                } else {
-                    "› ".bold().dim()
-                };
                 let mut body = wrap_user_message(message, text_elements, style, wrap_width);
                 apply_user_text_style(&mut body, text_style);
-                prefix_hyperlink_lines(body, marker, "  ".into())
+                prefix_hyperlink_lines(body, self.prompt_marker(), "  ".into())
             };
         if wrapped_images.is_empty() && wrapped_message.is_empty() {
             return Vec::new();
@@ -318,13 +326,6 @@ impl HistoryCell for UserHistoryCell {
             if !wrapped_message.is_empty() {
                 lines.push(HyperlinkLine::new(Line::from("").style(style)));
             }
-        }
-        if self.is_spoken()
-            && let Some(first) = wrapped_message.first_mut()
-        {
-            // Wrapping already applied the foreground to the text. Native history
-            // applies line styles over spans, so leave the voice marker's color intact.
-            first.line.style.fg = None;
         }
         lines.extend(wrapped_message);
         lines.push(HyperlinkLine::new(Line::from("").style(style)));
@@ -343,21 +344,7 @@ impl HistoryCell for UserHistoryCell {
     }
 
     fn transcript_hyperlink_lines(&self, width: u16) -> Vec<HyperlinkLine> {
-        let mut lines = self.display_hyperlink_lines(width);
-        if self.is_spoken() {
-            for line in &mut lines {
-                if let Some(source) = &line.source {
-                    line.line.style.fg = source.line_style.fg;
-                }
-            }
-            if self.text_style != Style::default() {
-                lines = lines
-                    .into_iter()
-                    .map(HyperlinkLine::resolve_span_styles)
-                    .collect();
-            }
-        }
-        lines
+        self.display_hyperlink_lines(width)
     }
 
     fn raw_lines(&self) -> Vec<Line<'static>> {

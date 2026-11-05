@@ -3558,7 +3558,7 @@ async fn handle_start_side_seeds_navigation_before_thread_started() -> Result<()
                 let buffer = tui.terminal.previous_buffer();
                 let divider = 62;
                 let row = (0..size.height)
-                    .find(|&y| buffer[(divider + 2, y)].symbol() == "›")
+                    .find(|&y| buffer[(divider + 2, y)].symbol() == "❯")
                     .expect("right composer prompt");
                 let snapshot_row = |y| {
                     (divider..=divider + 2)
@@ -3692,10 +3692,10 @@ async fn open_agent_picker_prompts_when_subagents_disabled() -> Result<()> {
     Box::pin(app.open_agent_picker(&mut app_server)).await;
     assert_snapshot!(render_bottom_popup(&app.chat_widget, /*width*/ 80), @r###"
           Enable subagents?
-    › As  Subagents are disabled in this TUI session.
+    ❯ As  Subagents are disabled in this TUI session.
 
       gp
-        › 1. Yes, enable  Save on the server for new threads without changing
+        ❯ 1. Yes, enable  Save on the server for new threads without changing
                           this thread
           2. Not now      Keep subagents disabled
 

@@ -49,7 +49,7 @@ impl ExternalAgentConfigMigrationScreen {
             let mut line = entry.line.clone();
             if selected {
                 if let Some(cursor) = line.spans.first_mut() {
-                    cursor.content = "› ".into();
+                    cursor.content = "❯ ".into();
                 }
                 line.spans.iter_mut().for_each(|span| {
                     span.style = selection_style();

@@ -7,6 +7,6 @@ expression: "render_bottom_popup(&app.chat_widget, 80)"
   Close the side conversation before forking another task.
 
 
-› 1. Return to command center
+❯ 1. Return to command center
 
   enter select · esc back

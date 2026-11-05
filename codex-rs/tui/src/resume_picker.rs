@@ -3531,7 +3531,7 @@ fn dense_column_text(text: &str, width: usize) -> String {
 fn selection_marker(is_selected: bool, is_expanded: bool) -> Span<'static> {
     match (is_selected, is_expanded) {
         (true, true) => "⌄ ".set_style(selected_session_style().bold()),
-        (true, false) => "› ".set_style(selected_session_style()),
+        (true, false) => "❯ ".set_style(selected_session_style()),
         (false, _) => "  ".into(),
     }
 }
@@ -6372,7 +6372,7 @@ session_picker_view = "dense"
 
         assert_eq!(line.width(), 80);
         assert_eq!(line.style.fg, selected_session_style().fg);
-        assert_eq!(line.spans[0].content, "› ");
+        assert_eq!(line.spans[0].content, "❯ ");
     }
 
     #[test]

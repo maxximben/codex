@@ -34,7 +34,7 @@ async fn review_picker_filtered_accept_and_cancel_preserve_parent_and_draft() {
     chat.handle_key_event(KeyEvent::from(KeyCode::Char('a')));
     chat.handle_key_event(KeyEvent::from(KeyCode::F(/*n*/ 2)));
     let parent = render_bottom_popup(&chat, /*width*/ 80);
-    assert!(parent.contains("› 3. Review a commit"), "{parent}");
+    assert!(parent.contains("❯ 3. Review a commit"), "{parent}");
     assert!(parent.contains("f3 select · f2 back"), "{parent}");
     chat.handle_key_event(KeyEvent::from(KeyCode::F(/*n*/ 3)));
     assert_matches!(rx.try_recv(), Ok(AppEvent::OpenReviewCommitPicker(_)));

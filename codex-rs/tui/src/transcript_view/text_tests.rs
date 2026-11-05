@@ -222,7 +222,7 @@ fn empty_logical_lines_keep_their_hard_breaks() {
 fn source_provenance_preserves_spaces_and_excludes_gutters() {
     let source = "alpha   beta gamma";
     let lines = adaptive_wrap_hyperlink_lines(&[source.into()], RtOptions::new(/*width*/ 10));
-    let lines = prefix_hyperlink_lines(lines, "› ".bold(), "  ".into());
+    let lines = prefix_hyperlink_lines(lines, "❯ ".bold(), "  ".into());
     let layout = TextLayout::new(lines, /*width*/ 12);
     assert_eq!(layout.text(), source);
     assert_eq!(layout.position_at(/*row*/ 0, /*column*/ 0), 0);
@@ -237,7 +237,7 @@ fn selected_revision_rewraps_both_directions_with_styles_and_indents() {
     let lines = adaptive_wrap_hyperlink_lines(
         &[source],
         RtOptions::new(/*width*/ 10)
-            .initial_indent("› ".into())
+            .initial_indent("❯ ".into())
             .subsequent_indent("  ".into()),
     );
     let narrow = TextLayout::new(lines, /*width*/ 10);

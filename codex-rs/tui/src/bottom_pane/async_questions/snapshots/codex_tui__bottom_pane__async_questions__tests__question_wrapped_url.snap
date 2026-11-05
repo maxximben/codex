@@ -8,7 +8,7 @@ expression: "crate::terminal_hyperlinks::strip_osc8(&buffer_text(&buffer))"
   (https://github.com/openai/codex/
   pull/12345?diff=split)?
 
-  › 1. Named
+  ❯ 1. Named
     2. Other
 
   enter submit   ⌃] skip

@@ -159,7 +159,7 @@ impl WidgetRef for &FileSearchPopup {
                         name,
                         name_prefix_spans: vec![
                             if self.state.selected_idx == Some(idx) {
-                                "› "
+                                "❯ "
                             } else {
                                 "  "
                             }

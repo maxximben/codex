@@ -7,7 +7,7 @@ expression: "render_bottom_popup(&chat, 120)"
   Learn more <https://developers.openai.com/codex/windows>
 
 
-› 1. Set up default sandbox (requires Administrator permissions)
+❯ 1. Set up default sandbox (requires Administrator permissions)
   2. Quit
 
   enter select · esc back

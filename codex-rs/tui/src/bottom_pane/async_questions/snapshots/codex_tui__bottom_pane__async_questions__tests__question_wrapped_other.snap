@@ -8,7 +8,7 @@ expression: buffer_text(&buffer)
     1. A suggested answer that is
        long enough to wrap across
        multiple rows
-  › 2. An alternative answer that
+  ❯ 2. An alternative answer that
        wraps across several option
        rows
 

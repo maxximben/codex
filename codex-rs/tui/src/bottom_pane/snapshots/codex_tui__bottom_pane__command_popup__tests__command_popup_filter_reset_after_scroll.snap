@@ -5,7 +5,7 @@ expression: "format!(\"{buf:?}\")"
 Buffer {
     area: Rect { x: 0, y: 0, width: 72, height: 3 },
     content: [
-        "› /status      show current session configuration and token usage       ",
+        "❯ /status      show current session configuration and token usage       ",
         "  /statusline  configure which items appear in the status line          ",
         "  /stop        stop all background terminals                            ",
     ],

@@ -5,6 +5,6 @@ expression: "reconnect_status.replace(&render_bottom_popup(&app.chat_widget, 80)
 • Reconnecting to server… (<elapsed>)
 
 
-› startup draft
+❯ startup draft
 
   ⌃c quit

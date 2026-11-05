@@ -93,7 +93,7 @@ async fn marketplace_upgrade_loading_popup_snapshot() {
         .join(" | ");
     insta::assert_snapshot!(
         upgrade_lines,
-        @"Upgrading debug marketplace... | ›    Upgrading debug marketplace...  This updates when marketplace upgrade completes"
+        @"Upgrading debug marketplace... | ❯    Upgrading debug marketplace...  This updates when marketplace upgrade completes"
     );
 }
 
@@ -1233,7 +1233,7 @@ async fn plugins_popup_remote_section_fallback_states_when_remote_plugin_disable
             .expect("expected remote section header");
         let item = popup
             .lines()
-            .find_map(|line| line.trim_start().strip_prefix('›'))
+            .find_map(|line| line.trim_start().strip_prefix('❯'))
             .expect("expected selected remote section item")
             .trim();
         format!("{header}\n{item}")
@@ -1518,7 +1518,7 @@ async fn plugins_popup_refresh_preserves_selected_row_position() {
 
     let before = render_bottom_popup(&chat, /*width*/ 100);
     assert!(
-        before.contains("› [-] Slack"),
+        before.contains("❯ [-] Slack"),
         "expected Slack to be selected before refresh, got:\n{before}"
     );
 
@@ -1556,7 +1556,7 @@ async fn plugins_popup_refresh_preserves_selected_row_position() {
 
     let after = render_bottom_popup(&chat, /*width*/ 100);
     assert!(
-        after.contains("› [-] Notion"),
+        after.contains("❯ [-] Notion"),
         "expected refresh to preserve the selected row position, got:\n{after}"
     );
     assert!(
@@ -1712,7 +1712,7 @@ async fn plugins_popup_toggle_keys_preserve_search_and_selection() {
     assert_chatwidget_snapshot!("plugins_popup_toggle_refresh_preserves_search", popup);
     assert!(
         popup.lines().any(|line| line.trim() == "dr")
-            && popup.contains("› [*] Drive")
+            && popup.contains("❯ [*] Drive")
             && popup.contains("Tab to disable"),
         "expected the filtered plugin and search query to survive refresh, got:\n{popup}"
     );
@@ -2587,7 +2587,7 @@ async fn apps_popup_preserves_selected_app_across_refresh() {
 
     let before = render_bottom_popup(&chat, /*width*/ 80);
     assert!(
-        before.contains("› Slack"),
+        before.contains("❯ Slack"),
         "expected Slack to be selected before refresh, got:\n{before}"
     );
 
@@ -2652,11 +2652,11 @@ async fn apps_popup_preserves_selected_app_across_refresh() {
 
     let after = render_bottom_popup(&chat, /*width*/ 80);
     assert!(
-        after.contains("› Slack"),
+        after.contains("❯ Slack"),
         "expected Slack to stay selected after refresh, got:\n{after}"
     );
     assert!(
-        !after.contains("› Notion"),
+        !after.contains("❯ Notion"),
         "did not expect selection to reset to Notion after refresh, got:\n{after}"
     );
 }

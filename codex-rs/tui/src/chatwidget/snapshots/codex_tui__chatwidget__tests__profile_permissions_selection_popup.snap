@@ -5,7 +5,7 @@ expression: "render_bottom_popup(&chat, 80)"
   Update Model Permissions
 
 
-› 1. Ask for approval (current)  Read and edit workspace files and run commands,
+❯ 1. Ask for approval (current)  Read and edit workspace files and run commands,
                                  with approval required for internet access or
                                  edits outside the workspace
   2. Approve for me              Only ask for actions detected as potentially

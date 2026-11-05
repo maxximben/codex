@@ -12,6 +12,6 @@ expression: "terminal.backend().to_string().replace('\\\\', \"/\")"
   Continue only if you trust these
   files. Your trust decision will be
   saved.
-› 1. Trust and continue                 
+❯ 1. Trust and continue                 
   2. Quit
   enter continue · esc quit

@@ -169,7 +169,7 @@ impl SkillPopup {
                     name,
                     name_prefix_spans: vec![
                         if self.state.selected_idx == Some(visible_idx) {
-                            "› "
+                            "❯ "
                         } else {
                             "  "
                         }

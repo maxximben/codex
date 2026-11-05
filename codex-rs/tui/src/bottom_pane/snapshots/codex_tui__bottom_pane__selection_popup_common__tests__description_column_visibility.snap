@@ -4,13 +4,13 @@ assertion_line: 838
 expression: "snapshots.join(\"\\n\\n\")"
 ---
 width=48
-› 1. 日 本 語
+❯ 1. 日 本 語
   2. Blocked (disabled)
 
 width=49
-› 1. 日 本 語               Details
+❯ 1. 日 本 語               Details
   2. Blocked (disabled)  Unavailable
 
 width=80
-› 1. 日 本 語               Details
+❯ 1. 日 本 語               Details
   2. Blocked (disabled)  Unavailable

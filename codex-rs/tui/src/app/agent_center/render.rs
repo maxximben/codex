@@ -110,7 +110,7 @@ impl Renderable for AgentsOverviewView {
                 return state.input.cursor_pos(area);
             }
             let input = &state.search;
-            let prefix = "Search › ";
+            let prefix = "Search ❯ ";
             let available = usize::from(layout.search.width).saturating_sub(prefix.width() + 1);
             return Some((
                 layout.search.x
@@ -191,14 +191,14 @@ impl Renderable for AgentsOverviewView {
         if state.editing_metadata() {
             buf.set_style(layout.search, crate::bottom_pane::active_tab_style());
             if state.rename_target.is_some() {
-                line("Rename › ".cyan().bold(), layout.search, buf);
+                line("Rename ❯ ".cyan().bold(), layout.search, buf);
                 let mut area = layout.search;
                 let prefix_width = 9.min(area.width);
                 area.x += prefix_width;
                 area.width -= prefix_width;
                 WidgetRef::render_ref(&&state.input, area, buf);
             } else {
-                let label = "Search › ";
+                let label = "Search ❯ ";
                 let available = usize::from(layout.search.width).saturating_sub(label.width() + 1);
                 line(
                     vec![

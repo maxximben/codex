@@ -9,7 +9,7 @@ empty (48 columns):
      loading
 
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   ? for shortcuts
 ---
@@ -19,7 +19,7 @@ configured (48 columns):
      workspace
 
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   ? for shortcuts
 ---
@@ -29,7 +29,7 @@ resuming (48 columns):
      loading
   Resuming session…
 
-› Ask Codex to do anything
+❯ Ask Codex to do anything
 
   ? for shortcuts
 ---
@@ -39,7 +39,7 @@ forking (48 columns):
      loading
   Forking session…
 
-› draft while loading
+❯ draft while loading
 
 
 ---
@@ -49,7 +49,7 @@ multiline (48 columns):
      loading
 
 
-› first startup line
+❯ first startup line
   second startup line
 
 
@@ -60,7 +60,7 @@ narrow (18 columns):
      loading
 
 
-› first startup
+❯ first startup
   line
   second startup
   line

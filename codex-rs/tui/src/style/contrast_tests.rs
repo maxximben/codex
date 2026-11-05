@@ -24,7 +24,7 @@ fn selection_text_stays_readable_after_palette_conversion() {
             );
             let mut buffer = Buffer::empty(area);
             buffer.set_style(area, Style::default().dim());
-            Line::from("› resume")
+            Line::from("❯ resume")
                 .style(selection_style(Some(background), level))
                 .render(area, &mut buffer);
             let cell = &buffer[(0, 0)];
@@ -60,7 +60,7 @@ fn selection_uses_terminal_defaults_without_a_known_palette() {
         );
         let mut buffer = Buffer::empty(area);
         buffer.set_style(area, Style::default().red().bg(Color::Yellow).dim());
-        Line::from("›")
+        Line::from("❯")
             .style(selection_style(background, level))
             .render(area, &mut buffer);
         let cell = &buffer[(0, 0)];

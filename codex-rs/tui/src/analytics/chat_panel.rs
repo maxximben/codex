@@ -95,7 +95,7 @@ impl AnalyticsView {
                 };
                 let label = format!(
                     "{} {}",
-                    if selected { "›" } else { " " },
+                    if selected { "❯" } else { " " },
                     chat.display_title()
                 );
                 let label: Line<'static> = if selected {

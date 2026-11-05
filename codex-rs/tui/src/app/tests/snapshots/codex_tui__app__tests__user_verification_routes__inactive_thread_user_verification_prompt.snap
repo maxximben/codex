@@ -11,7 +11,7 @@ expression: "render_bottom_popup(&app.chat_widget, 80)"
   Verify the production deployment.
 
 
-› 1. Verify and approve (y)
+❯ 1. Verify and approve (y)
   2. Cancel this request (c)
 
   Press enter to confirm or esc to cancel

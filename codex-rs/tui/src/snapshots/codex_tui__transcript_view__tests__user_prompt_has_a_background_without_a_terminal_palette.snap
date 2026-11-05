@@ -8,16 +8,15 @@ Buffer {
         "                                ",
         "  [Image #1]                    ",
         "                                ",
-        "› First steering message        ",
+        "❯ First steering message        ",
         "                                ",
         "                                ",
         "                                ",
         "                                ",
     ],
     styles: [
-        x: 0, y: 0, fg: Reset, bg: DarkGray, underline: Reset, modifier: NONE,
-        x: 0, y: 3, fg: Reset, bg: DarkGray, underline: Reset, modifier: BOLD | DIM,
-        x: 2, y: 3, fg: Reset, bg: DarkGray, underline: Reset, modifier: NONE,
-        x: 0, y: 5, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+        x: 0, y: 0, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
+        x: 0, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: BOLD,
+        x: 2, y: 3, fg: Reset, bg: Reset, underline: Reset, modifier: NONE,
     ]
 }

@@ -5117,7 +5117,7 @@ fn session_lifecycle_avoids_redundant_subagent_metadata_reads() -> Result<()> {
                       Select an agent to watch. ⌥← previous, ⌥→ next.
 
 
-                    › 1. • Main [default] (current)  [root]
+                    ❯ 1. • Main [default] (current)  [root]
                       2. • /root/worker              [child]
 
                       enter select · esc back
@@ -5448,7 +5448,7 @@ async fn command_center_read_only_open_requests_and_failure_preservation() -> Re
                   Couldn't load this conversation. Please try again.
 
 
-                › 1. Return to command center
+                ❯ 1. Return to command center
 
                   enter select · esc back
                 ");

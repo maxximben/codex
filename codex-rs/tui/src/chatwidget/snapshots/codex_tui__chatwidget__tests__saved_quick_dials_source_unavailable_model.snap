@@ -7,7 +7,7 @@ expression: "render_bottom_popup(&chat, 80)"
 
      Current model           Choose an available reasoning effort with /model
                              before saving.
-› 1. Current permissions     /permissions :workspace --approval-policy=on-
+❯ 1. Current permissions     /permissions :workspace --approval-policy=on-
                              request --reviewer=auto_review
      Current terminal title  Choose available terminal-title items with /title
                              before saving.

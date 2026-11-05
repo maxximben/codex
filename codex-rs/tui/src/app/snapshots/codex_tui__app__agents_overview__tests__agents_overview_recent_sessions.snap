@@ -8,7 +8,7 @@ expression: "age.replace_all(&rendered, \" [age]\")"
   ────────────────────────────────────────────────────────────────────────────
       Tasks                                            Status         Updated
   /  10
-  › ○ Task 12                                          Inactive [age]
+  ❯ ○ Task 12                                          Inactive [age]
     ○ Task 11                                          Inactive [age]
     ○ Task 10                                          Inactive [age]
     ○ Task 9                                           Inactive [age]

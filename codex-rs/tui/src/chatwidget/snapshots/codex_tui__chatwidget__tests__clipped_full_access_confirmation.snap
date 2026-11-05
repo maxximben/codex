@@ -10,7 +10,7 @@ specialty=None 40x10
     your computer and run commands
     with network, without your
     [… 10 lines]
-  › 1. Yes, continue anyway
+  ❯ 1. Yes, continue anyway
     2. Cancel
     enter select · esc back
 
@@ -28,6 +28,6 @@ specialty=Some("cyber") 40x16
     of dangerous actions. Ensure
     proper safeguards are in place
     [… 14 lines]
-  › 1. Yes, continue anyway
+  ❯ 1. Yes, continue anyway
     2. Cancel
     enter select · esc back

@@ -1130,7 +1130,7 @@ mod tests {
                 Paragraph::new(vec![
                     Line::default(),
                     Line::default(),
-                    Line::from(vec!["›".bold(), " ".into(), "/resume".dim()]),
+                    Line::from(vec!["❯".bold(), " ".into(), "/resume".dim()]),
                 ])
                 .render(frame.area(), frame.buffer_mut());
             })
@@ -1146,7 +1146,7 @@ mod tests {
                         Line::default(),
                         Line::default(),
                         Line::from(vec![
-                            "›".bold(),
+                            "❯".bold(),
                             " ".into(),
                             "Ask Codex to do anything".dim(),
                         ]),
@@ -1171,7 +1171,7 @@ mod tests {
 
 
 
-        › Ask Codex to do anything
+        ❯ Ask Codex to do anything
         ");
     }
 

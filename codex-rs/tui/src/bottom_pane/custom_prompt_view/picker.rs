@@ -82,7 +82,7 @@ impl CustomPromptView {
             if self.textarea.text().is_empty() {
                 Paragraph::new(self.placeholder.as_str().dim()).render(areas.input, buf);
             }
-            Line::from("›".fg(accent_color())).render(
+            Line::from("❯".fg(accent_color())).render(
                 Rect {
                     x: area.x,
                     width: 1,

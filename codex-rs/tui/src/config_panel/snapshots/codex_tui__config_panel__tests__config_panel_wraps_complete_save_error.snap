@@ -7,14 +7,14 @@ expression: "render(&panel, 50)"
   Failed to save status line settings:
   permission denied while writing config.toml
 
-   Appearance   Notifications   Input          ›
+   Appearance   Notifications   Input          ❯
 
-› Theme                   Automatic ›
-  Effects                 Configure ›
+❯ Theme                   Automatic ❯
+  Effects                 Configure ❯
   Tips                    [ ] Off
   Status line colors      [ ] Off
-  Status line display     Configure ›
-  Terminal title display  Configure ›
+  Status line display     Configure ❯
+  Terminal title display  Configure ❯
 ──────────────────────────────────────────────────
   Choose a syntax color palette with a live
   preview

@@ -6,7 +6,7 @@ expression: buffer_text(&buffer)
   2 of 2
   Second
 
-  › 1. Other
+  ❯ 1. Other
     2. Other (write an answer)
 
   enter submit   ⌃] skip   ⇧→ prev question

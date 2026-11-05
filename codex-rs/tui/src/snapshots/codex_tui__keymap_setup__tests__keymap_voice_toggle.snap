@@ -2,7 +2,7 @@
 source: tui/src/keymap_setup.rs
 expression: "render_picker(build_keymap_action_menu_params(\"chat\".into(),\n\"toggle_voice\".into(), &RuntimeKeymap::defaults(), &TuiKeymap::default(),),\n80,)"
 ---
-
+────────────────────────────────────────────────────────────────────────────────
   Edit Shortcut
   Toggle Voice · Chat
   Current f8 · Default keymap
@@ -10,7 +10,7 @@ expression: "render_picker(build_keymap_action_menu_params(\"chat\".into(),\n\"t
   Start or stop a voice conversation.
 
 
-› 1. Replace binding                   Capture a replacement key for `f8`
+❯ 1. Replace binding                   Capture a replacement key for `f8`
   2. Add alternate binding             Keep `f8` and add another key
   3. Use leader...                     Capture the key that follows the
                                        configured leader
@@ -18,6 +18,6 @@ expression: "render_picker(build_keymap_action_menu_params(\"chat\".into(),\n\"t
   5. Add alternate key chord           Keep `f8` and add a two-stroke key chord
   –  Remove custom binding (disabled)  No custom root override to remove
   6. Back to shortcuts                 Return to the shortcut list
-
+────────────────────────────────────────────────────────────────────────────────
   Changes write the root `tui.keymap.*` override.
   enter select · esc back

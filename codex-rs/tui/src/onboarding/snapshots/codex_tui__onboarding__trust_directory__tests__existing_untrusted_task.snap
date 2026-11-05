@@ -11,7 +11,7 @@ expression: terminal.backend()
   restricted settings, start a new task. The folder's trust setting
   will not change.
 
-› 1. Open existing task                                               
+❯ 1. Open existing task                                               
   2. Back to Agent Command Center
 
   enter continue · esc back

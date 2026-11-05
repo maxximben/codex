@@ -4,7 +4,7 @@ use assert_matches::assert_matches;
 use pretty_assertions::assert_eq;
 
 #[test]
-fn configured_user_message_text_style_keeps_voice_marker_and_plain_raw_text() {
+fn configured_user_message_text_style_colors_voice_marker_and_keeps_plain_raw_text() {
     let cell = new_spoken_user_prompt("spoken body".into()).with_text_style(
         &codex_config::types::TuiUserMessage {
             color: Some("cyan".into()),
@@ -20,9 +20,9 @@ fn configured_user_message_text_style_keeps_voice_marker_and_plain_raw_text() {
         let marker = lines
             .iter()
             .flat_map(|line| &line.line.spans)
-            .find(|span| span.content == "› ")
+            .find(|span| span.content == "❯ ")
             .unwrap();
-        assert_eq!(marker.style.fg, Some(Color::Red));
+        assert_eq!(marker.style.fg, Some(Color::Cyan));
         let body = lines
             .iter()
             .flat_map(|line| &line.line.spans)
@@ -31,6 +31,7 @@ fn configured_user_message_text_style_keeps_voice_marker_and_plain_raw_text() {
         assert_eq!(body.style.fg, Some(Color::Cyan));
         assert!(body.style.add_modifier.contains(Modifier::ITALIC));
         assert!(!body.style.add_modifier.contains(Modifier::BOLD));
+        assert_eq!(marker.style.add_modifier, body.style.add_modifier);
     }
     assert_eq!(cell.raw_lines(), vec![Line::from("spoken body")]);
 }
@@ -199,7 +200,7 @@ fn sanitizer_preallocates_owned_multi_fragment_text() {
 }
 
 #[test]
-fn spoken_user_messages_have_a_red_chevron_without_changing_raw_text() {
+fn spoken_user_messages_share_the_text_color_without_changing_raw_text() {
     let message = "  hello from voice";
     let spoken = new_spoken_user_prompt(message.to_string());
     let typed = new_user_prompt(message.to_string(), Vec::new(), Vec::new(), Vec::new());
@@ -207,33 +208,35 @@ fn spoken_user_messages_have_a_red_chevron_without_changing_raw_text() {
         .display_hyperlink_lines(/*width*/ 40)
         .into_iter()
         .flat_map(|line| line.line.spans)
-        .find(|span| span.content == "› ")
+        .find(|span| span.content == "❯ ")
         .expect("spoken user marker");
 
     assert!(
         spoken
             .display_lines(/*width*/ 40)
             .iter()
-            .any(|line| line.to_string() == "› hello from voice")
+            .any(|line| line.to_string() == "❯ hello from voice")
     );
     assert!(
         typed
             .display_lines(/*width*/ 40)
             .iter()
-            .any(|line| { line.to_string() == "›   hello from voice" })
+            .any(|line| { line.to_string() == "❯   hello from voice" })
     );
-    assert_eq!(marker.style.fg, Some(Color::Red));
+    assert_eq!(marker.style.fg, None);
     assert!(marker.style.add_modifier.contains(Modifier::BOLD));
     assert_eq!(spoken.raw_lines(), vec![Line::from(message)]);
     assert_eq!(
         spoken.display_lines_for_mode(/*width*/ 40, HistoryRenderMode::Raw),
         vec![Line::from(message)]
     );
-    assert!(typed.display_lines(/*width*/ 40).iter().any(|line| {
-        line.spans
-            .iter()
-            .any(|span| span.content == "› " && span.style.fg != Some(Color::Red))
-    }));
+    let typed_marker = typed
+        .display_hyperlink_lines(/*width*/ 40)
+        .into_iter()
+        .flat_map(|line| line.line.spans)
+        .find(|span| span.content == "❯ ")
+        .expect("typed user marker");
+    assert_eq!(marker.style, typed_marker.style);
 
     let area = Rect::new(
         /*x*/ 0, /*y*/ 0, /*width*/ 40, /*height*/ 3,

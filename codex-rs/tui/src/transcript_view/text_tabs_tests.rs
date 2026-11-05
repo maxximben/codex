@@ -17,7 +17,7 @@ fn styled_tabs_use_row_stops_including_the_gutter() {
     line.push_span("one".cyan(), Some("https://example.com/one"));
     line.push_span("\t".magenta().underlined(), /*destination*/ None);
     line.push_span("two".cyan(), Some("https://example.com/two"));
-    let lines = prefix_hyperlink_lines(vec![line], "› ".bold(), "  ".into());
+    let lines = prefix_hyperlink_lines(vec![line], "❯ ".bold(), "  ".into());
     let layout = TextLayout::new(lines, /*width*/ 32);
     let area = Rect::new(
         /*x*/ 3, /*y*/ 2, /*width*/ 32, /*height*/ 1,
@@ -70,7 +70,7 @@ fn tab_stops_restart_after_wrapping_and_resize_preserves_source_and_links() {
     let mut line = HyperlinkLine::new(Line::from("abcdefghi\t".green()));
     line.push_span("X".cyan(), Some("https://example.com/x"));
     line.push_span("\tYZ".magenta(), /*destination*/ None);
-    let lines = prefix_hyperlink_lines(vec![line], "› ".bold(), "  ".into());
+    let lines = prefix_hyperlink_lines(vec![line], "❯ ".bold(), "  ".into());
     let layout = TextLayout::new(lines, /*width*/ 10);
     let area = Rect::new(
         /*x*/ 0, /*y*/ 0, /*width*/ 10, /*height*/ 3,

@@ -44,7 +44,7 @@ fn configured_user_message_text_style_survives_resize_and_preserves_copy() {
                 layout.render(area, &mut buffer, 0);
                 let mut checked = 0;
                 for painted in &buffer.content {
-                    if painted.symbol().trim().is_empty() || painted.symbol() == "›" {
+                    if painted.symbol().trim().is_empty() || painted.symbol() == "❯" {
                         continue;
                     }
                     assert_eq!(

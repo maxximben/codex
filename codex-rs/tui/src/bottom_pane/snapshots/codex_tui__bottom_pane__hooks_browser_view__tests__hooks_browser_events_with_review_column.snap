@@ -10,7 +10,7 @@ expression: "render_lines(&view, 112)"
                                                                                                                 
   Event                 Installed   Active      Review      Description                                         
                                                                                                                 
-› PreToolUse            1           0           1           Before a tool executes                              
+❯ PreToolUse            1           0           1           Before a tool executes                              
   PermissionRequest     0           0           0           When permission is requested                        
   PostToolUse           0           0           0           After a tool executes                               
   PreCompact            0           0           0           Before context compaction                           

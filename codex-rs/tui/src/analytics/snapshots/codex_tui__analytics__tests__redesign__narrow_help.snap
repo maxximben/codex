@@ -3,7 +3,7 @@ source: tui/src/analytics/redesign_tests.rs
 expression: help
 ---
 " Usage · Business                       "
-"  Overview   Credits   Tokens         › "
+"  Overview   Credits   Tokens         ❯ "
 " ────────────────────────────────────── "
 " Usage shortcuts                        "
 "                                        "
