@@ -45,6 +45,11 @@ It preserves this fork's `.github/workflows/` directory: upstream workflows need
 OpenAI infrastructure, and `GITHUB_TOKEN` cannot push workflow changes.
 All other source changes are merged normally.
 
+When a release changes only the conflicting `[workspace.package].version`, the
+updater takes the newer upstream version and asks Git to merge the rest of the
+manifest again. Dependency and other source conflicts still stop the update;
+the updater never replaces the whole manifest with one side of a conflict.
+
 The same workflow runs two parallel Windows jobs for the same candidate commit.
 The `checks` job tests custom headers, transparent backgrounds, sent-message text
 styles and config defaults, and verifies the generated config schema. It uses the
@@ -68,7 +73,7 @@ or generates a different, untested merge commit. The `custom-ui/windows` commit
 status links to the validation run. If `custom-ui` or the PR changes during the
 build, the update stops and the next run can validate the new base.
 
-Conflicts outside `.github/workflows/`, test failures, missing dependencies or
+Remaining source conflicts, test failures, missing dependencies or
 GitHub permission errors stop the update. Inspect the failed Actions run, resolve
 source conflicts manually on `custom-ui`, and run maintenance again.
 

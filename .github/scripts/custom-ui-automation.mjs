@@ -1,5 +1,10 @@
 import { spawnSync } from "node:child_process";
-import { appendFileSync, readFileSync, existsSync } from "node:fs";
+import {
+  appendFileSync,
+  readFileSync,
+  existsSync,
+  writeFileSync,
+} from "node:fs";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -21,8 +26,8 @@ export function releaseIdentity(version, sha) {
   };
 }
 
-export function git(args, { cwd, allowFailure = false } = {}) {
-  const result = spawnSync("git", args, { cwd, encoding: "utf8" });
+export function git(args, { cwd, allowFailure = false, input } = {}) {
+  const result = spawnSync("git", args, { cwd, encoding: "utf8", input });
   if (result.error) throw result.error;
   if (result.status !== 0 && !allowFailure)
     throw new Error(`git ${args[0]} failed: ${result.stderr || result.stdout}`);
@@ -31,6 +36,61 @@ export function git(args, { cwd, allowFailure = false } = {}) {
     stdout: result.stdout.trim(),
     stderr: result.stderr.trim(),
   };
+}
+
+function workspacePackage(manifest) {
+  const lines = manifest.split(/\r?\n/);
+  let inPackage = false;
+  let versionIndex = -1;
+  let version;
+  for (const [index, line] of lines.entries()) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith("[")) inPackage = trimmed === "[workspace.package]";
+    if (!inPackage) continue;
+    const match = /^version\s*=\s*"(\d+\.\d+\.\d+)"$/.exec(trimmed);
+    if (!match) continue;
+    if (versionIndex !== -1) return null;
+    versionIndex = index;
+    version = match[1];
+  }
+  if (versionIndex === -1) return null;
+  return {
+    version,
+    withVersion(next) {
+      const normalized = [...lines];
+      normalized[versionIndex] = `version = "${next}"`;
+      return normalized.join("\n");
+    },
+  };
+}
+
+// Re-merge the index stages after agreeing only on the release version. Git must
+// still resolve every other manifest change cleanly; never accept an entire side.
+function resolveReleaseVersion(run, cwd) {
+  const path = "codex-rs/Cargo.toml";
+  const stages = [1, 2, 3].map((stage) =>
+    run(["show", `:${stage}:${path}`], { allowFailure: true }),
+  );
+  if (stages.some((stage) => stage.code !== 0)) return;
+  const [base, ours, theirs] = stages.map((stage) =>
+    workspacePackage(stage.stdout),
+  );
+  if (!base || !ours || !theirs || base.version === theirs.version) return;
+  const next = theirs.version.split(".").map(Number);
+  const current = ours.version.split(".").map(Number);
+  const differing = next.findIndex((part, index) => part !== current[index]);
+  if (differing === -1 || next[differing] < current[differing]) return;
+  const blobs = [ours, base, theirs].map((stage) =>
+    run(["hash-object", "-w", "--stdin"], {
+      input: `${stage.withVersion(theirs.version)}\n`,
+    }).stdout,
+  );
+  const merged = run(["merge-file", "--object-id", "--stdout", ...blobs], {
+    allowFailure: true,
+  });
+  if (merged.code !== 0) return;
+  writeFileSync(resolve(cwd ?? process.cwd(), path), `${merged.stdout}\n`);
+  run(["add", "--", path]);
 }
 
 // Keep this fork's Actions definitions. GITHUB_TOKEN cannot push upstream workflow changes.
@@ -53,6 +113,10 @@ export function mergeUpstream(base, upstream, cwd) {
     "--",
     ".github/workflows",
   ]);
+  const unresolved = run(["diff", "--name-only", "--diff-filter=U"]).stdout.split("\n");
+  if (unresolved.includes("codex-rs/Cargo.toml")) {
+    resolveReleaseVersion(run, cwd);
+  }
   const conflicts = run(["diff", "--name-only", "--diff-filter=U"]).stdout;
   if (conflicts || merge.code > 1) {
     run(["merge", "--abort"]);

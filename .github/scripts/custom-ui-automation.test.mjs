@@ -204,6 +204,64 @@ test("merge includes upstream source, preserves customizations and freezes all w
   assert.equal(f.run(["status", "--porcelain"]), "");
 });
 
+function releaseFixture(
+  t,
+  { ours = "0.166.0", theirs = "0.167.0", dependencyConflict = false } = {},
+) {
+  const f = fixture(t);
+  mkdirSync(join(f.directory, "codex-rs"));
+  const manifest = (version, dependency) => `[workspace.package]\nversion = "${version}"\nedition = "2024"\nlicense = "Apache-2.0"\n\n[dependencies]\nsample = "${dependency}"\n`;
+  f.write("codex-rs/Cargo.toml", manifest("0.0.0", "1.0.0"));
+  f.run(["add", "."]);
+  f.run(["commit", "-m", "workspace manifest"]);
+  const common = f.run(["rev-parse", "HEAD"]);
+  f.run(["switch", "-c", "upstream"]);
+  f.write("codex-rs/Cargo.toml", manifest(theirs, "2.0.0"));
+  f.run(["commit", "-am", "upstream release"]);
+  const upstream = f.run(["rev-parse", "HEAD"]);
+  f.run(["switch", "-c", "custom-ui", common]);
+  f.write(
+    "codex-rs/Cargo.toml",
+    manifest(ours, dependencyConflict ? "3.0.0" : "1.0.0"),
+  );
+  f.write("custom.txt", "custom UI stays\n");
+  f.run(["commit", "-am", "fork release"]);
+  return { ...f, base: f.run(["rev-parse", "HEAD"]), upstream, manifest };
+}
+
+test("release version conflicts take the newer upstream version and preserve source changes", (t) => {
+  const f = releaseFixture(t);
+  const candidate = mergeUpstream(f.base, f.upstream, f.directory);
+  assert.equal(
+    f.run(["show", `${candidate}:codex-rs/Cargo.toml`]),
+    f.manifest("0.167.0", "2.0.0").trim(),
+  );
+  assert.equal(f.run(["show", `${candidate}:custom.txt`]), "custom UI stays");
+  assert.equal(
+    f.run(["diff", f.base, candidate, "--", ".github/workflows"]),
+    "",
+  );
+  for (const ancestor of [f.base, f.upstream])
+    f.run(["merge-base", "--is-ancestor", ancestor, candidate]);
+  assert.equal(f.run(["status", "--porcelain"]), "");
+});
+
+for (const [name, options] of [
+  ["dependency conflicts in the same manifest", { dependencyConflict: true }],
+  ["workspace version downgrades", { ours: "0.168.0" }],
+  ["unrecognized workspace versions", { ours: "0.166.0-custom" }],
+]) {
+  test(`release version handling refuses ${name}`, (t) => {
+    const f = releaseFixture(t, options);
+    assert.throws(
+      () => mergeUpstream(f.base, f.upstream, f.directory),
+      /codex-rs\/Cargo\.toml/,
+    );
+    assert.equal(f.run(["rev-parse", "HEAD"]), f.base);
+    assert.equal(f.run(["status", "--porcelain"]), "");
+  });
+}
+
 test("a source conflict aborts the merge and leaves the custom branch unchanged", (t) => {
   const f = fixture(t);
   f.run(["switch", "-c", "upstream"]);
