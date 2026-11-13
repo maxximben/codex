@@ -251,7 +251,7 @@ async fn external_writer_view_shows_notice_instead_of_composer() {
             .collect::<Vec<_>>()
             .join("\n")
     );
-    assert_ne!(frame[(0, 1)].bg, ratatui::style::Color::Reset);
+    assert_eq!(frame[(0, 1)].bg, ratatui::style::Color::Reset);
     assert_eq!(frame[(0, 1)].bg, frame[(59, 4)].bg);
     assert_eq!(
         (frame[(3, 5)].fg, frame[(3, 5)].modifier),

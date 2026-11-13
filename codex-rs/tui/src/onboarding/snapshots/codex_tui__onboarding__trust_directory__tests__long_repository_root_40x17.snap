@@ -2,7 +2,7 @@
 source: tui/src/onboarding/trust_directory.rs
 expression: "terminal.backend().to_string().replace('\\\\', \"/\")"
 ---
-  Folder access
+  Folder access─────────────────────────
   workspace/…/repository/checkout     
   Note: You’re in a subdirectory of a 
   Git project. Trusting will apply to 
@@ -18,4 +18,4 @@ expression: "terminal.backend().to_string().replace('\\\\', \"/\")"
   saved.
 ❯ 1. Trust and continue                 
   2. Quit
-  enter continue · esc quit
+──enter continue · esc quit─────────────

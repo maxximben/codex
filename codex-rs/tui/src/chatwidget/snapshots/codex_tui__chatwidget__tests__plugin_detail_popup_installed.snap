@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/popups_and_settings.rs
 expression: strip_osc8_for_snapshot(&popup)
 ---
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Plugins
   Figma · Installed by admin · ChatGPT Marketplace
   Turn Figma files into implementation context.
@@ -15,5 +16,5 @@ expression: strip_osc8_for_snapshot(&popup)
      Hooks               PreToolUse (1), Stop (2)
      Apps                Figma, Slack
      MCP Servers         figma-mcp, docs-mcp
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   esc close

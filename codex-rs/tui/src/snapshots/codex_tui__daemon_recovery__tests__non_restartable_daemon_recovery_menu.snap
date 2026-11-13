@@ -2,7 +2,7 @@
 source: tui/src/daemon_recovery_tests.rs
 expression: text
 ---
-
+──────────────────────────────────────────────────────────────────────────────────────────
   Cannot use the background server
   code-mode host fallback policy requires embedded mode
 
@@ -11,3 +11,4 @@ expression: text
      Restart with these settings (disabled)  Restart cannot resolve this compatibility
                                              check.
 ❯ 2. Cancel
+──────────────────────────────────────────────────────────────────────────────────────────

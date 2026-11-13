@@ -1,8 +1,8 @@
 ---
 source: tui/src/chatwidget/tests/popups_and_settings.rs
-assertion_line: 3203
 expression: popup
 ---
+────────────────────────────────────────────────────────────────────────────────
   Experimental features
   Checked features are configured on. Some experimental features take effect
   only in new tasks or after restarting the Codex server.
@@ -13,5 +13,5 @@ expression: popup
   [ ] Prevent sleep while running  Keep your computer awake while Codex is
                                    running a thread.
 
-
+────────────────────────────────────────────────────────────────────────────────
   space toggle · enter save · esc save/close

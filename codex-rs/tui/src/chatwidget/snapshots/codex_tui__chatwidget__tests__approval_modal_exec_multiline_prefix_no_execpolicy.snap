@@ -3,7 +3,7 @@ source: tui/src/chatwidget/tests/exec_flow.rs
 expression: contents
 ---
 
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Would you like to run the following command?
 
   $ python - <<'PY'
@@ -13,5 +13,5 @@ expression: contents
 
 ❯ 1. Yes, proceed (y)                                                                               
   2. No, and tell Codex what to do differently (esc)
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Press enter to confirm or esc to cancel

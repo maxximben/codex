@@ -3,7 +3,7 @@ source: tui/src/chatwidget/tests/permission_picker_tests.rs
 expression: "snapshots.join(\"\\n\\n\")"
 ---
 specialty=None 40x10
-
+  ────────────────────────────────────
     Enable full access?
     When Codex runs with full
     access, it can edit any file on
@@ -15,7 +15,7 @@ specialty=None 40x10
     enter select · esc back
 
 specialty=Some("cyber") 40x16
-
+  ────────────────────────────────────
     Enable full access?
 
     When Codex runs with full

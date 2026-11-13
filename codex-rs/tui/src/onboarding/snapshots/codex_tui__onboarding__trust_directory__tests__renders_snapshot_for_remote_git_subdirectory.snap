@@ -2,7 +2,7 @@
 source: tui/src/onboarding/trust_directory.rs
 expression: "terminal.backend().to_string().lines().map(str::trim_end).collect::<Vec<_>>().join(\"\\n\")"
 ---
-
+──────────────────────────────────────────────────────────────────────
   Folder access
   /srv/remote/project/nested
 
@@ -19,3 +19,4 @@ expression: "terminal.backend().to_string().lines().map(str::trim_end).collect::
   2. Back to Agent Command Center
 
   enter continue · esc back
+──────────────────────────────────────────────────────────────────────

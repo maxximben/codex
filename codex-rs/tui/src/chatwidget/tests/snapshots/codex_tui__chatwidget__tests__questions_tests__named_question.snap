@@ -3,7 +3,7 @@ source: tui/src/chatwidget/tests/questions_tests.rs
 expression: "render_bottom_popup(&chat, 80)"
 ---
 • Queued follow-up inputs
-
+────────────────────────────────────────────────────────────────────────────────
   What next?
 
   ❯ 1. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -14,3 +14,4 @@ expression: "render_bottom_popup(&chat, 80)"
     2. Other
 
   enter submit   ⌃] skip   ⇧→ main prompt
+────────────────────────────────────────────────────────────────────────────────

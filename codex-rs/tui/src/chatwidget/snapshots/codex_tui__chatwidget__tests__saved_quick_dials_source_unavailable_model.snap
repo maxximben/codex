@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/quick_dials_tests.rs
 expression: "render_bottom_popup(&chat, 80)"
 ---
+────────────────────────────────────────────────────────────────────────────────
   Start preset from current settings
 
 
@@ -12,5 +13,5 @@ expression: "render_bottom_popup(&chat, 80)"
      Current terminal title  Choose available terminal-title items with /title
                              before saving.
   2. Current status line     /statusline model --colors
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

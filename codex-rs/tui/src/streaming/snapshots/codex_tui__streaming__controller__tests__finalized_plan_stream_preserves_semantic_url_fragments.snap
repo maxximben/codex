@@ -18,7 +18,7 @@ expression: lines
         line: Line::from_iter([
             Span::from("  "),
             Span::from(" "),
-        ]).bg(Color::Rgb(244, 244, 244)),
+        ]).bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
@@ -26,11 +26,11 @@ expression: lines
             Span::from("  "),
             Span::from("# ").fg(Color::Rgb(210, 15, 57)).bold().underlined(),
             Span::from("Plan").fg(Color::Rgb(210, 15, 57)).bold().underlined(),
-        ]).bg(Color::Rgb(244, 244, 244)),
+        ]).bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
-        line: Line::from("  ").bg(Color::Rgb(244, 244, 244)),
+        line: Line::from("  ").bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
@@ -38,11 +38,11 @@ expression: lines
             Span::from("  "),
             Span::from("> "),
             Span::from("Quote"),
-        ]).fg(Color::Rgb(165, 82, 143)).bg(Color::Rgb(244, 244, 244)),
+        ]).fg(Color::Rgb(174, 87, 151)).bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
-        line: Line::from("  ").bg(Color::Rgb(244, 244, 244)),
+        line: Line::from("  ").bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
@@ -55,14 +55,14 @@ expression: lines
             Span::from("  "),
             Span::from(" "),
             Span::from("URL"),
-        ]).fg(Color::Rgb(156, 99, 20)).bg(Color::Rgb(244, 244, 244)).bold(),
+        ]).fg(Color::Rgb(166, 105, 21)).bg(Color::Reset).bold(),
         hyperlinks: [],
     },
     HyperlinkLine {
         line: Line::from_iter([
             Span::from("  "),
             Span::from("━━━━━━━━  ━━━━━━━━━━━━━━━━━━━━━━").dim(),
-        ]).bg(Color::Rgb(244, 244, 244)),
+        ]).bg(Color::Reset),
         hyperlinks: [],
     },
     HyperlinkLine {
@@ -73,8 +73,8 @@ expression: lines
             Span::from(" "),
             Span::from("  "),
             Span::from(" "),
-            Span::from("https://example.com/").fg(Color::Rgb(29, 101, 244)).underlined(),
-        ]).bg(Color::Rgb(244, 244, 244)),
+            Span::from("https://example.com/").fg(Color::Rgb(30, 102, 245)).underlined(),
+        ]).bg(Color::Reset),
         hyperlinks: [
             TerminalHyperlink {
                 columns: 13..33,
@@ -91,8 +91,8 @@ expression: lines
             Span::from(" "),
             Span::from("  "),
             Span::from(" "),
-            Span::from("a/very/long/path/to/").fg(Color::Rgb(29, 101, 244)).underlined(),
-        ]).bg(Color::Rgb(244, 244, 244)),
+            Span::from("a/very/long/path/to/").fg(Color::Rgb(30, 102, 245)).underlined(),
+        ]).bg(Color::Reset),
         hyperlinks: [
             TerminalHyperlink {
                 columns: 13..33,
@@ -109,8 +109,8 @@ expression: lines
             Span::from(" "),
             Span::from("  "),
             Span::from(" "),
-            Span::from("a/table/artifact").fg(Color::Rgb(29, 101, 244)).underlined(),
-        ]).bg(Color::Rgb(244, 244, 244)),
+            Span::from("a/table/artifact").fg(Color::Rgb(30, 102, 245)).underlined(),
+        ]).bg(Color::Reset),
         hyperlinks: [
             TerminalHyperlink {
                 columns: 13..29,
@@ -123,7 +123,7 @@ expression: lines
         line: Line::from_iter([
             Span::from("  "),
             Span::from(" "),
-        ]).bg(Color::Rgb(244, 244, 244)),
+        ]).bg(Color::Reset),
         hyperlinks: [],
     },
 ]

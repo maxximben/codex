@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/popups_and_settings.rs
 expression: popup
 ---
+────────────────────────────────────────────────────────────────────────────────
   Memories
   Choose how Codex uses and creates memories. Changes are saved to config.toml
 
@@ -13,5 +14,5 @@ expression: popup
 
 
   Learn more: https://developers.openai.com/codex/memories
-
+────────────────────────────────────────────────────────────────────────────────
   space toggle · enter save/select · esc cancel

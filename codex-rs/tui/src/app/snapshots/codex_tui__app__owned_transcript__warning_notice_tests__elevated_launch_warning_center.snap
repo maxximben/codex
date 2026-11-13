@@ -13,7 +13,7 @@ expression: screen(&tui)
 
 
 
-
+────────────────────────────────────────────────────────────────────────────────
   Warnings · 1 of 1 · Startup
 
   Running as administrator: shared background server disabled. To enable it,
@@ -24,5 +24,5 @@ expression: screen(&tui)
 
 
 
-
+────────────────────────────────────────────────────────────────────────────────
   k keep & next · esc dismiss & close · ⌃o copy · ←/→ warning

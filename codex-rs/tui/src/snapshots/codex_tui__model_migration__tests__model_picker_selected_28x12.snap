@@ -2,7 +2,7 @@
 source: tui/src/model_migration.rs
 expression: rendered
 ---
-
+────────────────────────────
   # Introducing gpt-new
 
   A faster coding model
@@ -13,3 +13,4 @@ expression: rendered
 
   enter/esc confirm · ⌃c
   quit
+────────────────────────────

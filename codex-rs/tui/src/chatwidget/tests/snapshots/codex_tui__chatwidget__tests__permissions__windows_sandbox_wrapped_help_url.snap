@@ -2,7 +2,7 @@
 source: tui/src/chatwidget/tests/permissions.rs
 expression: visible
 ---
-                                        
+────────────────────────────────────────
   Set up the Codex agent sandbox to     
   protect your files and control        
   network access. Learn more            
@@ -24,5 +24,5 @@ expression: visible
                                         
                                         
                                         
-                                        
+────────────────────────────────────────
   enter select · esc back

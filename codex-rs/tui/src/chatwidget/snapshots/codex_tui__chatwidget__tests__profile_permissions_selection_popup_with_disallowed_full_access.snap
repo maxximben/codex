@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/permissions.rs
 expression: "render_bottom_popup(&chat, 80)"
 ---
+────────────────────────────────────────────────────────────────────────────────
   Update Model Permissions
 
 
@@ -14,5 +15,5 @@ expression: "render_bottom_popup(&chat, 80)"
                              (disabled: Disabled by requirements)
 ❯ 3. Read Only (current)     Read workspace files, with approval required for
                              edits or internet access
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

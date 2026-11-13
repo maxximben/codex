@@ -2,7 +2,7 @@
 source: tui/src/onboarding/trust_directory.rs
 expression: terminal.backend()
 ---
-
+──────────────────────────────────────────────────────────────────────
   Folder access
   /workspace/project                                                
 
@@ -15,3 +15,4 @@ expression: terminal.backend()
   2. Back to Agent Command Center
 
   enter continue · esc back
+──────────────────────────────────────────────────────────────────────

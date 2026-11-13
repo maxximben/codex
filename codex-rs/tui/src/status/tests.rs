@@ -188,6 +188,17 @@ fn render_lines(lines: &[Line<'static>]) -> Vec<String> {
 fn sanitize_directory(lines: Vec<String>) -> Vec<String> {
     lines
         .into_iter()
+        // Keep the monthly-credit fixtures independent of the host's numeric locale.
+        .map(|line| {
+            line.replace(
+                &codex_protocol::num_format::format_with_separators(8_000),
+                "8,000",
+            )
+            .replace(
+                &codex_protocol::num_format::format_with_separators(25_000),
+                "25,000",
+            )
+        })
         .map(|line| {
             if let Some((prefix, value)) = line.split_once("Directory:") {
                 let padding = &value[..value.len() - value.trim_start().len()];

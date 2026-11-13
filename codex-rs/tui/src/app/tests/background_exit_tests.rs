@@ -351,6 +351,7 @@ async fn daemon_ctrl_c_shows_background_exit_menu_and_escape_dismisses_it() -> R
 
     assert!(!app.chat_widget.no_modal_or_popup_active());
     assert_snapshot!(render_bottom_popup(&app.chat_widget, /*width*/ 90), @r"
+    ──────────────────────────────────────────────────────────────────────────────────────────
       Task is still running
       Choose what happens to the current task.
 
@@ -358,7 +359,7 @@ async fn daemon_ctrl_c_shows_background_exit_menu_and_escape_dismisses_it() -> R
     ❯ 1. Cancel task        Stop the current task and stay in Codex
       2. Run in background  Exit Codex and leave the task running
       3. Exit               Stop the current task and exit Codex
-
+    ──────────────────────────────────────────────────────────────────────────────────────────
       enter select · esc back
     ");
 
@@ -621,13 +622,14 @@ async fn daemon_ctrl_c_hides_background_exit_for_running_background_side_thread(
 
     open_running_task_exit_menu(&mut app, &mut tui, &mut app_server).await;
     assert_snapshot!(render_bottom_popup(&app.chat_widget, /*width*/ 90), @r"
+    ──────────────────────────────────────────────────────────────────────────────────────────
       Task is still running
       Choose what happens to the current task.
 
 
     ❯ 1. Cancel task  Stop the current task and stay in Codex
       2. Exit         Stop the current task and exit Codex
-
+    ──────────────────────────────────────────────────────────────────────────────────────────
       enter select · esc back
     ");
     app.chat_widget
@@ -740,8 +742,6 @@ async fn daemon_ctrl_c_during_paste_burst_does_not_show_exit_menu() -> Result<()
 async fn daemon_ctrl_c_during_mcp_startup_does_not_show_background_exit_menu() -> Result<()> {
     let (mut app, mut app_event_rx, mut op_rx) = make_test_app_with_channels().await;
     let thread_id = prepare_local_daemon_thread(&mut app)?;
-    app.chat_widget
-        .set_mcp_startup_expected_servers(["slow".to_string()]);
     app.chat_widget.handle_server_notification(
         ServerNotification::McpServerStatusUpdated(McpServerStatusUpdatedNotification {
             thread_id: Some(thread_id.to_string()),

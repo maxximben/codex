@@ -12,7 +12,7 @@ expression: normalize_snapshot_paths(expanded)
   └ m-updated.txt (+1 -1)
     1 -old
 
-
+────────────────────────────────────────────────────────────────────────────────
   Would you like to make the following edits?
 
   Description: Apply proposed file edits
@@ -24,5 +24,5 @@ expression: normalize_snapshot_paths(expanded)
 ❯ 1. Yes, proceed (y)
   2. Yes, and don't ask again for these files (a)
   3. No, and tell Codex what to do differently (esc)
-
+────────────────────────────────────────────────────────────────────────────────
   Press enter to confirm or esc to cancel

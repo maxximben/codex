@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/realtime_settings_tests.rs
 expression: "render_bottom_popup(&chat, 90)"
 ---
+──────────────────────────────────────────────────────────────────────────────────────────
   Microphone: Zen Go Synergy Core Playback
   Select the input channels to mix. Select at least one.
 
@@ -11,5 +12,5 @@ expression: "render_bottom_popup(&chat, 90)"
 ❯ [x] Input 2
   [ ] Input 3
   [ ] Input 4
-
+──────────────────────────────────────────────────────────────────────────────────────────
   space toggle · enter save · esc cancel

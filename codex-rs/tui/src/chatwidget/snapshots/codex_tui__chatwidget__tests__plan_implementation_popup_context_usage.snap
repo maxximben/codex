@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/plan_mode.rs
 expression: popup
 ---
+────────────────────────────────────────────────────────────────────────────────
   Implement this plan?
 
 
@@ -9,5 +10,5 @@ expression: popup
   2. Yes, clear context and implement  Start a fresh thread (current context:
                                        89% used)
   3. No, stay in Plan mode             Continue planning with the model
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

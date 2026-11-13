@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/bedrock_catalog_tests.rs
 expression: "render_bottom_popup(&chat, 100)"
 ---
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Select Reasoning Level for GPT-6-Astra
 
 
@@ -10,5 +11,5 @@ expression: "render_bottom_popup(&chat, 100)"
   3. High             Greater reasoning depth for complex problems
   4. Extra high       Extra high reasoning depth for complex problems
   5. More reasoning…  Max and Ultra consume usage limits faster
-
+────────────────────────────────────────────────────────────────────────────────────────────────────
   enter default · s session · esc back

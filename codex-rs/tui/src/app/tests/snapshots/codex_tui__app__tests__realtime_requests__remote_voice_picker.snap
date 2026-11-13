@@ -2,6 +2,7 @@
 source: tui/src/app/tests/realtime_requests.rs
 expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_widget, 80)"
 ---
+────────────────────────────────────────────────────────────────────────────────
   Select voice
   Applies to your next voice conversation.
 
@@ -14,5 +15,5 @@ expression: "crate::chatwidget::tests::helpers::render_bottom_popup(&app.chat_wi
   6. breeze
   7. arbor
 ❯ 8. sol (current)
-↓
+↓───────────────────────────────────────────────────────────────────────────────
   enter select · esc back

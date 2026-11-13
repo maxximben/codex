@@ -9,6 +9,12 @@ use ratatui::text::Line;
 use ratatui::widgets::Widget;
 
 #[test]
+fn prompt_and_shortcut_surfaces_preserve_terminal_transparency() {
+    assert_eq!(super::super::history_prompt_style().bg, Some(Color::Reset));
+    assert_eq!(super::super::shortcut_hud_style().bg, Some(Color::Reset));
+}
+
+#[test]
 fn selection_text_stays_readable_after_palette_conversion() {
     for background in [
         (255, 255, 255),

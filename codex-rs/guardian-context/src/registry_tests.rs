@@ -204,7 +204,7 @@ fn reused_registry_preserves_section_identity_and_source_roles() {
     ];
     let answers = ["assistant: Publish?\nuser: No.\n".to_string()];
     let reviews = super::PreviousReviews::try_from_fragments(vec![super::PreviousReview {
-        id: codex_protocol::ResponseItemId::new("review"),
+        id: codex_protocol_test_support::uuid_v7_item_id_generator_for_test()("review"),
         fragment: "<guardian_sync_review>debug-secret review</guardian_sync_review>".to_string(),
     }])
     .unwrap();
@@ -321,15 +321,15 @@ fn reused_registry_preserves_section_identity_and_source_roles() {
             let prepared = {
                 let context = super::default_registry().prepare(&input).unwrap();
                 let profile = &super::ContextProfile::synchronous();
-                let transcript = profile.prepare_transcript(
-                    context.transcript_entries(),
+                super::prepare_context(
+                    std::borrow::Cow::Owned(context),
+                    profile,
                     /*entry_number_offset*/ 0,
-                );
-                context.compose(
                     super::ContextPresentation::SyncFull {
                         session_id: "worker",
                     },
-                    transcript,
+                    super::ContextBudgeting::Fixed,
+                    &[],
                 )
             }
             .unwrap()
@@ -381,28 +381,30 @@ fn reused_registry_preserves_section_identity_and_source_roles() {
                 })
                 .unwrap();
             assert_eq!(
-                super::prepare_sync_context(
-                    collected.clone(),
+                super::prepare_context(
+                    std::borrow::Cow::Owned(collected.clone()),
                     &super::ContextProfile::synchronous(),
                     /*entry_number_offset*/ 0,
                     super::ContextPresentation::SyncFull {
                         session_id: "worker"
                     },
                     super::ContextBudgeting::Fixed,
+                    &[],
                 )
                 .err(),
                 Some(SectionError::EvidenceLimitExceeded {
                     section: "native_tool_call"
                 })
             );
-            let elastic = super::prepare_sync_context(
-                collected,
+            let elastic = super::prepare_context(
+                std::borrow::Cow::Owned(collected),
                 &super::ContextProfile::synchronous(),
                 /*entry_number_offset*/ 0,
                 super::ContextPresentation::SyncFull {
                     session_id: "worker",
                 },
                 super::ContextBudgeting::Elastic,
+                &[],
             )
             .unwrap();
             let config = super::ElasticBudgetConfig::default();

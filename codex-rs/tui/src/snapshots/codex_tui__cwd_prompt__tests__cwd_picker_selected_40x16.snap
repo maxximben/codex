@@ -2,7 +2,7 @@
 source: tui/src/cwd_prompt.rs
 expression: rendered
 ---
-
+────────────────────────────────────────
   Working directory · resume
   Session = latest cwd recorded in the
   resumed session                     
@@ -17,3 +17,4 @@ expression: rendered
 
   enter continue · esc use session ·
   ⌃c quit
+────────────────────────────────────────

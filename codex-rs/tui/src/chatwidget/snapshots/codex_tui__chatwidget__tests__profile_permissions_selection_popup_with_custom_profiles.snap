@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/permissions.rs
 expression: "render_bottom_popup(&chat, 80)"
 ---
+────────────────────────────────────────────────────────────────────────────────
   Update Model Permissions
 
 
@@ -16,5 +17,5 @@ expression: "render_bottom_popup(&chat, 80)"
 ❯ 5. locked-down (current)   Inspect and patch only approved workspace files.
      web-enabled (disabled)  Workspace profile with network access. (disabled:
                              Disabled by requirements)
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

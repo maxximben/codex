@@ -1334,7 +1334,7 @@ async fn approvals_popup_navigation_skips_disabled() {
     for line in popup.lines() {
         let row = line
             .trim_start()
-            .strip_prefix('\u{203a}')
+            .strip_prefix('❯')
             .unwrap_or_else(|| line.trim_start())
             .trim_start();
         let mut chars = row.chars();
@@ -1356,7 +1356,7 @@ async fn approvals_popup_navigation_skips_disabled() {
         let popup = render_bottom_popup(&chat, /*width*/ 80);
         let selected_disabled = popup
             .lines()
-            .find(|line| line.trim_start().starts_with('\u{203a}'))
+            .find(|line| line.trim_start().starts_with('❯'))
             .expect("expected a selected selection row")
             .contains("(disabled)");
         assert!(

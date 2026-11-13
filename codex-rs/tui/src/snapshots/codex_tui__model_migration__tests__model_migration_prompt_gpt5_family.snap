@@ -2,7 +2,7 @@
 source: tui/src/model_migration.rs
 expression: terminal.backend()
 ---
-
+─────────────────────────────────────────────────────────────────
   Codex just got an upgrade. Introducing gpt-5.1.
 
   We recommend switching from gpt-5 to gpt-5.1.
@@ -11,3 +11,4 @@ expression: terminal.backend()
   more about gpt-5.1 at https://www.codex.com/models/gpt-5.1
 
   enter/esc continue · ⌃c quit
+─────────────────────────────────────────────────────────────────

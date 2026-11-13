@@ -2,7 +2,7 @@
 source: tui/src/startup_hooks_review.rs
 expression: "render_lines(&view, 40)"
 ---
-
+────────────────────────────────────────
   Hooks need review
   2 hooks are new or changed.
   Hooks can run outside the sandbox
@@ -13,5 +13,5 @@ expression: "render_lines(&view, 40)"
   2. Trust all and continue
   3. Continue without trusting (hooks
      won't run)
-
+────────────────────────────────────────
   enter confirm · esc skip

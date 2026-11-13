@@ -2,7 +2,7 @@
 source: tui/src/onboarding/trust_directory.rs
 expression: "terminal.backend().to_string().replace('\\\\', \"/\")"
 ---
-  Folder access
+  Folder access─────────────────────────
   workspace/…/repository              
   Trust this folder? Codex can read,
   edit, and run files here, subject to
@@ -14,4 +14,4 @@ expression: "terminal.backend().to_string().replace('\\\\', \"/\")"
   saved.
 ❯ 1. Trust and continue                 
   2. Quit
-  enter continue · esc quit
+──enter continue · esc quit─────────────

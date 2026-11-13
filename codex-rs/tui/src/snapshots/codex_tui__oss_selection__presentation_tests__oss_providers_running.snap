@@ -2,7 +2,7 @@
 source: tui/src/oss_selection_tests.rs
 expression: terminal.backend()
 ---
-
+────────────────────────────────────────────────────────────────────────────────
   Select an open-source provider
   Choose a local AI server for this session.
 
@@ -12,3 +12,4 @@ expression: terminal.backend()
   Local Ollama server (Responses API, default port 11434)
 
   ↑/↓ choose · enter select · esc LM Studio · ⌃c exit
+────────────────────────────────────────────────────────────────────────────────

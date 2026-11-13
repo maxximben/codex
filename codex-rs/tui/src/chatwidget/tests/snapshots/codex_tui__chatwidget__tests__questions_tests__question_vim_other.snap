@@ -4,7 +4,7 @@ expression: "format!(\"NORMAL\\n{normal}\\n\\nSEARCH\\n{search}\")"
 ---
 NORMAL
 • Queued follow-up inputs
-
+────────────────────────────────────────────────────────────────────────────────
   Which way?
 
     1. Named
@@ -12,10 +12,11 @@ NORMAL
        alpha gamma
                                                                    Vim: Normal
   enter submit   ⌃] skip   ⇧→ main prompt
+────────────────────────────────────────────────────────────────────────────────
 
 SEARCH
 • Queued follow-up inputs
-
+────────────────────────────────────────────────────────────────────────────────
   Which way?
 
     1. Named
@@ -24,3 +25,4 @@ SEARCH
        /gamma
                                                                    Vim: Normal
   enter submit   ⌃] skip   ⇧→ main prompt
+────────────────────────────────────────────────────────────────────────────────

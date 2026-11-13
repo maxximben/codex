@@ -8,7 +8,7 @@ expression: "render_bottom_popup(&app.chat_widget,\nwidth).replace(r\"C:\\cli-bu
   No tasks yet
 
 
-
+    ────────────────────────────────────────────────────────────────────────
       Update daemon and exit Codex?
       Install the latest public stable release. Restore production
       updates; keep your automatic-update setting.
@@ -18,7 +18,7 @@ expression: "render_bottom_popup(&app.chat_widget,\nwidth).replace(r\"C:\\cli-bu
 
     ❯ 1. Cancel
       2. Update and exit
-
+    ────────────────────────────────────────────────────────────────────────
       enter select · esc back
 
 

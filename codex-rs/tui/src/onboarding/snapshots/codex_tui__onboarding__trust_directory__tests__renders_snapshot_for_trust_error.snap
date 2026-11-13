@@ -2,7 +2,7 @@
 source: tui/src/onboarding/trust_directory.rs
 expression: terminal.backend()
 ---
-
+──────────────────────────────────────────────────────────────────────
   Folder access
   /workspace/project                                                
 
@@ -19,3 +19,4 @@ expression: terminal.backend()
   not supported; allowed set [fast_mode=false]                      
 
   enter continue · esc quit
+──────────────────────────────────────────────────────────────────────

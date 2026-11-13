@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/app_server.rs
 expression: "render_bottom_popup(&chat, 40)"
 ---
+  ────────────────────────────────────
 •   Stop this attempt and retry?
 
     This will stop the current
@@ -17,3 +18,4 @@ expression: "render_bottom_popup(&chat, 40)"
 
   ❯ 1. Keep waiting
     2. Stop and retry
+  ────────────────────────────────────

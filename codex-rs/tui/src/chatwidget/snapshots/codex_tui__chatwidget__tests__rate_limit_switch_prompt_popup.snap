@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/status_and_layout.rs
 expression: popup
 ---
+────────────────────────────────────────────────────────────────────────────────
   Approaching rate limits
   Switch to gpt-6-luna for lower credit usage?
 
@@ -11,5 +12,5 @@ expression: popup
   2. Keep current model
   3. Keep current model (never show again)  Hide future rate limit reminders
                                             about switching models
-
+────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

@@ -62,6 +62,94 @@ fn configured_user_message_text_style_applies_to_structured_answers() {
 }
 
 #[test]
+fn configured_user_message_text_style_preserves_markdown_links_and_transparency() {
+    let cell = new_user_prompt(
+        "**bold** [documentation](https://example.test/docs)".into(),
+        vec![],
+        vec![],
+        vec![],
+    )
+    .with_text_style(&codex_config::types::TuiUserMessage {
+        color: Some("cyan".into()),
+        ..Default::default()
+    });
+    for width in [64, 20] {
+        let lines = cell.display_hyperlink_lines(width);
+        assert_eq!(lines, cell.transcript_hyperlink_lines(width));
+        assert!(
+            lines
+                .iter()
+                .all(|line| line.line.style.bg == Some(Color::Reset))
+        );
+        assert!(
+            lines
+                .iter()
+                .flat_map(|line| &line.hyperlinks)
+                .any(|link| { link.destination == "https://example.test/docs" })
+        );
+        let spans = lines
+            .iter()
+            .flat_map(|line| &line.line.spans)
+            .collect::<Vec<_>>();
+        for text in ["❯ ", "bold", "documentation"] {
+            assert!(
+                spans
+                    .iter()
+                    .any(|span| { span.content == text && span.style.fg == Some(Color::Cyan) })
+            );
+        }
+        assert!(spans.iter().any(|span| {
+            span.content == "bold" && span.style.add_modifier.contains(Modifier::BOLD)
+        }));
+    }
+    assert_eq!(cell.raw_lines(), vec![Line::from(&cell.message[..])]);
+}
+
+#[test]
+fn typed_prompt_markdown_keeps_the_prompt_gutter_and_links() {
+    let message = "**testing** _hello_ [example documentation](https://example.test/docs)\n\n- Try the command\n\n```sh\necho '*literal*'\n```";
+    let cell = new_user_prompt(message.into(), Vec::new(), Vec::new(), Vec::new());
+
+    let mut snapshots = Vec::new();
+    for width in [64, 20] {
+        let lines = cell.display_hyperlink_lines(width);
+        assert_eq!(lines, cell.transcript_hyperlink_lines(width));
+        assert!(lines.iter().all(|line| line.width() < usize::from(width)));
+        for (text, modifier) in [("testing", Modifier::BOLD), ("hello", Modifier::ITALIC)] {
+            assert!(lines.iter().flat_map(|line| &line.line.spans).any(|span| {
+                span.content == text && span.style.add_modifier.contains(modifier)
+            }));
+        }
+        let linked_text = lines
+            .iter()
+            .flat_map(|line| {
+                line.hyperlinks
+                    .iter()
+                    .filter(|link| link.destination == "https://example.test/docs")
+                    .flat_map(|link| {
+                        line.line
+                            .to_string()
+                            .chars()
+                            .skip(link.columns.start)
+                            .take(link.columns.len())
+                            .collect::<Vec<_>>()
+                    })
+            })
+            .filter(|ch| !ch.is_whitespace())
+            .collect::<String>();
+        assert_eq!(linked_text, "exampledocumentationhttps://example.test/docs");
+        let rendered = ratatui::text::Text::from(visible_lines(lines)).to_string();
+        let rendered = rendered
+            .lines()
+            .map(str::trim_end)
+            .collect::<Vec<_>>()
+            .join("\n");
+        snapshots.push(format!("width {width}\n{rendered}"));
+    }
+    insta::assert_snapshot!(snapshots.join("\n\n"));
+}
+
+#[test]
 fn user_prompt_urls_keep_destinations_across_widths() {
     let url = "https://example.test/terminal-link-wrapping/solid-octants";
     let placeholder = "[Image #1]";
@@ -81,7 +169,14 @@ fn user_prompt_urls_keep_destinations_across_widths() {
     let mut snapshots = Vec::new();
     for width in [120, 60, 24] {
         let lines = cell.display_hyperlink_lines(width);
-        assert_eq!(cell.transcript_hyperlink_lines(width), lines);
+        let transcript = cell.transcript_hyperlink_lines(width);
+        assert_eq!(
+            transcript
+                .into_iter()
+                .map(HyperlinkLine::resolve_span_styles)
+                .collect::<Vec<_>>(),
+            lines
+        );
         assert!(lines.iter().all(|line| line.width() <= usize::from(width)));
         for destination in [url, "https://example.test/a"] {
             let linked_text = lines
@@ -128,7 +223,7 @@ fn local_image_only_user_message_remains_visible() {
 fn mixed_image_labels_preserve_existing_placeholders_without_duplicates() {
     let placeholder = "[Image #2]";
     let cell = new_user_prompt(
-        format!("{placeholder} compare these"),
+        format!("{placeholder} **compare** these"),
         vec![TextElement::new(
             (0..placeholder.len()).into(),
             Some(placeholder.to_string()),
@@ -217,6 +312,7 @@ fn spoken_user_messages_share_the_text_color_without_changing_raw_text() {
             .iter()
             .any(|line| line.to_string() == "❯ hello from voice")
     );
+    assert_eq!(typed.raw_lines(), vec![Line::from(message)]);
     assert!(
         typed
             .display_lines(/*width*/ 40)
@@ -236,13 +332,17 @@ fn spoken_user_messages_share_the_text_color_without_changing_raw_text() {
         .flat_map(|line| line.line.spans)
         .find(|span| span.content == "❯ ")
         .expect("typed user marker");
-    assert_eq!(marker.style, typed_marker.style);
+    // Native spoken history resolves the inherited transparent background onto spans.
+    assert_eq!(marker.style, typed_marker.style.bg(Color::Reset));
 
     let area = Rect::new(
         /*x*/ 0, /*y*/ 0, /*width*/ 40, /*height*/ 3,
     );
     let mut buf = Buffer::empty(area);
-    Paragraph::new(spoken.display_lines(area.width)).render(area, &mut buf);
+    let lines = crate::terminal_palette::with_test_default_colors(/*colors*/ None, || {
+        spoken.display_lines(area.width)
+    });
+    Paragraph::new(lines).render(area, &mut buf);
     insta::assert_snapshot!("spoken_user_prompt", format!("{buf:?}"));
 }
 

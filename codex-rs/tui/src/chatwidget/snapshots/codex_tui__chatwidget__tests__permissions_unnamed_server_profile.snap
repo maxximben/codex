@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/permissions.rs
 expression: popup
 ---
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   Update Model Permissions
 
 
@@ -11,5 +12,5 @@ expression: popup
   3. Full Access               Use with caution: Codex can edit files outside this workspace and access the internet
                                without approval
   4. Read Only                 Read workspace files, with approval required for edits or internet access
-
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   enter select · esc back

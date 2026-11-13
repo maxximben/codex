@@ -648,6 +648,7 @@ fn open_questions(chat: &mut ChatWidget, options: Option<Vec<String>>) {
     chat.thread_id = Some(ThreadId::new());
     chat.on_agent_message_item_completed(
         AgentMessageItem {
+            moderation: None,
             id: "review".into(),
             content: Vec::new(),
             phase: None,
@@ -801,6 +802,7 @@ async fn question_drafts_survive_navigation_and_snapshot_replay() {
     let saved = chat.capture_thread_input_state();
     let (mut chat, _rx, mut ops) = make_chatwidget_manual(/*model_override*/ None).await;
     let item = AppServerThreadItemPayload::AgentMessage {
+        moderation: None,
         id: "buffered".into(),
         text: String::new(),
         phase: None,
@@ -853,7 +855,7 @@ async fn single_question_spacing_with_working_status() {
         .position(|line| line.trim() == "Only question?")
         .unwrap();
     assert!(rows[question - 2].contains("Queued follow-up inputs"));
-    assert!(rows[question - 1].is_empty());
+    assert!(rows[question - 1].trim().starts_with('─'));
     assert_eq!(rows[question + 2].trim(), "A typed answer");
     assert!(rows[question + 3].is_empty());
     insta::assert_snapshot!("single_question_working_spacing", rendered);
@@ -1067,6 +1069,7 @@ async fn async_question_markdown_matches_loaded_history() {
     let (mut chat, mut rx, _ops) = make_chatwidget_manual(/*model_override*/ None).await;
     let title = "Keep `--verbose` for **failed** runs?";
     let item = AppServerThreadItemPayload::AgentMessage {
+        moderation: None,
         id: "ask".into(),
         text: format!("{title}\n- Only for **CI**\n\nSee the [guide](https://example.test/guide)?"),
         phase: None,

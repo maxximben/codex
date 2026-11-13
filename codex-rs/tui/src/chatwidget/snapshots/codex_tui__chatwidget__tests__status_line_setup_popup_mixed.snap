@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/status_surface_previews.rs
 expression: status_line_popup_snapshot(&mut chat)
 ---
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Configure Status Line
   Select which items to display in the status line.
 
@@ -15,6 +16,6 @@ expression: status_line_popup_snapshot(&mut chat)
   [x] daybreak              Whether Daybreak is enabled for this thread
   [ ] model                 Current model name
   [ ] model-with-reasoning  Current model name with reasoning level
-↓
+↓───────────────────────────────────────────────────────────────────────────────────────────────────
   my-project · feature/mixed-preview · Mixed preview thread · Daybreak on
   space toggle · ←/→ reorder · enter save · esc cancel

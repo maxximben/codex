@@ -2,6 +2,7 @@
 source: tui/src/chatwidget/tests/status_surface_previews.rs
 expression: status_line_popup_snapshot(&mut chat)
 ---
+────────────────────────────────────────────────────────────────────────────────────────────────────
   Configure Status Line
   Select which items to display in the status line.
 
@@ -15,6 +16,6 @@ expression: status_line_popup_snapshot(&mut chat)
   [ ] model-with-reasoning  Current model name with reasoning level
   [ ] reasoning             Current reasoning level
   [ ] current-dir           Current working directory
-↓
+↓───────────────────────────────────────────────────────────────────────────────────────────────────
   monthly 65% left · weekly 50% left
   space toggle · ←/→ reorder · enter save · esc cancel

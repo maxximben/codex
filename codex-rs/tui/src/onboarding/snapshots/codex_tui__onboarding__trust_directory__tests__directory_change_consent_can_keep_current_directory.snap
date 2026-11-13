@@ -1,9 +1,8 @@
 ---
 source: tui/src/onboarding/trust_directory.rs
-assertion_line: 365
 expression: terminal.backend()
 ---
-
+──────────────────────────────────────────────────────────────────────
   Folder access
   /workspace/project                                                
 
@@ -16,3 +15,4 @@ expression: terminal.backend()
   2. Keep current directory
 
   enter continue · esc cancel
+──────────────────────────────────────────────────────────────────────

@@ -4,7 +4,7 @@ expression: render_inline(28)
 ---
 $ codex fork saved-session
 
-
+────────────────────────────
   This conversation is
   archived
   019e72f4-e09a-70f2-b2c2-
@@ -15,3 +15,4 @@ $ codex fork saved-session
 
   enter continue · esc
   cancel
+────────────────────────────
