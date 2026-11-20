@@ -23,6 +23,7 @@ use crate::terminal_palette::best_color_for_level;
 use crate::terminal_palette::default_bg;
 use crate::terminal_palette::effective_stdout_color_level;
 use crate::terminal_palette::rgb_color;
+use crate::text_formatting::contains_rtl_or_arabic_number;
 
 // Match the desktop app's thinking and reasoning header timings.
 const START_DELAY: Duration = Duration::from_millis(/*millis*/ 600);
@@ -52,6 +53,10 @@ fn summary_shimmer_for(
     background: Option<(u8, u8, u8)>,
     color_level: StdoutColorLevel,
 ) -> Vec<Span<'static>> {
+    // Per-grapheme updates break terminal bidi rendering. Keep these labels in one span.
+    if contains_rtl_or_arabic_number(text) {
+        return crate::motion::shimmer_text(text, motion);
+    }
     let (base, highlight) = if background.is_some_and(is_light) {
         ((96, 51, 150), (132, 80, 181))
     } else {

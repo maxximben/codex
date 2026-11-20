@@ -201,6 +201,7 @@ async fn mcp_startup_summary_counts_servers_and_sign_in_subset() -> Result<()> {
     ] {
         app.chat_widget.handle_server_notification(
             ServerNotification::McpServerStatusUpdated(McpServerStatusUpdatedNotification {
+                environment_id: None,
                 thread_id: None,
                 name: name.into(),
                 status,
