@@ -207,7 +207,7 @@ pub(crate) fn new_session_info(
     let header = SessionHeaderHistoryCell::new(
         model_display_name.to_string(),
         session.reasoning_effort.clone(),
-        config.cwd.to_path_buf(),
+        session.cwd.to_path_buf(),
         CODEX_CLI_VERSION,
     )
     .with_header(&local_settings.tui.header, &local_settings.codex_home)
